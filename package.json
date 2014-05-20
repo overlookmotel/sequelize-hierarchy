@@ -1,0 +1,14 @@
+{
+  "name": "sequelize-hierarchy",
+  "version": "0.0.2",
+  "description": "Nested hierarchies for Sequelize",
+  "main": "./lib/",
+  "author": {
+    "name": "Overlook Motel"
+  },
+  "dependencies": {
+    "sequelize-transaction-promises": "*",
+    "shimming": "*"
+  },
+  "readmeFilename": "README.md"
+}
