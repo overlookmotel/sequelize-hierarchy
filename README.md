@@ -6,6 +6,20 @@ Under development. API is unstable. Not suitable for use quite yet.
 
 Requires latest master 2.0.0-dev of Sequelize
 
+## Usage
+
+Example:
+
+	var Sequelize = require('sequelize');
+	require('sequelize-hierarchy')(Sequelize);
+	
+	var sequelize = new Sequelize('database', 'user', 'password');
+	
+	var Folder = sequelize.define('Folder', name: { type: Sequelize.STRING });
+	Folder.isHierarchy();
+
+This creates a new table `FoldersAncestors` which contains the ancestry information and will be automatically updated as you create, update and delete folders using standard sequelize methods.
+
 ## Changelog
 
 0.0.1
