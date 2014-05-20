@@ -18,7 +18,14 @@ Example:
 	var Folder = sequelize.define('Folder', name: { type: Sequelize.STRING });
 	Folder.isHierarchy();
 
-This creates a new table `FoldersAncestors` which contains the ancestry information and will be automatically updated as you create, update and delete folders using standard sequelize methods.
+This does the following:
+
+* Adds a column `ParentId` to Folder model
+* Adds a column `HierarchyLevel` to Folder model (which should not be updated directly)
+* Creates a new table `FoldersAncestors` which contains the ancestry information
+* Creates hooks into standard sequelize methods (create, update and destroy etc) to automatically update the ancestry table as details in the folder table change
+
+The column and table names etc can be modified by passing options to `.isHierarchy()`. See `modelExtends.js` in the code for details.
 
 ## Changelog
 
