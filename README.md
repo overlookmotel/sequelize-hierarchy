@@ -2,7 +2,7 @@
 
 Nested hierarchies for Sequelize
 
-Under development. API is unstable.
+Under development. API is unstable. Not suitable for use quite yet.
 
 Requires latest master 2.0.0-dev of Sequelize
 
@@ -15,6 +15,10 @@ Requires latest master 2.0.0-dev of Sequelize
 0.0.2
 
 * Implemented with hooks
+
+0.0.3
+
+* Removed unused dependency on sequelize-transaction-promises
 
 ## TODO
 
