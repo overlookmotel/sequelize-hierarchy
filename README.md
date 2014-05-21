@@ -40,11 +40,11 @@ The column and table names etc can be modified by passing options to `.isHierarc
 0.0.3
 
 * Removed unused dependency on sequelize-transaction-promises
+* Check for illegal parent ID in updates
 
 ## TODO
 
 * Test function for bulkUpdate
-* Add check for illegal parentId as update validate hook
 * Add other creation methods (e.g. createChild, createParent etc)
 * Work out why addChild is not working
 * Check setParent accessor methods work
