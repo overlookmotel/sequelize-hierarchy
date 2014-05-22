@@ -39,14 +39,13 @@ The column and table names etc can be modified by passing options to `.isHierarc
 
 0.0.3
 
-* Removed unused dependency on sequelize-transaction-promises
+* Removed unused dependency sequelize-transaction-promises
 * Check for illegal parent ID in updates
 * `Model#rebuildHierarchy()` function
 * Bug fix for defining through table
 
 ## TODO
 
-* Test function for bulkUpdate
 * Add other creation methods (e.g. createChild, createParent etc)
 * Check setParent accessor methods work
 * Create more efficient function for bulkCreate (+ alter sequelize bulkCreate to do single multi-row insertion?)
