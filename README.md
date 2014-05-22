@@ -41,6 +41,7 @@ The column and table names etc can be modified by passing options to `.isHierarc
 
 * Removed unused dependency on sequelize-transaction-promises
 * Check for illegal parent ID in updates
+* `Model#rebuildHierarchy()` function
 
 ## TODO
 
