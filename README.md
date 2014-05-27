@@ -77,10 +77,17 @@ The forms with `{ hierarchy: true }` are equivalent to using `Folder.findAll({ i
 * Bug fix for defining through table
 * Hooks for `Model.find()` and `Model.findAll()` to convert flat representations of hierarchies into tree structures
 
+0.0.4
+
+* Transactionalised if operations to alter tables are called within a transaction
+* Do not pass results back from hooks (not needed by Sequelize)
+* Replaced usage of Promise.resolve().then() with Promise.try()
+
 ## TODO
 
 * Add other creation methods (e.g. createChild, createParent etc)
 * Check setParent etc accessor methods work
+* Fix Sequelize so that beforeFind etc hooks do not need to return a promise, then delete excess Promise.resolve() code
 * Write tests
 * Create more efficient function for bulkCreate (+ alter sequelize bulkCreate to do single multi-row insertion?)
 
