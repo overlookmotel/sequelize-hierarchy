@@ -15,14 +15,14 @@ Example:
 	
 	var sequelize = new Sequelize('database', 'user', 'password');
 	
-	var Folder = sequelize.define('Folder', name: { type: Sequelize.STRING });
-	Folder.isHierarchy();
+	var folder = sequelize.define('folder', name: { type: Sequelize.STRING });
+	folder.isHierarchy();
 
 This does the following:
 
-* Adds a column `ParentId` to Folder model
-* Adds a column `HierarchyLevel` to Folder model (which should not be updated directly)
-* Creates a new table `FoldersAncestors` which contains the ancestry information
+* Adds a column `parentId` to Folder model
+* Adds a column `hierarchyLevel` to Folder model (which should not be updated directly)
+* Creates a new table `foldersAncestors` which contains the ancestry information
 * Creates hooks into standard Sequelize methods (create, update and destroy etc) to automatically update the ancestry table as details in the folder table change
 * Creates hooks into Sequelize's `find()` and `findAll()` methods so that hierarchies can be returned as javascript object tree structures 
 
@@ -30,34 +30,34 @@ The column and table names etc can be modified by passing options to `.isHierarc
 
 Examples of getting a hierarchy structure:
 
-	Folder.findAll().then(function(results) {
+	folder.findAll().then(function(results) {
 		// results = [
-		//	{ id: 1, ParentId: null, name: 'a' },
-		//	{ id: 2, ParentId: 1, name: 'ab' },
-		//	{ id: 3, ParentId: 2, name: 'abc' }
+		//	{ id: 1, parentId: null, name: 'a' },
+		//	{ id: 2, parentId: 1, name: 'ab' },
+		//	{ id: 3, parentId: 2, name: 'abc' }
 		// ]
 	})
 
-	Folder.findAll({ hierarchy: true }).then(function(results) {
+	folder.findAll({ hierarchy: true }).then(function(results) {
 		// results = [
-		//	{ id: 1, ParentId: null, name: 'a', childs: [
-		//		{ id: 2, ParentId: 1, name: 'ab', childs: [
-		//			{ id: 3, ParentId: 2, name: 'abc' }
+		//	{ id: 1, parentId: null, name: 'a', children: [
+		//		{ id: 2, parentId: 1, name: 'ab', children: [
+		//			{ id: 3, parentId: 2, name: 'abc' }
 		//		] }
 		//	] }
 		// ]
 	})
 	
-	Folder.find({ where: { id: 1 }, include: [ { model: Folder, as: 'Descendents', hierarchy: true } ] }).then(function(result) {
+	folder.find({ where: { id: 1 }, include: [ { model: folder, as: 'descendents', hierarchy: true } ] }).then(function(result) {
 		// result =
-		// { id: 1, ParentId: null, name: 'a', childs: [
-		//		{ id: 2, ParentId: 1, name: 'ab', childs: [
-		//			{ id: 3, ParentId: 2, name: 'abc' }
+		// { id: 1, parentId: null, name: 'a', children: [
+		//		{ id: 2, parentId: 1, name: 'ab', children: [
+		//			{ id: 3, parentId: 2, name: 'abc' }
 		//		] }
 		// ] }
 	})
 
-The forms with `{ hierarchy: true }` are equivalent to using `Folder.findAll({ include: [ { model: Folder, as: 'Childs' } ] })` except that the include is recursed however deeply the tree structure goes.
+The forms with `{ hierarchy: true }` are equivalent to using `folder.findAll({ include: [ { model: folder, as: 'children' } ] })` except that the include is recursed however deeply the tree structure goes.
 
 ## Changelog
 
@@ -82,6 +82,9 @@ The forms with `{ hierarchy: true }` are equivalent to using `Folder.findAll({ i
 * Transactionalised if operations to alter tables are called within a transaction
 * Do not pass results back from hooks (not needed by Sequelize)
 * Replaced usage of Promise.resolve().then() with Promise.try()
+* Change uses of Utils._.str.capitalize() to Utils.uppercaseFirst() to reflect removal of underscore.string dependency from sequelize
+* Adjusted capitalization to reflect that model names and tables names are no longer capitalized
+* Changed 'childs' to 'children' as pluralization now performed through Inflection library which plururalizes "child" correctly
 
 ## TODO
 
