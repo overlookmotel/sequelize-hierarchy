@@ -16,5 +16,19 @@
   "dependencies": {
     "shimming": "0.0.x"
   },
+  "devDependencies": {
+    "mocha": "*",
+    "chai": "*",
+    "chai-as-promised": "*",
+    "sequelize": "2.0.x",
+    "mysql": "~2.4.1",
+    "lodash": "2.4.1"
+  },
+  "scripts": {
+    "test": "make all"
+  },
+  "engines": {
+    "node": ">=0.6.21"
+  },
   "readmeFilename": "README.md"
 }
