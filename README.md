@@ -2,9 +2,9 @@
 
 Nested hierarchies for Sequelize
 
-Under development. API is stable but not suitable for use quite yet.
+Under development. API is stable and works with MySQL. Testing and re-coding to work with other DB dialects supported by Sequelize (Postgres, SQLite etc) would be a welcome contribution.
 
-Requires master recent v2.0.0-dev version of Sequelize. As of 24 May 2014, the necessary hooks in Sequelize are not yet present, awaiting a PR to be accepted.
+Requires Sequelize v2.0.0-rc1 or later (when hooks on `Model#findAll()` were introduced).
 
 ## Usage
 
@@ -23,8 +23,8 @@ This does the following:
 * Adds a column `parentId` to Folder model
 * Adds a column `hierarchyLevel` to Folder model (which should not be updated directly)
 * Creates a new table `foldersAncestors` which contains the ancestry information
-* Creates hooks into standard Sequelize methods (create, update and destroy etc) to automatically update the ancestry table as details in the folder table change
-* Creates hooks into Sequelize's `find()` and `findAll()` methods so that hierarchies can be returned as javascript object tree structures 
+* Creates hooks into standard Sequelize methods (create, update, destroy etc) to automatically update the ancestry table as details in the folder table change
+* Creates hooks into Sequelize's `Model#find()` and `Model#findAll()` methods so that hierarchies can be returned as javascript object tree structures
 
 The column and table names etc can be modified by passing options to `.isHierarchy()`. See `modelExtends.js` in the code for details.
 
@@ -59,6 +59,11 @@ Examples of getting a hierarchy structure:
 
 The forms with `{ hierarchy: true }` are equivalent to using `folder.findAll({ include: [ { model: folder, as: 'children' } ] })` except that the include is recursed however deeply the tree structure goes.
 
+## Tests
+
+Use `npm test` to run the tests.
+Requires a database called 'sequelize_test' and a db user 'sequelize_test', password 'sequelize_test'.
+
 ## Changelog
 
 0.0.1
@@ -86,12 +91,18 @@ The forms with `{ hierarchy: true }` are equivalent to using `folder.findAll({ i
 * Adjusted capitalization to reflect that model names and tables names are no longer capitalized
 * Changed 'childs' to 'children' as pluralization now performed through Inflection library which plururalizes "child" correctly
 
+0.0.5 (First working version ready for use)
+
+* bulkCreate and bulkUpdate use hooks instead of shimming
+* Dependency on shimming module removed
+* Added tests for main functions
+* Bug fixes
+
 ## TODO
 
-* Add other creation methods (e.g. createChild, createParent etc)
+* Tests for other functions
 * Check setParent etc accessor methods work
-* Fix Sequelize so that beforeFind etc hooks do not need to return a promise, then delete excess Promise.resolve() code
-* Write tests
+* Add other creation methods (e.g. createChild, createParent etc)
 * Create more efficient function for bulkCreate (+ alter sequelize bulkCreate to do single multi-row insertion?)
 
 ## Known issues
