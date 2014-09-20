@@ -14,7 +14,6 @@
     "url": "https://github.com/overlookmotel/sequelize-hierarchy/issues"
   },
   "dependencies": {
-    "shimming": "0.0.x"
   },
   "devDependencies": {
     "mocha": "*",
