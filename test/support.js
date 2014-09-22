@@ -7,6 +7,8 @@ var fs = require('fs'),
 	DataTypes = require(__dirname + "/../node_modules/sequelize/lib/data-types"),
 	Config = require(__dirname + "/config/config");
 
+require('../lib/index')(Sequelize);
+
 // Make sure errors get thrown when testing
 Sequelize.Promise.onPossiblyUnhandledRejection(function(e, promise) {
 	throw e;
