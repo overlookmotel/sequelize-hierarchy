@@ -2,9 +2,11 @@
 
 Nested hierarchies for Sequelize
 
-Under development. API is stable and works with MySQL. Testing and re-coding to work with other DB dialects supported by Sequelize (Postgres, SQLite etc) would be a welcome contribution.
+Under development. API is mostly stable and works with MySQL. Testing and re-coding to work with other DB dialects supported by Sequelize (Postgres, SQLite etc) would be a welcome contribution.
 
-Requires Sequelize v2.0.0-rc1 or later (when hooks on `Model#findAll()` were introduced).
+Forthcoming change in next version to API for `Model#find()` where option `hierarchy` set.
+
+Requires recent version of Sequelize v2.0.0 development branch (after 23 Sept 2014, when universal hooks were introduced).
 
 ## Usage
 
@@ -87,7 +89,7 @@ Requires a database called 'sequelize_test' and a db user 'sequelize_test', pass
 * Transactionalised if operations to alter tables are called within a transaction
 * Do not pass results back from hooks (not needed by Sequelize)
 * Replaced usage of Promise.resolve().then() with Promise.try()
-* Change uses of Utils._.str.capitalize() to Utils.uppercaseFirst() to reflect removal of underscore.string dependency from sequelize
+* Changed uses of Utils._.str.capitalize() to Utils.uppercaseFirst() to reflect removal of underscore.string dependency from sequelize
 * Adjusted capitalization to reflect that model names and tables names are no longer capitalized
 * Changed 'childs' to 'children' as pluralization now performed through Inflection library which plururalizes "child" correctly
 
@@ -98,10 +100,14 @@ Requires a database called 'sequelize_test' and a db user 'sequelize_test', pass
 * Added tests for main functions
 * Bug fixes
 
+0.0.6
+
+* `Model#find()` hooks made universal to allow e.g. `Person.findAll({ include: { model: Department, include: { model: Department, as: 'descendents', hierarchy: true } } })`
+* Tests for find and accessors (`Model#getDescendents()` etc)
+
 ## TODO
 
-* Tests for other functions
-* Check setParent etc accessor methods work
+* Change behaviour of `Model#find()` with option `hierarchy` to include descendents automatically.
 * Add other creation methods (e.g. createChild, createParent etc)
 * Create more efficient function for bulkCreate (+ alter sequelize bulkCreate to do single multi-row insertion?)
 
