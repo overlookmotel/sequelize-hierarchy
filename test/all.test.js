@@ -64,14 +64,14 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 	
 	describe('#create', function() {
 		describe('for root level', function() {
-			it('should set hierarchyLevel', function() {
+			it('sets hierarchyLevel', function() {
 				return this.folder.find({where: {name: 'a'}})
 				.then(function(folder) {
 					expect(folder.hierarchyLevel).to.equal(1);
 				});
 			});
 			
-			it('should create hierarchy table records', function() {
+			it('creates hierarchy table records', function() {
 				return this.foldersAncestor.findAll({where: {folderId: this.folders.a.id}}).bind(this)
 				.then(function(ancestors) {
 					expect(ancestors.length).to.equal(0);
@@ -80,14 +80,14 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 		});
 		
 		describe('for 2nd level', function() {		
-			it('should set hierarchyLevel', function() {
+			it('sets hierarchyLevel', function() {
 				return this.folder.find({where: {name: 'ab'}})
 				.then(function(folder) {
 					expect(folder.hierarchyLevel).to.equal(2);
 				});
 			});
 			
-			it('should create hierarchy table records', function() {
+			it('creates hierarchy table records', function() {
 				return this.foldersAncestor.findAll({where: {folderId: this.folders.ab.id}}).bind(this)
 				.then(function(ancestors) {
 					expect(ancestors.length).to.equal(1);
@@ -97,14 +97,14 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 		});
 		
 		describe('for 3rd level', function() {		
-			it('should set hierarchyLevel', function() {
+			it('sets hierarchyLevel', function() {
 				return this.folder.find({where: {name: 'abd'}})
 				.then(function(folder) {
 					expect(folder.hierarchyLevel).to.equal(3);
 				});
 			});
 			
-			it('should create hierarchy table records', function() {
+			it('creates hierarchy table records', function() {
 				return this.foldersAncestor.findAll({where: {folderId: this.folders.abd.id}, order: [['ancestorId', 'ASC']]}).bind(this)
 				.then(function(ancestors) {
 					expect(ancestors.length).to.equal(2);
@@ -115,20 +115,20 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 		});
 	});
 	
-	describe('#update', function() {
+	describe('#updateAttributes', function() {
 		describe('for root level', function() {
 			beforeEach(function() {
 				return this.folders.abdf.updateAttributes({parentId: null});
 			});
 			
-			it('should set hierarchyLevel', function() {
+			it('sets hierarchyLevel', function() {
 				return this.folder.find({where: {name: 'abdf'}})
 				.then(function(folder) {
 					expect(folder.hierarchyLevel).to.equal(1);
 				});
 			});
 			
-			it('should update hierarchy table records', function() {
+			it('updates hierarchy table records', function() {
 				return this.foldersAncestor.findAll({where: {folderId: this.folders.abdf.id}}).bind(this)
 				.then(function(ancestors) {
 					expect(ancestors.length).to.equal(0);
@@ -141,14 +141,14 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 				return this.folders.abdf.updateAttributes({parentId: this.folders.a.id});
 			});
 			
-			it('should set hierarchyLevel', function() {
+			it('sets hierarchyLevel', function() {
 				return this.folder.find({where: {name: 'abdf'}})
 				.then(function(folder) {
 					expect(folder.hierarchyLevel).to.equal(2);
 				});
 			});
 			
-			it('should update hierarchy table records', function() {
+			it('updates hierarchy table records', function() {
 				return this.foldersAncestor.findAll({where: {folderId: this.folders.abdf.id}}).bind(this)
 				.then(function(ancestors) {
 					expect(ancestors.length).to.equal(1);
@@ -162,14 +162,14 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 				return this.folders.abdf.updateAttributes({parentId: this.folders.ab.id});
 			});
 			
-			it('should set hierarchyLevel', function() {
+			it('sets hierarchyLevel', function() {
 				return this.folder.find({where: {name: 'abdf'}})
 				.then(function(folder) {
 					expect(folder.hierarchyLevel).to.equal(3);
 				});
 			});
 			
-			it('should update hierarchy table records', function() {
+			it('updates hierarchy table records', function() {
 				return this.foldersAncestor.findAll({where: {folderId: this.folders.abdf.id}, order: [['ancestorId', 'ASC']]}).bind(this)
 				.then(function(ancestors) {
 					expect(ancestors.length).to.equal(2);
@@ -184,14 +184,14 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 				return this.folders.ab.updateAttributes({parentId: this.folders.ac.id});
 			});
 			
-			it('should set hierarchyLevel for descendents', function() {
+			it('sets hierarchyLevel for descendents', function() {
 				return this.folder.find({where: {name: 'abdf'}})
 				.then(function(folder) {
 					expect(folder.hierarchyLevel).to.equal(5);
 				});
 			});
 			
-			it('should update hierarchy table records for descendents', function() {
+			it('updates hierarchy table records for descendents', function() {
 				return this.folder.find({
 					where: {id: this.folders.abdf.id},
 					include: [{model: this.folder, as: 'ancestors'}],
@@ -209,7 +209,7 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 		});
 		
 		describe('errors', function() {
-			it('should throw error if trying to make parent one of descendents', function() {
+			it('throws error if trying to make parent one of descendents', function() {
 				var promise = this.folders.a.updateAttributes({parentId: this.folders.ab.id});
 				return expect(promise).to.be.rejected;
 			});
@@ -217,7 +217,7 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 	});
 	
 	describe('#destroy', function() {
-		it('should remove hierarchy table records', function() {
+		it('removes hierarchy table records', function() {
 			return this.folders.abdf.destroy().bind(this)
 			.then(function() {
 				return this.foldersAncestor.findAll({where: {folderId: this.folders.abdf.id}}).bind(this)
@@ -227,7 +227,7 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 			});
 		});
 		
-		it('should throw error if try to destroy a record which has children', function() {
+		it('throws error if try to destroy a record which has children', function() {
 			var promise = this.folders.a.destroy();
 			return expect(promise).to.be.rejected;
 		});
@@ -241,7 +241,7 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 			]);
 		});
 		
-		it('should set hierarchyLevel for all rows', function() {
+		it('sets hierarchyLevel for all rows', function() {
 			return this.folder.find({where: {name: 'abeh'}}).bind(this)
 			.then(function(folder) {
 				expect(folder.hierarchyLevel).to.equal(4);
@@ -253,7 +253,7 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 			});
 		});
 		
-		it('should create hierarchy table records for all rows', function() {
+		it('creates hierarchy table records for all rows', function() {
 			return this.folder.find({
 				where: {name: 'abeh'},
 				include: [{model: this.folder, as: 'ancestors'}],
@@ -286,7 +286,7 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 			return this.folder.update({parentId: this.folders.ab.id}, {where: {parentId: this.folders.abd.id}});
 		});
 		
-		it('should set hierarchyLevel for all rows', function() {
+		it('sets hierarchyLevel for all rows', function() {
 			return Promise.each(['abdf', 'abdg'], function(name) {
 				return this.folder.find({where: {name: name}}).bind(this)
 				.then(function(folder) {
@@ -295,7 +295,7 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 			}.bind(this));
 		});
 		
-		it('should create hierarchy table records for all rows', function() {
+		it('creates hierarchy table records for all rows', function() {
 			return Promise.each(['abdf', 'abdg'], function(name) {
 				return this.folder.find({
 					where: {name: name},
@@ -313,7 +313,7 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 	});
 	
 	describe('#bulkDestroy', function() {
-		it('should remove hierarchy table records for all rows', function() {
+		it('removes hierarchy table records for all rows', function() {
 			return this.folder.destroy({where: {parentId: this.folders.abd.id}}).bind(this)
 			.then(function() {
 				return Promise.each(['abdf', 'abdg'], function(name) {
@@ -325,7 +325,7 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 			});
 		});
 		
-		it('should throw error if try to destroy a record which has children', function() {
+		it('throws error if try to destroy a record which has children', function() {
 			var promise = this.folder.destroy({where: {parentId: this.folders.ab.id}}).bind(this)
 			return expect(promise).to.be.rejected;
 		});
