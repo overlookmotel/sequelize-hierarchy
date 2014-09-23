@@ -30,6 +30,13 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 		
 		this.foldersAncestor = this.sequelize.models.foldersAncestors;
 		
+		this.drive = this.sequelize.define('drive', {
+			name: Sequelize.STRING
+		});
+		
+		this.drive.hasMany(this.folder);
+		this.folder.belongsTo(this.drive);
+		
 		return this.sequelize.sync({ force: true }).bind(this)
 		.then(function() {
 			this.folders = {};
@@ -321,6 +328,248 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 		it('should throw error if try to destroy a record which has children', function() {
 			var promise = this.folder.destroy({where: {parentId: this.folders.ab.id}}).bind(this)
 			return expect(promise).to.be.rejected;
+		});
+	});
+	
+	describe('#find', function() {
+		describe('can retrieve', function() {
+			it('children', function() {
+				return this.folder.find({
+					where: {name: 'a'},
+					include: [{model: this.folder, as: 'children'}],
+					order: [[{model: this.folder, as: 'children'}, 'name']]
+				}).bind(this)
+				.then(function(folder) {
+					expect(folder.children.length).to.equal(2);
+					expect(folder.children[0].name).to.equal('ab');
+					expect(folder.children[1].name).to.equal('ac');
+				});
+			});
+
+			it('descendents', function() {
+				return this.folder.find({
+					where: {name: 'a'},
+					include: [{model: this.folder, as: 'descendents'}],
+					order: [[{model: this.folder, as: 'descendents'}, 'name']]
+				}).bind(this)
+				.then(function(folder) {
+					expect(folder.descendents.length).to.equal(6);
+					expect(folder.descendents[0].name).to.equal('ab');
+					expect(folder.descendents[1].name).to.equal('abd');
+					expect(folder.descendents[2].name).to.equal('abdf');
+					expect(folder.descendents[3].name).to.equal('abdg');
+					expect(folder.descendents[4].name).to.equal('abe');
+					expect(folder.descendents[5].name).to.equal('ac');
+				});
+			});
+
+			it('parent', function() {
+				return this.folder.find({
+					where: {name: 'abdf'},
+					include: [{model: this.folder, as: 'parent'}]
+				}).bind(this)
+				.then(function(folder) {
+					expect(folder.parent).to.be.ok;
+					expect(folder.parent.name).to.equal('abd');
+				});
+			});
+		
+			it('ancestors', function() {
+				return this.folder.find({
+					where: {name: 'abdf'},
+					include: [{model: this.folder, as: 'ancestors'}],
+					order: [[{model: this.folder, as: 'ancestors'}, 'hierarchyLevel']]
+				}).bind(this)
+				.then(function(folder) {
+					expect(folder.ancestors.length).to.equal(3);
+					expect(folder.ancestors[0].name).to.equal('a');
+					expect(folder.ancestors[1].name).to.equal('ab');
+					expect(folder.ancestors[2].name).to.equal('abd');
+				});
+			});
+		});
+		
+		describe('with hierarchy option', function() {
+			it('findAll gets a structured tree', function() {
+				return this.folder.findAll({order: [['name']], hierarchy: true}).bind(this)
+				.then(function(folders) {
+					expect(folders.length).to.equal(1);
+					var folder = folders[0];
+					
+					expect(folder.name).to.equal('a');
+					expect(folder.children).to.exist;
+					expect(folder.children.length).to.equal(2);
+					expect(folder.children[0].name).to.equal('ab');
+					expect(folder.children[1].name).to.equal('ac');
+					
+					expect(folder.children[0].children).to.exist;
+					expect(folder.children[0].children.length).to.equal(2);
+					expect(folder.children[0].children[0].name).to.equal('abd');
+					expect(folder.children[0].children[1].name).to.equal('abe');
+					
+					expect(folder.children[1].children).not.to.exist;
+					
+					expect(folder.children[0].children[0].children).to.exist;
+					expect(folder.children[0].children[0].children.length).to.equal(2);
+					expect(folder.children[0].children[0].children[0].name).to.equal('abdf');
+					expect(folder.children[0].children[0].children[1].name).to.equal('abdg');
+					
+					expect(folder.children[0].children[1].children).not.to.exist;
+					
+					expect(folder.children[0].children[0].children[0].children).not.to.exist;
+					expect(folder.children[0].children[0].children[1].children).not.to.exist;
+				});
+			});
+
+			it('find gets a structured tree', function() {
+				return this.folder.find({
+					where: {name: 'a'},
+					include: [{model: this.folder, as: 'descendents', hierarchy: true}],
+					order: [[{model: this.folder, as: 'descendents'}, 'name']]
+				}).bind(this)
+				.then(function(folder) {
+					expect(folder.name).to.equal('a');
+					expect(folder.children).to.exist;
+					expect(folder.children.length).to.equal(2);
+					expect(folder.children[0].name).to.equal('ab');
+					expect(folder.children[1].name).to.equal('ac');
+
+					expect(folder.children[0].children).to.exist;
+					expect(folder.children[0].children.length).to.equal(2);
+					expect(folder.children[0].children[0].name).to.equal('abd');
+					expect(folder.children[0].children[1].name).to.equal('abe');
+
+					expect(folder.children[1].children).not.to.exist;
+
+					expect(folder.children[0].children[0].children).to.exist;
+					expect(folder.children[0].children[0].children.length).to.equal(2);
+					expect(folder.children[0].children[0].children[0].name).to.equal('abdf');
+					expect(folder.children[0].children[0].children[1].name).to.equal('abdg');
+
+					expect(folder.children[0].children[1].children).not.to.exist;
+
+					expect(folder.children[0].children[0].children[0].children).not.to.exist;
+					expect(folder.children[0].children[0].children[1].children).not.to.exist;
+				});
+			});
+			
+			it('find gets a structured tree when included from another model', function() {
+				return this.drive.create({name: 'x'}).bind(this)
+				.then(function(drive) {
+					this.drives = {x: drive};
+					return drive.addFolder(this.folders.a);
+				})
+				.then(function() {
+					return this.drive.findAll({
+						include: {
+							model: this.folder, 
+							include: {model: this.folder, as: 'descendents', hierarchy: true}
+						}
+					});
+				})
+				.then(function(drives) {
+					expect(drives.length).to.equal(1);
+					expect(drives[0].folders).to.be.ok;
+					expect(drives[0].folders.length).to.equal(1);
+					
+					var folder = drives[0].folders[0];
+					
+					expect(folder.name).to.equal('a');
+					expect(folder.children).to.exist;
+					expect(folder.children.length).to.equal(2);
+					expect(folder.children[0].name).to.equal('ab');
+					expect(folder.children[1].name).to.equal('ac');
+					
+					expect(folder.children[0].children).to.exist;
+					expect(folder.children[0].children.length).to.equal(2);
+					expect(folder.children[0].children[0].name).to.equal('abd');
+					expect(folder.children[0].children[1].name).to.equal('abe');
+					
+					expect(folder.children[1].children).not.to.exist;
+					
+					expect(folder.children[0].children[0].children).to.exist;
+					expect(folder.children[0].children[0].children.length).to.equal(2);
+					expect(folder.children[0].children[0].children[0].name).to.equal('abdf');
+					expect(folder.children[0].children[0].children[1].name).to.equal('abdg');
+					
+					expect(folder.children[0].children[1].children).not.to.exist;
+					
+					expect(folder.children[0].children[0].children[0].children).not.to.exist;
+					expect(folder.children[0].children[0].children[1].children).not.to.exist;
+				});
+			});
+		});
+	});
+	
+	describe('accessors', function() {
+		describe('can retrieve', function() {
+			it('children', function() {
+				return this.folders.a.getChildren({order: [['name']]}).bind(this)
+				.then(function(folders) {
+					expect(folders.length).to.equal(2);
+					expect(folders[0].name).to.equal('ab');
+					expect(folders[1].name).to.equal('ac');
+				});
+			});
+			
+			it('descendents', function() {
+				return this.folders.a.getDescendents({order: [['name']]}).bind(this)
+				.then(function(folders) {
+					expect(folders.length).to.equal(6);
+					expect(folders[0].name).to.equal('ab');
+					expect(folders[1].name).to.equal('abd');
+					expect(folders[2].name).to.equal('abdf');
+					expect(folders[3].name).to.equal('abdg');
+					expect(folders[4].name).to.equal('abe');
+					expect(folders[5].name).to.equal('ac');
+				});
+			});
+			
+			it('parent', function() {
+				return this.folders.abdf.getParent().bind(this)
+				.then(function(folder) {
+					expect(folder).to.be.ok;
+					expect(folder.name).to.equal('abd');
+				});
+			});
+			
+			it('ancestors', function() {
+				return this.folders.abdf.getAncestors({order: [['hierarchyLevel']]}).bind(this)
+				.then(function(folders) {
+					expect(folders.length).to.equal(3);
+					expect(folders[0].name).to.equal('a');
+					expect(folders[1].name).to.equal('ab');
+					expect(folders[2].name).to.equal('abd');
+				});
+			});
+		});
+		
+		describe('with hierarchy option', function() {
+			it('getDescendents gets a structured tree', function() {
+				return this.folders.a.getDescendents({order: [['name']], hierarchy: true}).bind(this)
+				.then(function(folders) {
+					expect(folders.length).to.equal(2);
+					expect(folders[0].name).to.equal('ab');
+					expect(folders[1].name).to.equal('ac');
+					
+					expect(folders[0].children).to.exist;
+					expect(folders[0].children.length).to.equal(2);
+					expect(folders[0].children[0].name).to.equal('abd');
+					expect(folders[0].children[1].name).to.equal('abe');
+					
+					expect(folders[1].children).not.to.exist;
+					
+					expect(folders[0].children[0].children).to.exist;
+					expect(folders[0].children[0].children.length).to.equal(2);
+					expect(folders[0].children[0].children[0].name).to.equal('abdf');
+					expect(folders[0].children[0].children[1].name).to.equal('abdg');
+					
+					expect(folders[0].children[1].children).not.to.exist;
+					
+					expect(folders[0].children[0].children[0].children).not.to.exist;
+					expect(folders[0].children[0].children[1].children).not.to.exist;
+				});
+			});
 		});
 	});
 });
