@@ -54,7 +54,7 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 			}.bind(this));
 		});
 	});
-
+	
 	describe('#create', function() {
 		describe('for root level', function() {
 			it('should set hierarchyLevel', function() {
@@ -128,7 +128,7 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 				});
 			});
 		});
-
+		
 		describe('for 2nd level', function() {
 			beforeEach(function() {
 				return this.folders.abdf.updateAttributes({parentId: this.folders.a.id});
@@ -149,7 +149,7 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 				});
 			});
 		});
-
+		
 		describe('for 3rd level', function() {
 			beforeEach(function() {
 				return this.folders.abdf.updateAttributes({parentId: this.folders.ab.id});
@@ -171,7 +171,7 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 				});
 			});
 		});
-
+		
 		describe('descendents', function() {
 			beforeEach(function() {
 				return this.folders.ab.updateAttributes({parentId: this.folders.ac.id});
@@ -200,7 +200,7 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 				});
 			});
 		});
-
+		
 		describe('errors', function() {
 			it('should throw error if trying to make parent one of descendents', function() {
 				var promise = this.folders.a.updateAttributes({parentId: this.folders.ab.id});
@@ -208,7 +208,7 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 			});
 		});
 	});
-
+	
 	describe('#destroy', function() {
 		it('should remove hierarchy table records', function() {
 			return this.folders.abdf.destroy().bind(this)
@@ -225,7 +225,7 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 			return expect(promise).to.be.rejected;
 		});
 	});
-
+	
 	describe('#bulkCreate', function() {
 		beforeEach(function() {
 			return this.folder.bulkCreate([
@@ -245,7 +245,7 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 				expect(folder.hierarchyLevel).to.equal(3);
 			});
 		});
-			
+		
 		it('should create hierarchy table records for all rows', function() {
 			return this.folder.find({
 				where: {name: 'abeh'},
@@ -273,7 +273,7 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 			});
 		});
 	});
-
+	
 	describe('#bulkUpdate', function() {
 		beforeEach(function() {
 			return this.folder.update({parentId: this.folders.ab.id}, {where: {parentId: this.folders.abd.id}});
