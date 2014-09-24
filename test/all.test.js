@@ -572,4 +572,38 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 			});
 		});
 	});
+	
+	describe('#rebuildHierarchy', function() {
+		beforeEach(function() {
+			return this.foldersAncestor.destroy({}, {truncate: true}).bind(this)
+			.then(function() {
+				return this.folder.update({hierarchyLevel: 999}, {where: {}});
+			})
+			.then(function() {
+				return this.folder.rebuildHierarchy();
+			});
+		});
+		
+		it('recreates hierarchyLevel for all records', function() {
+			return this.folder.findAll().bind(this)
+			.then(function(folders) {
+				folders.forEach(function(folder) {
+					expect(folder.hierarchyLevel).to.equal(folder.name.length);
+				});
+			});
+		});
+		
+		it('recreates hierarchy table records', function() {
+			return this.foldersAncestor.findAll({where: {ancestorId: this.folders.a.id}, order: [['folderId']]}).bind(this)
+			.then(function(descendents) {
+				expect(descendents.length).to.equal(6);
+				expect(descendents[0].folderId).to.equal(this.folders.ab.id);
+				expect(descendents[1].folderId).to.equal(this.folders.ac.id);
+				expect(descendents[2].folderId).to.equal(this.folders.abd.id);
+				expect(descendents[3].folderId).to.equal(this.folders.abe.id);
+				expect(descendents[4].folderId).to.equal(this.folders.abdf.id);
+				expect(descendents[5].folderId).to.equal(this.folders.abdg.id);
+			});
+		});
+	});
 });
