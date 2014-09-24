@@ -573,6 +573,129 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 		});
 	});
 	
+	describe('setters', function() {
+		describe('legal', function() {
+			it('setParent', function() {
+				return this.folders.abdg.setParent(this.folders.a).bind(this)
+				.then(function() {
+					return this.folder.find({where: {name: 'abdg'}});
+				}).then(function(folder) {
+					expect(folder.parentId).to.equal(this.folders.a.id);
+					expect(folder.hierarchyLevel).to.equal(2);
+				});
+			});
+			
+			describe('createParent', function() {
+				beforeEach(function() {
+					return this.folders.abd.createParent({name: 'ach', parentId: this.folders.ac.id}).bind(this)
+					.then(function() {
+						return this.folder.find({where: {name: 'ach'}}).bind(this)
+						.then(function(folder) {
+							this.folders.ach = folder;
+						});
+					});
+				});
+				
+				describe('creates new item', function() {
+					it('with correct parent', function() {
+						expect(this.folders.ach.parentId).to.equal(this.folders.ac.id);
+					});
+					
+					it('with correct hierarchyLevel', function() {
+						expect(this.folders.ach.hierarchyLevel).to.equal(3);
+					});
+					
+					it('with correct hierarchy table entries', function() {
+						return this.foldersAncestor.findAll({where: {folderId: this.folders.ach.id}, order: [['ancestorId']]}).bind(this)
+						.then(function(ancestors) {
+							expect(ancestors.length).to.equal(2);
+							expect(ancestors[0].ancestorId).to.equal(this.folders.a.id);
+							expect(ancestors[1].ancestorId).to.equal(this.folders.ac.id);
+						});
+					});
+				});
+				
+				describe('sets current item', function() {
+					it('to correct parent', function() {
+						return this.folder.find({where: {name: 'abd'}}).bind(this)
+						.then(function(folder) {
+							expect(folder.parentId).to.equal(this.folders.ach.id);
+						});
+					});
+					
+					it('with correct hierarchyLevel', function() {
+						return this.folder.find({where: {name: 'abd'}}).bind(this)
+						.then(function(folder) {
+							expect(folder.hierarchyLevel).to.equal(4);
+						});
+					});
+					
+					it('with correct hierarchy table entries', function() {
+						return this.foldersAncestor.findAll({where: {folderId: this.folders.abd.id}, order: [['ancestorId']]}).bind(this)
+						.then(function(ancestors) {
+							expect(ancestors.length).to.equal(3);
+							expect(ancestors[0].ancestorId).to.equal(this.folders.a.id);
+							expect(ancestors[1].ancestorId).to.equal(this.folders.ac.id);
+							expect(ancestors[2].ancestorId).to.equal(this.folders.ach.id);
+						});
+					});
+				});
+			});
+			
+			it('addChild', function() {
+				return this.folders.a.addChild(this.folders.abdg).bind(this)
+				.then(function() {
+					return this.folder.find({where: {name: 'abdg'}});
+				}).then(function(folder) {
+					expect(folder.parentId).to.equal(this.folders.a.id);
+					expect(folder.hierarchyLevel).to.equal(2);
+				});
+			});
+			
+			describe('createChild', function() {
+				beforeEach(function() {
+					return this.folders.ac.createChild({name: 'ach'}).bind(this)
+					.then(function() {
+						return this.folder.find({where: {name: 'ach'}});
+					}).then(function(folder) {
+						this.folders.ach = folder;
+					});
+				});
+				
+				it('with correct parent', function() {
+					expect(this.folders.ach.parentId).to.equal(this.folders.ac.id);
+				});
+				
+				it('with correct hierarchyLevel', function() {
+					expect(this.folders.ach.hierarchyLevel).to.equal(3);
+				});
+				
+				it('with correct hierarchy table entries', function() {
+					return this.foldersAncestor.findAll({where: {folderId: this.folders.ach.id}, order: [['ancestorId']]}).bind(this)
+					.then(function(ancestors) {
+						expect(ancestors.length).to.equal(2);
+						expect(ancestors[0].ancestorId).to.equal(this.folders.a.id);
+						expect(ancestors[1].ancestorId).to.equal(this.folders.ac.id);
+					});
+				});
+			});
+		});
+		
+		describe('illegal throws error', function() {
+			['set', 'add', 'addMultiple', 'create', 'remove'].forEach(function(accessorType) {
+				it(accessorType + 'Descendent', function() {
+					var promise = Promise.try(function() {this.folders.ac[accessorType + 'Descendent'](this.folders.abdg);});
+					return expect(promise).to.be.rejected;
+				});
+				
+				it(accessorType + 'Ancestor', function() {
+					var promise = Promise.try(function() {this.folders.ac[accessorType + 'Ancestor'](this.folders.abdg);});
+					return expect(promise).to.be.rejected;
+				});
+			}.bind(this));
+		});
+	});
+	
 	describe('#rebuildHierarchy', function() {
 		beforeEach(function() {
 			return this.foldersAncestor.destroy({}, {truncate: true}).bind(this)
