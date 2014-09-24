@@ -144,10 +144,17 @@ Requires a database called 'sequelize_test' and a db user 'sequelize_test', pass
 * `Model#find()` hooks made universal to allow e.g. `Person.findAll({ include: { model: Department, include: { model: Department, as: 'descendents', hierarchy: true } } })`
 * Tests for find and accessors (`Model#getDescendents()` etc)
 
+0.1.0
+
+* Bug fix for `Model#rebuildHierarchy()`
+* Tests for `Model#rebuildHierarchy()`
+* Re-write of README file
+* Bug fix for `Instance#setParent()`
+* Prevent access to descendents & ancestors setters (e.g. `setAncestors`)
+* Tests for accessors and setters
+
 ## TODO
 
-* Change behaviour of `Model#find()` with option `hierarchy` to include descendents automatically.
-* Add other creation methods (e.g. createChild, createParent etc)
 * Create more efficient function for bulkCreate (+ alter sequelize bulkCreate to do single multi-row insertion?)
 
 ## Known issues
