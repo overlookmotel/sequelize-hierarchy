@@ -105,7 +105,7 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 			});
 			
 			it('creates hierarchy table records', function() {
-				return this.foldersAncestor.findAll({where: {folderId: this.folders.abd.id}, order: [['ancestorId', 'ASC']]}).bind(this)
+				return this.foldersAncestor.findAll({where: {folderId: this.folders.abd.id}, order: [['ancestorId']]}).bind(this)
 				.then(function(ancestors) {
 					expect(ancestors.length).to.equal(2);
 					expect(ancestors[0].ancestorId).to.equal(this.folders.a.id);
@@ -170,7 +170,7 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 			});
 			
 			it('updates hierarchy table records', function() {
-				return this.foldersAncestor.findAll({where: {folderId: this.folders.abdf.id}, order: [['ancestorId', 'ASC']]}).bind(this)
+				return this.foldersAncestor.findAll({where: {folderId: this.folders.abdf.id}, order: [['ancestorId']]}).bind(this)
 				.then(function(ancestors) {
 					expect(ancestors.length).to.equal(2);
 					expect(ancestors[0].ancestorId).to.equal(this.folders.a.id);
@@ -195,7 +195,7 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 				return this.folder.find({
 					where: {id: this.folders.abdf.id},
 					include: [{model: this.folder, as: 'ancestors'}],
-					order: [[{model: this.folder, as: 'ancestors'}, 'hierarchyLevel', 'ASC']]
+					order: [[{model: this.folder, as: 'ancestors'}, 'hierarchyLevel']]
 				}).bind(this)
 				.then(function(folder) {
 					var ancestors = folder.ancestors;
@@ -257,7 +257,7 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 			return this.folder.find({
 				where: {name: 'abeh'},
 				include: [{model: this.folder, as: 'ancestors'}],
-				order: [[{model: this.folder, as: 'ancestors'}, 'hierarchyLevel', 'ASC']]
+				order: [[{model: this.folder, as: 'ancestors'}, 'hierarchyLevel']]
 			}).bind(this)
 			.then(function(folder) {
 				var ancestors = folder.ancestors;
@@ -269,7 +269,7 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 				return this.folder.find({
 					where: {name: 'abi'},
 					include: [{model: this.folder, as: 'ancestors'}],
-					order: [[{model: this.folder, as: 'ancestors'}, 'hierarchyLevel', 'ASC']]
+					order: [[{model: this.folder, as: 'ancestors'}, 'hierarchyLevel']]
 				});
 			})
 			.then(function(folder) {
@@ -300,7 +300,7 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 				return this.folder.find({
 					where: {name: name},
 					include: [{model: this.folder, as: 'ancestors'}],
-					order: [[{model: this.folder, as: 'ancestors'}, 'hierarchyLevel', 'ASC']]
+					order: [[{model: this.folder, as: 'ancestors'}, 'hierarchyLevel']]
 				}).bind(this)
 				.then(function(folder) {
 					var ancestors = folder.ancestors;
