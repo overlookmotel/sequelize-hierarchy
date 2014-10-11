@@ -23,6 +23,13 @@
     "mysql": "~2.4.1",
     "lodash": "2.4.1"
   },
+  "keywords": [
+    "sequelize",
+    "sequelize-plugin",
+    "hierarchy",
+    "nested",
+    "tree"
+  ],
   "scripts": {
     "test": "make all"
   },
