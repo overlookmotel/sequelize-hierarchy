@@ -52,12 +52,3 @@ First working version ready for use
 
 * Add keywords to package.json for NPM searching
 * Move changelog into changelog.md
-
-## TODO
-
-* Create more efficient function for bulkCreate (+ alter sequelize bulkCreate to do single multi-row insertion?)
-
-## Known issues
-
-* beforeUpdate hook function assumes that item has not been updated since it was originally retrieved from DB
-* All hooks should be within transactions
