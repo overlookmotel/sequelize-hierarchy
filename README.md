@@ -47,6 +47,10 @@ Example:
 
 The column and table names etc can be modified by passing options to `.isHierarchy()`. See `modelExtends.js` in the code for details.
 
+Hierarchies can also be created in `define()`. e.g.:
+
+	var folder = sequelize.define('folder', name: { type: Sequelize.STRING }, { hierarchy: true });
+
 Examples of getting a hierarchy structure:
 
 	// get entire hierarchy as a flat list
