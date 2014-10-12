@@ -56,3 +56,7 @@ First working version ready for use
 ## 0.1.2
 
 * Correct changelog formatting
+
+## 0.1.3
+
+* Allow hierarchy creation in `define()` options
