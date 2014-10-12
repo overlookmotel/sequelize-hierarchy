@@ -21,6 +21,41 @@ chai.config.includeStack = true;
 // tests
 
 describe(Support.getTestDialectTeaser("Tests"), function () {
+	describe('Hierarchy creation', function() {
+		it('works via isHierarchy()', function() {
+			var folder = this.sequelize.define('folder', {
+				name: Sequelize.STRING
+			});
+			
+			folder.isHierarchy();
+			
+			expect(folder.hierarchy).to.be.ok;
+		});
+		
+		it('works via define options', function() {
+			var folder = this.sequelize.define('folder', {
+				name: Sequelize.STRING
+			}, {
+				hierarchy: true
+			});
+			
+			expect(folder.hierarchy).to.be.ok;
+		});
+		
+		it('allows parentId and hierarchyLevel fields to already be defined', function() {
+			var folder = this.sequelize.define('folder', {
+				name: Sequelize.STRING,
+				hierarchyLevel: Sequelize.INTEGER,
+				parentId: Sequelize.INTEGER
+			});
+			
+			folder.isHierarchy();
+			
+			expect(folder.attributes.hierarchyLevel.type._unsigned).to.equal(true);
+			expect(folder.attributes.parentId.references).to.equal('folders');
+		});
+	});
+	
 	describe('Methods', function() {
 		beforeEach(function() {
 			this.folder = this.sequelize.define('folder', {
