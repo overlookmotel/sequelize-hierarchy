@@ -60,3 +60,8 @@ First working version ready for use
 ## 0.1.3
 
 * Allow hierarchy creation in `define()` options
+
+## 0.1.4
+
+* Cody tidy
+* Added license
