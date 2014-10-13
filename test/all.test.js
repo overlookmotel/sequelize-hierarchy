@@ -11,7 +11,7 @@ var chai = require('chai'),
 	Support = require(__dirname + '/support'),
 	Promise = Sequelize.Promise;
 
-require('../lib/index')(Sequelize);
+require('../lib/')(Sequelize);
 
 // init
 
