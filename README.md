@@ -121,3 +121,5 @@ See changelog.md
 
 * beforeUpdate hook function assumes that item has not been updated since it was originally retrieved from DB
 * All hooks should be within transactions
+
+If you discover a bug, please raise an issue on Github. https://github.com/overlookmotel/sequelize-hierarchy/issues
