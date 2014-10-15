@@ -64,7 +64,7 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 			
 			this.folder.isHierarchy();
 			
-			this.foldersAncestor = this.sequelize.models.foldersAncestors;
+			this.folderAncestor = this.sequelize.models.folderAncestor;
 			
 			this.drive = this.sequelize.define('drive', {
 				name: Sequelize.STRING
@@ -108,7 +108,7 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 				});
 				
 				it('creates hierarchy table records', function() {
-					return this.foldersAncestor.findAll({where: {folderId: this.folders.a.id}}).bind(this)
+					return this.folderAncestor.findAll({where: {folderId: this.folders.a.id}}).bind(this)
 					.then(function(ancestors) {
 						expect(ancestors.length).to.equal(0);
 					});
@@ -124,7 +124,7 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 				});
 				
 				it('creates hierarchy table records', function() {
-					return this.foldersAncestor.findAll({where: {folderId: this.folders.ab.id}}).bind(this)
+					return this.folderAncestor.findAll({where: {folderId: this.folders.ab.id}}).bind(this)
 					.then(function(ancestors) {
 						expect(ancestors.length).to.equal(1);
 						expect(ancestors[0].ancestorId).to.equal(this.folders.a.id);
@@ -141,7 +141,7 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 				});
 				
 				it('creates hierarchy table records', function() {
-					return this.foldersAncestor.findAll({where: {folderId: this.folders.abd.id}, order: [['ancestorId']]}).bind(this)
+					return this.folderAncestor.findAll({where: {folderId: this.folders.abd.id}, order: [['ancestorId']]}).bind(this)
 					.then(function(ancestors) {
 						expect(ancestors.length).to.equal(2);
 						expect(ancestors[0].ancestorId).to.equal(this.folders.a.id);
@@ -165,7 +165,7 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 				});
 				
 				it('updates hierarchy table records', function() {
-					return this.foldersAncestor.findAll({where: {folderId: this.folders.abdf.id}}).bind(this)
+					return this.folderAncestor.findAll({where: {folderId: this.folders.abdf.id}}).bind(this)
 					.then(function(ancestors) {
 						expect(ancestors.length).to.equal(0);
 					});
@@ -185,7 +185,7 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 				});
 				
 				it('updates hierarchy table records', function() {
-					return this.foldersAncestor.findAll({where: {folderId: this.folders.abdf.id}}).bind(this)
+					return this.folderAncestor.findAll({where: {folderId: this.folders.abdf.id}}).bind(this)
 					.then(function(ancestors) {
 						expect(ancestors.length).to.equal(1);
 						expect(ancestors[0].ancestorId).to.equal(this.folders.a.id);
@@ -206,7 +206,7 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 				});
 				
 				it('updates hierarchy table records', function() {
-					return this.foldersAncestor.findAll({where: {folderId: this.folders.abdf.id}, order: [['ancestorId']]}).bind(this)
+					return this.folderAncestor.findAll({where: {folderId: this.folders.abdf.id}, order: [['ancestorId']]}).bind(this)
 					.then(function(ancestors) {
 						expect(ancestors.length).to.equal(2);
 						expect(ancestors[0].ancestorId).to.equal(this.folders.a.id);
@@ -256,7 +256,7 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 			it('removes hierarchy table records', function() {
 				return this.folders.abdf.destroy().bind(this)
 				.then(function() {
-					return this.foldersAncestor.findAll({where: {folderId: this.folders.abdf.id}}).bind(this)
+					return this.folderAncestor.findAll({where: {folderId: this.folders.abdf.id}}).bind(this)
 					.then(function(ancestors) {
 						expect(ancestors.length).to.equal(0);
 					});
@@ -353,7 +353,7 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 				return this.folder.destroy({where: {parentId: this.folders.abd.id}}).bind(this)
 				.then(function() {
 					return Promise.each(['abdf', 'abdg'], function(name) {
-						return this.foldersAncestor.findAll({where: {folderId: this.folders[name].id}}).bind(this)
+						return this.folderAncestor.findAll({where: {folderId: this.folders[name].id}}).bind(this)
 						.then(function(ancestors) {
 							expect(ancestors.length).to.equal(0);
 						});
@@ -642,7 +642,7 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 						});
 						
 						it('with correct hierarchy table entries', function() {
-							return this.foldersAncestor.findAll({where: {folderId: this.folders.ach.id}, order: [['ancestorId']]}).bind(this)
+							return this.folderAncestor.findAll({where: {folderId: this.folders.ach.id}, order: [['ancestorId']]}).bind(this)
 							.then(function(ancestors) {
 								expect(ancestors.length).to.equal(2);
 								expect(ancestors[0].ancestorId).to.equal(this.folders.a.id);
@@ -667,7 +667,7 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 						});
 						
 						it('with correct hierarchy table entries', function() {
-							return this.foldersAncestor.findAll({where: {folderId: this.folders.abd.id}, order: [['ancestorId']]}).bind(this)
+							return this.folderAncestor.findAll({where: {folderId: this.folders.abd.id}, order: [['ancestorId']]}).bind(this)
 							.then(function(ancestors) {
 								expect(ancestors.length).to.equal(3);
 								expect(ancestors[0].ancestorId).to.equal(this.folders.a.id);
@@ -707,7 +707,7 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 					});
 					
 					it('with correct hierarchy table entries', function() {
-						return this.foldersAncestor.findAll({where: {folderId: this.folders.ach.id}, order: [['ancestorId']]}).bind(this)
+						return this.folderAncestor.findAll({where: {folderId: this.folders.ach.id}, order: [['ancestorId']]}).bind(this)
 						.then(function(ancestors) {
 							expect(ancestors.length).to.equal(2);
 							expect(ancestors[0].ancestorId).to.equal(this.folders.a.id);
@@ -734,7 +734,7 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 		
 		describe('#rebuildHierarchy', function() {
 			beforeEach(function() {
-				return this.foldersAncestor.destroy({}, {truncate: true}).bind(this)
+				return this.folderAncestor.destroy({}, {truncate: true}).bind(this)
 				.then(function() {
 					return this.folder.update({hierarchyLevel: 999}, {where: {}});
 				})
@@ -753,7 +753,7 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 			});
 			
 			it('recreates hierarchy table records', function() {
-				return this.foldersAncestor.findAll({where: {ancestorId: this.folders.a.id}, order: [['folderId']]}).bind(this)
+				return this.folderAncestor.findAll({where: {ancestorId: this.folders.a.id}, order: [['folderId']]}).bind(this)
 				.then(function(descendents) {
 					expect(descendents.length).to.equal(6);
 					expect(descendents[0].folderId).to.equal(this.folders.ab.id);

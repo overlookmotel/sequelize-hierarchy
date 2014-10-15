@@ -41,7 +41,7 @@ Example:
 
 * Adds a column `parentId` to Folder model
 * Adds a column `hierarchyLevel` to Folder model (which should not be updated directly)
-* Creates a new table `foldersAncestors` which contains the ancestry information
+* Creates a new model `folderAncestor` which contains the ancestry information
 * Creates hooks into standard Sequelize methods (create, update, destroy etc) to automatically update the ancestry table as details in the folder table change
 * Creates hooks into Sequelize's `Model#find()` and `Model#findAll()` methods so that hierarchies can be returned as javascript object tree structures
 
