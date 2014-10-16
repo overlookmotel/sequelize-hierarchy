@@ -7,11 +7,9 @@
 var chai = require('chai'),
 	expect = chai.expect,
 	promised = require('chai-as-promised'),
-	Sequelize = require('sequelize'),
 	Support = require(__dirname + '/support'),
+	Sequelize = Support.Sequelize,
 	Promise = Sequelize.Promise;
-
-require('../lib/')(Sequelize);
 
 // init
 
