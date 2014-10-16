@@ -27,11 +27,18 @@ Requires recent version of Sequelize v2.0.0 development branch (after 23 Sept 20
 
 ## Usage
 
-Example:
+To load module:
+
+	var Sequelize = require('sequelize-hierarchy')();
+	// NB Sequelize must also be present in `node_modules`
+
+or, a more verbose form useful if chaining multiple Sequelize plugins:
 
 	var Sequelize = require('sequelize');
 	require('sequelize-hierarchy')(Sequelize);
-	
+
+To initialize:
+
 	var sequelize = new Sequelize('database', 'user', 'password');
 	
 	var folder = sequelize.define('folder', name: { type: Sequelize.STRING });
