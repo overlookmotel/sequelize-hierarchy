@@ -27,6 +27,8 @@ Requires recent version of Sequelize v2.0.0 development branch (after 23 Sept 20
 
 ## Usage
 
+### Loading module
+
 To load module:
 
 	var Sequelize = require('sequelize-hierarchy')();
@@ -37,7 +39,7 @@ or, a more verbose form useful if chaining multiple Sequelize plugins:
 	var Sequelize = require('sequelize');
 	require('sequelize-hierarchy')(Sequelize);
 
-To initialize:
+### Initializing hierarchy
 
 	var sequelize = new Sequelize('database', 'user', 'password');
 	
@@ -57,6 +59,8 @@ The column and table names etc can be modified by passing options to `.isHierarc
 Hierarchies can also be created in `define()`. e.g.:
 
 	var folder = sequelize.define('folder', name: { type: Sequelize.STRING }, { hierarchy: true });
+
+### Retrieving hierarchies
 
 Examples of getting a hierarchy structure:
 
@@ -100,12 +104,16 @@ Examples of getting a hierarchy structure:
 
 The forms with `{ hierarchy: true }` are equivalent to using `folder.findAll({ include: { model: folder, as: 'children' } })` except that the include is recursed however deeply the tree structure goes.
 
+### Accessors
+
 Accessors are also supported:
 
 	thisFolder.getParent()
 	thisFolder.getChildren()
 	thisFolder.getAncestors()
 	thisFolder.getDescendents()
+
+### Rebuilding the hierarchy
 
 To build the hierarchy data on an existing table, or if hierarchy data gets corrupted in some way (e.g. by changes to parentId being made directly in the database not through Sequelize), you can rebuild it with:
 
