@@ -60,7 +60,7 @@ describe(Support.getTestDialectTeaser("Tests"), function () {
 				name: Sequelize.STRING
 			});
 			
-			this.folder.isHierarchy();
+			this.folder.isHierarchy({camelThrough: true});
 			
 			this.folderAncestor = this.sequelize.models.folderAncestor;
 			
