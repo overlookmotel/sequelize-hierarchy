@@ -40,6 +40,7 @@ or, a more verbose form useful if chaining multiple Sequelize plugins:
 	require('sequelize-hierarchy')(Sequelize);
 
 ### Initializing hierarchy
+#### Model#isHierarchy( [options] )
 
 	var sequelize = new Sequelize('database', 'user', 'password');
 	
@@ -54,7 +55,9 @@ or, a more verbose form useful if chaining multiple Sequelize plugins:
 * Creates hooks into standard Sequelize methods (create, update, destroy etc) to automatically update the ancestry table as details in the folder table change
 * Creates hooks into Sequelize's `Model#find()` and `Model#findAll()` methods so that hierarchies can be returned as javascript object tree structures
 
-The column and table names etc can be modified by passing options to `.isHierarchy()`. See `modelExtends.js` in the code for details.
+The column and table names etc can be modified by passing options to `.isHierarchy()`. See below for details.
+
+#### via Sequelize#define() options
 
 Hierarchies can also be created in `define()`. e.g.:
 
@@ -113,7 +116,37 @@ Accessors are also supported:
 	thisFolder.getAncestors()
 	thisFolder.getDescendents()
 
+### Options
+
+The following options can be passed to `Model#isHierarchy( options )`:
+
+#### Aliases for relations
+
+* `as`: Name of parent association. Defaults to `'parent'`
+* `childrenAs`: Name of children association. Defaults to `'children'`
+* `ancestorsAs`: Name of ancestors association. Defaults to `'ancestors'`
+* `descendentsAs`: Name of descendents association. Defaults to `'descendents'`
+
+These affect the naming of accessors e.g. `instance.getParent()`
+
+#### Fields
+
+* `levelFieldName`: Name of the hierarchy depth field. Defaults to `'hierarchyLevel'`
+* `levelFieldType`: Type of the hierarchy depth field. Defaults to `Sequelize.INTEGER.UNSIGNED`
+* `foreignKey`: Name of the parent field. Defaults to `'parentId'`
+* `throughKey`: Name of the instance field in hierarchy (through) table. Defaults to `'<model name>Id'`
+* `throughForeignKey`: Name of the ancestor field in hierarchy (through) table. Defaults to `'ancestorId'`
+
+#### Hierarchy (through) table
+
+* `through`: Name of hierarchy (through) model. Defaults to `'<model name>ancestor'`
+* `throughTable`: Name of hierarchy (through) table. Defaults to `'<model name plural>ancestors'`
+
+* `freezeTableName`: When `true`, through table name is same as through model name. Inherits from sequelize define options.
+* `camelThrough`: When `true`, through model name and table name are camelized (i.e. `folderAncestor` not `folderancestor`). Inherits from sequelize define options.
+
 ### Rebuilding the hierarchy
+#### Model#rebuildHierarchy()
 
 To build the hierarchy data on an existing table, or if hierarchy data gets corrupted in some way (e.g. by changes to parentId being made directly in the database not through Sequelize), you can rebuild it with:
 
