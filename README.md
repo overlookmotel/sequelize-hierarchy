@@ -58,7 +58,7 @@ The column and table names etc can be modified by passing options to `.isHierarc
 
 Hierarchies can also be created in `define()`. e.g.:
 
-	var folder = sequelize.define('folder', name: { type: Sequelize.STRING }, { hierarchy: true });
+	var folder = sequelize.define('folder', { name: Sequelize.STRING }, { hierarchy: true });
 
 ### Retrieving hierarchies
 
