@@ -18,7 +18,7 @@ chai.config.includeStack = true;
 
 // tests
 
-describe(Support.getTestDialectTeaser("Tests"), function () {
+describe(Support.getTestDialectTeaser('Tests'), function () {
 	describe('Hierarchy creation', function() {
 		it('works via isHierarchy()', function() {
 			var folder = this.sequelize.define('folder', {
