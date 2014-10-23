@@ -15,6 +15,9 @@
   },
   "dependencies": {
   },
+  "peerDependencies": {
+    "sequelize": "2.0.x"
+  },
   "devDependencies": {
     "mocha": "*",
     "chai": "*",
