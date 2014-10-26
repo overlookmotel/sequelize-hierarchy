@@ -39,5 +39,11 @@
   "engines": {
     "node": ">=0.6.21"
   },
-  "readmeFilename": "README.md"
+  "readmeFilename": "README.md",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://github.com/overlookmotel/sequelize-hierarchy/raw/master/License"
+    }
+  ]
 }
