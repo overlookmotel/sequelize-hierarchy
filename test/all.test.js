@@ -12,7 +12,6 @@ var chai = require('chai'),
 	Promise = Sequelize.Promise;
 
 // init
-
 chai.use(promised);
 chai.config.includeStack = true;
 
