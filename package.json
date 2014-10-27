@@ -14,6 +14,7 @@
     "url": "https://github.com/overlookmotel/sequelize-hierarchy/issues"
   },
   "dependencies": {
+    "lodash": "2.4.1"
   },
   "peerDependencies": {
     "sequelize": "2.0.x"
@@ -23,8 +24,7 @@
     "chai": "*",
     "chai-as-promised": "*",
     "sequelize": "2.0.x",
-    "mysql": "~2.4.1",
-    "lodash": "2.4.1"
+    "mysql": "~2.4.1"
   },
   "keywords": [
     "sequelize",
