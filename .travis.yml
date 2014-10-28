@@ -1,0 +1,29 @@
+before_script:
+  - "mysql -e 'create database sequelize_test;'"
+  - "psql -c 'create database sequelize_test;' -U postgres"
+
+script:
+  - "make test"
+
+env:
+  - DB=mysql DIALECT=mysql
+  - DB=mysql DIALECT=postgres
+  - DB=mysql DIALECT=postgres-native
+  - DB=mysql DIALECT=sqlite
+  - DB=mysql DIALECT=mariadb
+
+language: node_js
+
+node_js:
+  - "0.10"
+
+branches:
+  only:
+    - master
+
+cache:
+  directories:
+    - node_modules
+
+addons:
+  postgresql: "9.3"
