@@ -20,9 +20,9 @@
     "sequelize": "2.0.x"
   },
   "devDependencies": {
-    "mocha": "*",
-    "chai": "*",
-    "chai-as-promised": "*",
+    "mocha": "2.0.x",
+    "chai": "1.9.x",
+    "chai-as-promised": "4.1.x",
     "sequelize": "2.0.x",
     "mysql": "~2.4.1"
   },
