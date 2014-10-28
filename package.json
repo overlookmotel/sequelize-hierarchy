@@ -27,7 +27,8 @@
     "mysql": "~2.4.1",
     "sqlite3": "~2.2.4",
     "pg": "~3.4.0",
-    "mariasql": "~0.1.2"
+    "mariasql": "~0.1.2",
+    "jshint": "2.5.x"
   },
   "keywords": [
     "sequelize",
