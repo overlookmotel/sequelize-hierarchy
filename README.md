@@ -20,10 +20,13 @@ This plugin for [Sequelize](http://sequelizejs.com/) solves this problem.
 
 ## Current status
 
-API is stable and works with MySQL.
-Testing and re-coding to work with other DB dialects supported by Sequelize (Postgres, SQLite etc) would be a welcome contribution.
+[![Build Status](https://secure.travis-ci.org/overlookmotel/sequelize-hierarchy.png)](http://travis-ci.org/overlookmotel/sequelize-hierarchy)
+[![Dependency Status](https://david-dm.org/overlookmotel/sequelize-hierarchy.png)](https://david-dm.org/overlookmotel/sequelize-hierarchy)
 
-Requires recent version of Sequelize v2.0.0 development branch (after 23 Sept 2014, when universal hooks were introduced).
+API is stable and works with MySQL.
+Re-coding to work with other DB dialects supported by Sequelize (Postgres, SQLite etc) would be a welcome contribution.
+
+Requires recent master of Sequelize v2.x dev branch, more recent than 28 Oct 2014. This is more recent than v2.0.0-rc2 which is latest available on NPM. i.e. you need to get latest Sequelize from Github (hence why Travis is failing).
 
 ## Usage
 
@@ -155,7 +158,7 @@ To build the hierarchy data on an existing table, or if hierarchy data gets corr
 ## Tests
 
 Use `npm test` to run the tests.
-Requires a database called 'sequelize_test' and a db user 'sequelize_test', password 'sequelize_test'.
+Requires a database called 'sequelize_test' and a db user 'travis' with no password.
 
 ## Changelog
 
