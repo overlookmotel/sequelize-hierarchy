@@ -50,8 +50,8 @@ var Support = {
 					resolve();
 				}
 			}).then(function () {
-				var options		= Sequelize.Utils._.extend({}, sequelize.options, { storage: p })
-					, _sequelize = new Sequelize(sequelize.config.database, null, null, options);
+				var options = Sequelize.Utils._.extend({}, sequelize.options, { storage: p }),
+					_sequelize = new Sequelize(sequelize.config.database, null, null, options);
 
 				if (callback) {
 					_sequelize.sync({ force: true }).success(function() { callback(_sequelize); });

@@ -9,7 +9,7 @@ module.exports = {
   },
 
   rand: function() {
-    return parseInt(Math.random() * 999, 10)
+    return parseInt(Math.random() * 999, 10);
   },
 
   //make maxIdleTime small so that tests exit promptly
@@ -51,4 +51,4 @@ module.exports = {
       maxIdleTime:    process.env.SEQ_MYSQL_POOL_IDLE || process.env.SEQ_POOL_IDLE || 3000
     }
   }
-}
+};
