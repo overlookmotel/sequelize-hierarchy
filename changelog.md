@@ -65,3 +65,25 @@ First working version ready for use
 
 * Cody tidy
 * Added license
+
+## 0.2.0
+
+Now supports all Sequelize dialects.
+
+* Postgres and SQLlite dialect support
+* No need to provide Sequelize to main function. i.e. `var Sequelize = require('sequelize-hierarchy')();`
+* Custom errors, inheriting from Sequelize.Error
+* `camelThrough` and `freezeTableName` options
+* Labels on created fields if `options.labels` = `true`
+* Options to add attributes to `parentId` and `hierarchyLevel` fields
+* Through model name created in singular rather than plural
+* More support for underscored attribute naming style
+* Default hierarchyLevel type is Sequelize.INTEGER for Postgres (Postgres does not support UNSIGNED)
+* Moved `replaceIdentifiers()` function into separate `utils` file
+* Set versions for mocha & chai dependencies
+* JSHint included in tests
+* Travis integration
+* Travis loads sequelize dependency from Github repo master branch not npm
+* Tests db user sequelize_test
+* Travis uses db user travis
+* Updated README with options documentation
