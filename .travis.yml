@@ -1,6 +1,13 @@
 before_script:
+  - "cd node_modules/"
+  - "rm -rf sequelize"
+  - "git clone --branch=master git://github.com/sequelize/sequelize.git"
+  - "cd sequelize"
+  - "npm install"
+  - "cd ../../"
   - "mysql -e 'create database sequelize_test;'"
   - "psql -c 'create database sequelize_test;' -U postgres"
+  - "export SEQ_USER=travis"
 
 script:
   - "make test"
