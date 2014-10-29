@@ -26,7 +26,7 @@ This plugin for [Sequelize](http://sequelizejs.com/) solves this problem.
 API is stable and works with MySQL.
 Re-coding to work with other DB dialects supported by Sequelize (Postgres, SQLite etc) would be a welcome contribution.
 
-Requires recent master of Sequelize v2.x dev branch, more recent than 28 Oct 2014. This is more recent than v2.0.0-rc2 which is latest available on NPM. i.e. you need to get latest Sequelize from Github (hence why Travis is failing).
+Requires recent master of Sequelize v2.x dev branch, more recent than 28 Oct 2014. This is more recent than v2.0.0-rc2 which is latest available on NPM. i.e. you need to get latest Sequelize from Github.
 
 ## Usage
 
