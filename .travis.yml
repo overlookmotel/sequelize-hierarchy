@@ -32,16 +32,5 @@ cache:
   directories:
     - node_modules
 
-matrix:
-  fast_finish: true
-
-  allow_failures:
-    - node_js: "0.10"
-      env: DB=mysql DIALECT=postgres
-    - node_js: "0.10"
-      env: DB=mysql DIALECT=postgres-native
-    - node_js: "0.10"
-      env: DB=mysql DIALECT=sqlite
-
 addons:
   postgresql: "9.3"
