@@ -136,7 +136,9 @@ These affect the naming of accessors e.g. `instance.getParent()`
 
 * `levelFieldName`: Name of the hierarchy depth field. Defaults to `'hierarchyLevel'`
 * `levelFieldType`: Type of the hierarchy depth field. Defaults to `Sequelize.INTEGER.UNSIGNED`
+* `levelFieldAttributes`: Attributes to add to the hierarchy depth field. Defaults to `undefined`
 * `foreignKey`: Name of the parent field. Defaults to `'parentId'`
+* `foreignKeyAttributes`: Attributes to add to the parent field. Defaults to `undefined`
 * `throughKey`: Name of the instance field in hierarchy (through) table. Defaults to `'<model name>Id'`
 * `throughForeignKey`: Name of the ancestor field in hierarchy (through) table. Defaults to `'ancestorId'`
 
@@ -145,8 +147,12 @@ These affect the naming of accessors e.g. `instance.getParent()`
 * `through`: Name of hierarchy (through) model. Defaults to `'<model name>ancestor'`
 * `throughTable`: Name of hierarchy (through) table. Defaults to `'<model name plural>ancestors'`
 
-* `freezeTableName`: When `true`, through table name is same as through model name. Inherits from sequelize define options.
-* `camelThrough`: When `true`, through model name and table name are camelized (i.e. `folderAncestor` not `folderancestor`). Inherits from sequelize define options.
+* `freezeTableName`: When `true`, through table name is same as through model name. Inherits from sequelize define options
+* `camelThrough`: When `true`, through model name and table name are camelized (i.e. `folderAncestor` not `folderancestor`). Inherits from sequelize define options
+
+#### Misc
+
+* `labels`: When `true`, creates an attribute `label` on the created `parentId` and `hierarchyField` which is a human-readable version of the field name. Inherits from sequelize define options or `false`
 
 ### Rebuilding the hierarchy
 #### Model#rebuildHierarchy()
