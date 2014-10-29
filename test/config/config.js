@@ -1,5 +1,5 @@
 module.exports = {
-  username: process.env.SEQ_USER || 'travis',
+  username: process.env.SEQ_USER || 'sequelize_test',
   password: process.env.SEQ_PW   || null,
   database: process.env.SEQ_DB   || 'sequelize_test',
   host:     process.env.SEQ_HOST || '127.0.0.1',
@@ -15,7 +15,7 @@ module.exports = {
   //make maxIdleTime small so that tests exit promptly
   mysql: {
     database: process.env.SEQ_MYSQL_DB   || process.env.SEQ_DB   || 'sequelize_test',
-    username: process.env.SEQ_MYSQL_USER || process.env.SEQ_USER || 'travis',
+    username: process.env.SEQ_MYSQL_USER || process.env.SEQ_USER || 'sequelize_test',
     password: process.env.SEQ_MYSQL_PW   || process.env.SEQ_PW   || null,
     host:     process.env.SEQ_MYSQL_HOST || process.env.SEQ_HOST || '127.0.0.1',
     port:     process.env.SEQ_MYSQL_PORT || process.env.SEQ_PORT || 3306,
@@ -30,7 +30,7 @@ module.exports = {
 
   postgres: {
     database: process.env.SEQ_PG_DB   || process.env.SEQ_DB    || 'sequelize_test',
-    username: process.env.SEQ_PG_USER || process.env.SEQ_USER  || 'travis',
+    username: process.env.SEQ_PG_USER || process.env.SEQ_USER  || 'sequelize_test',
     password: process.env.SEQ_PG_PW   || process.env.SEQ_PW    || null,
     host:     process.env.SEQ_PG_HOST || process.env.SEQ_HOST  || '127.0.0.1',
     port:     process.env.SEQ_PG_PORT || process.env.SEQ_PORT  || 5432,
@@ -42,7 +42,7 @@ module.exports = {
 
   mariadb: {
     database: process.env.SEQ_MYSQL_DB   || process.env.SEQ_DB   || 'sequelize_test',
-    username: process.env.SEQ_MYSQL_USER || process.env.SEQ_USER || 'travis',
+    username: process.env.SEQ_MYSQL_USER || process.env.SEQ_USER || 'sequelize_test',
     password: process.env.SEQ_MYSQL_PW   || process.env.SEQ_PW   || null,
     host:     process.env.SEQ_MYSQL_HOST || process.env.SEQ_HOST || '127.0.0.1',
     port:     process.env.SEQ_MYSQL_PORT || process.env.SEQ_PORT || 3306,
