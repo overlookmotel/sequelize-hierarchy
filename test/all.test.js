@@ -39,6 +39,21 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 			expect(folder.hierarchy).to.be.ok;
 		});
 		
+		it('works via defining in model attribute', function() {
+			var folder = this.sequelize.define('folder', {
+				name: Sequelize.STRING,
+				parId: {
+					type: Sequelize.INTEGER.UNSIGNED,
+					allowNull: true,
+					hierarchy: true
+				}
+			});
+			
+			expect(folder.hierarchy).to.be.ok;
+			expect(folder.hierarchy.foreignKey).to.equal('parId');
+			expect(folder.hierarchy.as).to.equal('par');
+		});
+		
 		it('allows parentId and hierarchyLevel fields to already be defined', function() {
 			var folder = this.sequelize.define('folder', {
 				name: Sequelize.STRING,
