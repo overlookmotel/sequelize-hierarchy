@@ -57,13 +57,13 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 		it('allows parentId and hierarchyLevel fields to already be defined', function() {
 			var folder = this.sequelize.define('folder', {
 				name: Sequelize.STRING,
-				hierarchyLevel: Sequelize.INTEGER,
+				hierarchyLevel: Sequelize.STRING,
 				parentId: Sequelize.INTEGER
 			});
 			
 			folder.isHierarchy();
 			
-			expect(folder.attributes.hierarchyLevel.type._unsigned).to.equal(true);
+			expect(folder.attributes.hierarchyLevel.type).not.to.equal(Sequelize.STRING);
 			expect(folder.attributes.parentId.references).to.equal('folders');
 		});
 	});
