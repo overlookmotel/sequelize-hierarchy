@@ -23,8 +23,7 @@ This plugin for [Sequelize](http://sequelizejs.com/) solves this problem.
 [![Build Status](https://secure.travis-ci.org/overlookmotel/sequelize-hierarchy.png)](http://travis-ci.org/overlookmotel/sequelize-hierarchy)
 [![Dependency Status](https://david-dm.org/overlookmotel/sequelize-hierarchy.png)](https://david-dm.org/overlookmotel/sequelize-hierarchy)
 
-API is stable and works with MySQL.
-Re-coding to work with other DB dialects supported by Sequelize (Postgres, SQLite etc) would be a welcome contribution.
+API is stable. All features and options are fairly well tested. Works with all dialects of SQL supported by Sequelize (MySQL, Postgres, SQLite).
 
 Requires recent master of Sequelize v2.x dev branch, more recent than 28 Oct 2014. This is more recent than v2.0.0-rc2 which is latest available on NPM. i.e. you need to get latest Sequelize from Github.
 
@@ -62,9 +61,19 @@ The column and table names etc can be modified by passing options to `.isHierarc
 
 #### via Sequelize#define() options
 
-Hierarchies can also be created in `define()`. e.g.:
+Hierarchies can also be created in `define()`:
 
 	var folder = sequelize.define('folder', { name: Sequelize.STRING }, { hierarchy: true });
+
+or on an attribute in `define()`:
+
+	var folder = sequelize.define('folder', {
+		name: Sequelize.STRING,
+		parentId: {
+			type: Sequelize.INTEGER.UNSIGNED,
+			hierarchy: true
+		}
+	});
 
 ### Retrieving hierarchies
 
@@ -121,7 +130,8 @@ Accessors are also supported:
 
 ### Options
 
-The following options can be passed to `Model#isHierarchy( options )`:
+The following options can be passed to `Model#isHierarchy( options )`.
+Defaults are inherited from `sequelize.define.options.hierarchy` if defined in call to `new Sequelize()`.
 
 #### Aliases for relations
 
@@ -172,7 +182,7 @@ See changelog.md
 
 ## TODO
 
-* Create more efficient function for bulkCreate (+ alter sequelize bulkCreate to do single multi-row insertion?)
+* Create more efficient function for bulkCreate (+ alter sequelize bulkCreate to do single multi-row insertion?). Would not affect API or behaviour, just improve performance.
 
 ## Known issues
 
