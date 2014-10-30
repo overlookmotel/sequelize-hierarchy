@@ -27,6 +27,7 @@ node_js:
 branches:
   only:
     - master
+    - dev
 
 cache:
   directories:
