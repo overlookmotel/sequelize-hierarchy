@@ -546,6 +546,58 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 						expect(folder.children[0].children[0].children[1].children).not.to.exist;
 					});
 				});
+				
+				it('find gets a structured tree when included from another model 2 deep', function() {
+					return this.drive.create({name: 'x'}).bind(this)
+					.then(function(drive) {
+						this.drives = {x: drive};
+						return drive.addFolder(this.folders.a);
+					})
+					.then(function() {
+						return this.folder.find({
+							where: {name: 'a'},
+							include: {
+								model: this.drive,
+								include: {
+									model: this.folder, 
+									include: {model: this.folder, as: 'descendents', hierarchy: true}
+								}
+							}
+						});
+					})
+					.then(function(folder) {
+						expect(folder.name).to.equal('a');
+						
+						var drive = folder.drive
+						expect(drive.folders).to.be.ok;
+						expect(drive.folders.length).to.equal(1);
+						
+						folder = drive.folders[0];
+						
+						expect(folder.name).to.equal('a');
+						expect(folder.children).to.exist;
+						expect(folder.children.length).to.equal(2);
+						expect(folder.children[0].name).to.equal('ab');
+						expect(folder.children[1].name).to.equal('ac');
+						
+						expect(folder.children[0].children).to.exist;
+						expect(folder.children[0].children.length).to.equal(2);
+						expect(folder.children[0].children[0].name).to.equal('abd');
+						expect(folder.children[0].children[1].name).to.equal('abe');
+						
+						expect(folder.children[1].children).not.to.exist;
+						
+						expect(folder.children[0].children[0].children).to.exist;
+						expect(folder.children[0].children[0].children.length).to.equal(2);
+						expect(folder.children[0].children[0].children[0].name).to.equal('abdf');
+						expect(folder.children[0].children[0].children[1].name).to.equal('abdg');
+						
+						expect(folder.children[0].children[1].children).not.to.exist;
+						
+						expect(folder.children[0].children[0].children[0].children).not.to.exist;
+						expect(folder.children[0].children[0].children[1].children).not.to.exist;
+					});
+				});
 			});
 			
 			describe('handles empty result set with', function() {

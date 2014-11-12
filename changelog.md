@@ -91,4 +91,5 @@ Now supports all Sequelize dialects.
 ## Next
 
 * Bug fix: error on empty result set from `find()`
+* Additional test for hierarchy model included 2 deep
 * Typo in README
