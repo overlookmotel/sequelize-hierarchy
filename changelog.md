@@ -88,7 +88,7 @@ Now supports all Sequelize dialects.
 * Travis uses db user travis
 * Updated README with options documentation
 
-## Next
+## 0.2.1
 
 * Bug fix: error on empty result set from `find()`
 * Additional test for hierarchy model included 2 deep
