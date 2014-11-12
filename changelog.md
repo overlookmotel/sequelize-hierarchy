@@ -93,4 +93,5 @@ Now supports all Sequelize dialects.
 * Bug fix: error on empty result set from `find()`
 * Additional test for hierarchy model included 2 deep
 * Update db library dependencies in line with Sequelize
+* Amend travis config file to use `npm install` to install Sequelize's dependencies after getting latest master from git
 * Typo in README
