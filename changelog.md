@@ -87,3 +87,7 @@ Now supports all Sequelize dialects.
 * Tests db user sequelize_test
 * Travis uses db user travis
 * Updated README with options documentation
+
+## Next
+
+* Typo in README

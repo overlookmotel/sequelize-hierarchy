@@ -131,7 +131,7 @@ Accessors are also supported:
 ### Options
 
 The following options can be passed to `Model#isHierarchy( options )`.
-Defaults are inherited from `sequelize.define.options.hierarchy` if defined in call to `new Sequelize()`.
+Defaults are inherited from `sequelize.options.define.hierarchy` if defined in call to `new Sequelize()`.
 
 #### Aliases for relations
 
