@@ -24,9 +24,9 @@
     "chai": "1.9.x",
     "chai-as-promised": "4.1.x",
     "sequelize": "2.0.x",
-    "mysql": "~2.4.1",
-    "sqlite3": "~2.2.4",
-    "pg": "~3.4.0",
+    "mysql": "~2.5.0",
+    "sqlite3": "~3.0.0",
+    "pg": "~3.6.0",
     "mariasql": "~0.1.2",
     "jshint": "2.5.x"
   },
