@@ -547,6 +547,56 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 					});
 				});
 			});
+			
+			describe('handles empty result set with', function() {
+				it('#find', function() {
+					return this.folder.find({
+						where: {name: 'z'}
+					}).bind(this)
+					.then(function(folder) {
+						expect(folder).to.be.null;
+					});
+				});
+				
+				it('#findAll', function() {
+					return this.folder.findAll({
+						where: {name: 'z'}
+					}).bind(this)
+					.then(function(folders) {
+						expect(folders.length).to.equal(0);
+					});
+				});
+				
+				it('#find with an include', function() {
+					return this.folder.find({
+						where: {name: 'z'},
+						include: [{model: this.folder, as: 'parent'}]
+					}).bind(this)
+					.then(function(folder) {
+						expect(folder).to.be.null;
+					});
+				});
+				
+				it('#find with an empty include', function() {
+					return this.folder.find({
+						where: {name: 'a'},
+						include: [{model: this.folder, as: 'parent'}]
+					}).bind(this)
+					.then(function(folder) {
+						expect(folder.parent).to.be.null;
+					});
+				});
+				
+				it('#find with empty descendents', function() {
+					return this.folder.find({
+						where: {name: 'abdg'},
+						include: [{model: this.folder, as: 'descendents', hierarchy: true}]
+					}).bind(this)
+					.then(function(folder) {
+						expect(folder.children.length).to.equal(0);
+					});
+				});
+			});
 		});
 		
 		describe('accessors', function() {

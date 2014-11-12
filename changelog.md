@@ -90,4 +90,5 @@ Now supports all Sequelize dialects.
 
 ## Next
 
+* Bug fix: error on empty result set from `find()`
 * Typo in README
