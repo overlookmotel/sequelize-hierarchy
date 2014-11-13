@@ -99,4 +99,5 @@ Now supports all Sequelize dialects.
 ## Next
 
 * Bug fix: `labels` option broken due to incorrect use of `this`
+* Hierarchy options inherited from `sequelize.options` instead of `sequelize.options.define`
 * Added `editorconfig` file
