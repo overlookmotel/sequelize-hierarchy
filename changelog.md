@@ -101,4 +101,5 @@ Now supports all Sequelize dialects.
 * Bug fix: `labels` option broken due to incorrect use of `this`
 * Hierarchy options inherited from `sequelize.options` instead of `sequelize.options.define`
 * `humanize()` utility function handles empty string/null/undefined
+* Bug fix: Before find hook runs after `{ include: [ { all: ... } ] }` options expanded (previously wasn't)
 * Added `editorconfig` file
