@@ -99,3 +99,4 @@ Now supports all Sequelize dialects.
 ## Next
 
 * Bug fix: `labels` option broken due to incorrect use of `this`
+* Added `editorconfig` file
