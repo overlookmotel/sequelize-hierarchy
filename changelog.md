@@ -96,7 +96,7 @@ Now supports all Sequelize dialects.
 * Amend travis config file to use `npm install` to install Sequelize's dependencies after getting latest master from git
 * Typo in README
 
-## Next
+## 0.2.2
 
 * Bug fix: `labels` option broken due to incorrect use of `this`
 * Hierarchy options inherited from `sequelize.options` instead of `sequelize.options.define`
