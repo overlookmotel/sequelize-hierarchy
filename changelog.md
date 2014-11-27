@@ -104,7 +104,7 @@ Now supports all Sequelize dialects.
 * Bug fix: Before find hook runs after `{ include: [ { all: ... } ] }` options expanded (previously wasn't)
 * Added `editorconfig` file
 
-## Next
+## 0.2.3
 
 * Bug fix: Deal with when an include is removed from results due to having `attributes: []` set in options on an include
 * Performance gain where no hierarchies included in a find() query
