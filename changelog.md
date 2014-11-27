@@ -107,3 +107,4 @@ Now supports all Sequelize dialects.
 ## Next
 
 * Bug fix: Deal with when an include is removed from results due to having `attributes: []` set in options on an include
+* Performance gain where no hierarchies included in a find() query
