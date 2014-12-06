@@ -113,3 +113,4 @@ Now supports all Sequelize dialects.
 ## Next
 
 * Updated sequelize dependency to v2.0.0-rc3
+* Correct error in README

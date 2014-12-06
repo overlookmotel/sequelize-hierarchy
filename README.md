@@ -110,10 +110,16 @@ Examples of getting a hierarchy structure:
 	})
 	
 	// get all the ancestors (i.e. parent and parent's parent and so on)
-	folder.find({ where: { name: 'abc' }, order: [ [ 'hierarchyLevel' ] ] }).then(function(result) {
+	folder.find({
+		where: { name: 'abc' },
+		include: [ { model: folder, as: 'ancestors' } ],
+		order: [ [ { model: folder, as: 'ancestors' }, 'hierarchyLevel' ] ]
+	}).then(function(result) {
 		// results = [
-		//	{ id: 1, parentId: null, name: 'a' },
-		//	{ id: 2, parentId: 1, name: 'ab' }
+		//	{ id: 3, parentId: 2, name: 'abc', ancestors: [
+		//		{ id: 1, parentId: null, name: 'a' },
+		//		{ id: 2, parentId: 1, name: 'ab' }
+		//	] }
 		// ]
 	})
 
