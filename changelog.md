@@ -110,7 +110,7 @@ Now supports all Sequelize dialects.
 * Performance gain where no hierarchies included in a find() query
 * Specify to use latest Sequelize version from Github in package.json rather than .travis.yml
 
-## Next
+## 0.2.4
 
 * Updated sequelize dependency to v2.0.0-rc3
 * Correct error in README
