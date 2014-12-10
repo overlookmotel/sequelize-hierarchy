@@ -72,7 +72,13 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 		beforeEach(function() {
 			this.folder = this.sequelize.define('folder', {
 				name: Sequelize.STRING
-			});
+			}, {
+        hooks: {
+          beforeCreate: function(instance, options, fn) {
+            fn();
+          }
+        }
+      });
 			
 			this.folder.isHierarchy({camelThrough: true});
 			
