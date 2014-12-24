@@ -45,7 +45,7 @@ or, a more verbose form useful if chaining multiple Sequelize plugins:
 #### Model#isHierarchy( [options] )
 
 	var sequelize = new Sequelize('database', 'user', 'password');
-	
+
 	var folder = sequelize.define('folder', name: { type: Sequelize.STRING });
 	folder.isHierarchy();
 
@@ -98,7 +98,7 @@ Examples of getting a hierarchy structure:
 		//	] }
 		// ]
 	})
-	
+
 	// get all the descendents of a particular item
 	folder.find({ where: { name: 'a' }, include: { model: folder, as: 'descendents', hierarchy: true } }).then(function(result) {
 		// result =
@@ -108,7 +108,7 @@ Examples of getting a hierarchy structure:
 		//		] }
 		// ] }
 	})
-	
+
 	// get all the ancestors (i.e. parent and parent's parent and so on)
 	folder.find({
 		where: { name: 'abc' },
