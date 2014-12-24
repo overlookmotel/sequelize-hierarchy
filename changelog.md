@@ -123,3 +123,7 @@ Now supports all Sequelize dialects.
 ## 0.2.6
 
 * Lock sequelize dev dependency to 2.0.0-rc3
+
+## Next
+
+* Remove `{raw: true}` option from queries for better compatibility with other plugins
