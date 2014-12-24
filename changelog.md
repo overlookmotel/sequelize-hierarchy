@@ -124,7 +124,7 @@ Now supports all Sequelize dialects.
 
 * Lock sequelize dev dependency to 2.0.0-rc3
 
-## Next
+## 0.2.7
 
 * Remove `{raw: true}` option from queries for better compatibility with other plugins
 * Model#rebuildHierarchy() utilizes transaction
