@@ -171,7 +171,7 @@ These affect the naming of accessors e.g. `instance.getParent()`
 * `labels`: When `true`, creates an attribute `label` on the created `parentId` and `hierarchyField` which is a human-readable version of the field name. Inherits from sequelize define options or `false`
 
 ### Rebuilding the hierarchy
-#### Model#rebuildHierarchy()
+#### Model#rebuildHierarchy( [options] )
 
 To build the hierarchy data on an existing table, or if hierarchy data gets corrupted in some way (e.g. by changes to parentId being made directly in the database not through Sequelize), you can rebuild it with:
 

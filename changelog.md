@@ -127,3 +127,4 @@ Now supports all Sequelize dialects.
 ## Next
 
 * Remove `{raw: true}` option from queries for better compatibility with other plugins
+* Model#rebuildHierarchy() utilizes transaction
