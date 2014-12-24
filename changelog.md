@@ -117,4 +117,5 @@ Now supports all Sequelize dialects.
 
 ## Next
 
+* Lock sequelize dependency to 2.0.0-rc3 (errors with rc4)
 * JSHint ignores redefinition of `Promise`

@@ -17,7 +17,7 @@
     "lodash": "2.4.1"
   },
   "peerDependencies": {
-    "sequelize": "^2.0.0-rc3"
+    "sequelize": "2.0.0-rc3"
   },
   "devDependencies": {
     "mocha": "2.0.x",
