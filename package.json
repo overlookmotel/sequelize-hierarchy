@@ -23,7 +23,7 @@
     "mocha": "2.0.x",
     "chai": "1.9.x",
     "chai-as-promised": "4.1.x",
-    "sequelize": "^2.0.0-rc3",
+    "sequelize": "2.0.0-rc3",
     "mysql": "~2.5.0",
     "sqlite3": "~3.0.0",
     "pg": "~3.6.0",
