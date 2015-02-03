@@ -848,7 +848,7 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 
 		describe('#rebuildHierarchy', function() {
 			beforeEach(function() {
-				return this.folderAncestor.destroy({}, {truncate: true}).bind(this)
+				return this.folderAncestor.destroy({truncate: true}).bind(this)
 				.then(function() {
 					return this.folder.update({hierarchyLevel: 999}, {where: {}});
 				})
