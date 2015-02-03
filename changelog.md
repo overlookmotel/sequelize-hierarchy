@@ -135,3 +135,4 @@ Now supports all Sequelize dialects.
 * Set sequelize dependency to ~2.0.0-rc3 (tilde)
 * Update db dev dependencies in line with Sequelize 2.0.0-rc8
 * Update dev dependencies
+* Travis runs on new container infrastructure
