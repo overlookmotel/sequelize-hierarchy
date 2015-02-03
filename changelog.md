@@ -133,3 +133,4 @@ Now supports all Sequelize dialects.
 ## Next
 
 * Update db dev dependencies in line with Sequelize 2.0.0-rc8
+* Update dev dependencies
