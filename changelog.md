@@ -129,3 +129,7 @@ Now supports all Sequelize dialects.
 * Remove `{raw: true}` option from queries for better compatibility with other plugins
 * Model#rebuildHierarchy() utilizes transaction
 * Remove all excess whitespace (no tabs on empty lines now)
+
+## Next
+
+* Update db dev dependencies in line with Sequelize 2.0.0-rc8
