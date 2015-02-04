@@ -130,7 +130,7 @@ Now supports all Sequelize dialects.
 * Model#rebuildHierarchy() utilizes transaction
 * Remove all excess whitespace (no tabs on empty lines now)
 
-## Next
+## 0.2.8
 
 * Fix bug in test with destroy options
 * Set sequelize dependency to ~2.0.0-rc3 (tilde)
