@@ -137,3 +137,7 @@ Now supports all Sequelize dialects.
 * Update db dev dependencies in line with Sequelize 2.0.0-rc8
 * Update dev dependencies
 * Travis runs on new container infrastructure
+
+## Next
+
+* Travis runs tests against node 0.10 and 0.12
