@@ -20,15 +20,14 @@
     "sequelize": "~2.0.0"
   },
   "devDependencies": {
-    "mocha": "~2.1.0",
-    "chai": "~1.10.0",
-    "chai-as-promised": "~4.1.1",
+    "mocha": "~2.0.0",
+    "chai": "~1.9.2",
+    "chai-as-promised": "^4.1.1",
     "sequelize": "~2.0.0",
     "mysql": "~2.5.0",
-    "sqlite3": "~3.0.0",
-    "pg": "~3.6.0",
+    "sqlite3": "^3.0.5",
+    "pg": "^4.2.0",
     "pg-hstore": "^2.3.1",
-    "mariasql": "~0.1.2",
     "jshint": "~2.6.0"
   },
   "keywords": [

@@ -141,5 +141,6 @@ Now supports all Sequelize dialects.
 ## Next
 
 * Update sequelize dependency to v2.0.0+
+* Update dev dependencies in line with sequelize v2.0.5
 * Travis runs tests against node 0.10 and 0.12
 * Correct typo in changelog
