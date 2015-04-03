@@ -23,7 +23,7 @@
 * Replaced usage of Promise.resolve().then() with Promise.try()
 * Changed uses of Utils._.str.capitalize() to Utils.uppercaseFirst() to reflect removal of underscore.string dependency from sequelize
 * Adjusted capitalization to reflect that model names and tables names are no longer capitalized
-* Changed 'childs' to 'children' as pluralization now performed through Inflection library which plururalizes "child" correctly
+* Changed 'childs' to 'children' as pluralization now performed through Inflection library which pluralizes "child" correctly
 
 ## 0.0.5
 
@@ -141,3 +141,4 @@ Now supports all Sequelize dialects.
 ## Next
 
 * Travis runs tests against node 0.10 and 0.12
+* Correct typo in changelog
