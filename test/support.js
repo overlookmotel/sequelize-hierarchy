@@ -1,11 +1,11 @@
-"use strict";
+'use strict';
 
 var fs = require('fs'),
 	path = require('path'),
 	_ = require('lodash'),
 	Sequelize = require('sequelize'),
-	DataTypes = require(__dirname + "/../node_modules/sequelize/lib/data-types"),
-	Config = require(__dirname + "/config/config");
+	DataTypes = require(__dirname + '/../node_modules/sequelize/lib/data-types'),
+	Config = require(__dirname + '/config/config');
 
 require('../lib/index')(Sequelize);
 
@@ -42,14 +42,14 @@ var Support = {
 		if (dialect === 'sqlite') {
 			var p = path.join(__dirname, 'tmp', 'db.sqlite');
 
-			return new Sequelize.Promise(function (resolve, reject) {
+			return new Sequelize.Promise(function(resolve, reject) {
 				// We cannot promisify exists, since exists does not follow node callback convention - first argument is a boolean, not an error / null
 				if (fs.existsSync(p)) {
 					resolve(Sequelize.Promise.promisify(fs.unlink)(p));
 				} else {
 					resolve();
 				}
-			}).then(function () {
+			}).then(function() {
 				var options = Sequelize.Utils._.extend({}, sequelize.options, { storage: p }),
 					_sequelize = new Sequelize(sequelize.config.database, null, null, options);
 
@@ -166,7 +166,7 @@ var Support = {
 			dialect = 'postgres-native';
 		}
 
-		return "[" + dialect.toUpperCase() + "] " + moduleName;
+		return '[' + dialect.toUpperCase() + '] ' + moduleName;
 	},
 
 	getTestUrl: function(config) {
@@ -178,10 +178,10 @@ var Support = {
 		} else {
 			var credentials = dbConfig.username;
 			if (dbConfig.password) {
-				credentials += ":" + dbConfig.password;
+				credentials += ':' + dbConfig.password;
 			}
 
-			url = config.dialect + "://" + credentials + "@" + dbConfig.host + ":" + dbConfig.port + "/" + dbConfig.database;
+			url = config.dialect + '://' + credentials + '@' + dbConfig.host + ':' + dbConfig.port + '/' + dbConfig.database;
 		}
 		return url;
 	}
