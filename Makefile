@@ -27,6 +27,8 @@ sqlite:
 	@DIALECT=sqlite make test
 mysql:
 	@DIALECT=mysql make test
+mssql:
+	@DIALECT=mssql make test
 postgres:
 	@DIALECT=postgres make test
 postgres-native:
