@@ -138,7 +138,7 @@ Now supports all Sequelize dialects.
 * Update dev dependencies
 * Travis runs on new container infrastructure
 
-## Next
+## 0.2.9
 
 * Update sequelize dependency to v2.0.0+
 * Update dev dependencies in line with sequelize v2.0.5
