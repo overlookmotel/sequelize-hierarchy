@@ -33,21 +33,27 @@ Requires Sequelize v2.0.0 or later.
 
 To load module:
 
-	var Sequelize = require('sequelize-hierarchy')();
-	// NB Sequelize must also be present in `node_modules`
+```js
+var Sequelize = require('sequelize-hierarchy')();
+// NB Sequelize must also be present in `node_modules`
+```
 
 or, a more verbose form useful if chaining multiple Sequelize plugins:
 
-	var Sequelize = require('sequelize');
-	require('sequelize-hierarchy')(Sequelize);
+```js
+var Sequelize = require('sequelize');
+require('sequelize-hierarchy')(Sequelize);
+```
 
 ### Initializing hierarchy
 #### Model#isHierarchy( [options] )
 
-	var sequelize = new Sequelize('database', 'user', 'password');
+```js
+var sequelize = new Sequelize('database', 'user', 'password');
 
-	var folder = sequelize.define('folder', name: { type: Sequelize.STRING });
-	folder.isHierarchy();
+var folder = sequelize.define('folder', name: { type: Sequelize.STRING });
+folder.isHierarchy();
+```
 
 `folder.isHierarchy()` does the following:
 
@@ -63,65 +69,71 @@ The column and table names etc can be modified by passing options to `.isHierarc
 
 Hierarchies can also be created in `define()`:
 
-	var folder = sequelize.define('folder', { name: Sequelize.STRING }, { hierarchy: true });
+```js
+var folder = sequelize.define('folder', { name: Sequelize.STRING }, { hierarchy: true });
+```
 
 or on an attribute in `define()`:
 
-	var folder = sequelize.define('folder', {
-		name: Sequelize.STRING,
-		parentId: {
-			type: Sequelize.INTEGER.UNSIGNED,
-			hierarchy: true
-		}
-	});
+```js
+var folder = sequelize.define('folder', {
+	name: Sequelize.STRING,
+	parentId: {
+		type: Sequelize.INTEGER.UNSIGNED,
+		hierarchy: true
+	}
+});
+```
 
 ### Retrieving hierarchies
 
 Examples of getting a hierarchy structure:
 
-	// get entire hierarchy as a flat list
-	folder.findAll().then(function(results) {
-		// results = [
-		//	{ id: 1, parentId: null, name: 'a' },
-		//	{ id: 2, parentId: 1, name: 'ab' },
-		//	{ id: 3, parentId: 2, name: 'abc' }
-		// ]
-	})
+```js
+// get entire hierarchy as a flat list
+folder.findAll().then(function(results) {
+	// results = [
+	//	{ id: 1, parentId: null, name: 'a' },
+	//	{ id: 2, parentId: 1, name: 'ab' },
+	//	{ id: 3, parentId: 2, name: 'abc' }
+	// ]
+});
 
-	// get entire hierarchy as a nested tree
-	folder.findAll({ hierarchy: true }).then(function(results) {
-		// results = [
-		//	{ id: 1, parentId: null, name: 'a', children: [
-		//		{ id: 2, parentId: 1, name: 'ab', children: [
-		//			{ id: 3, parentId: 2, name: 'abc' }
-		//		] }
-		//	] }
-		// ]
-	})
+// get entire hierarchy as a nested tree
+folder.findAll({ hierarchy: true }).then(function(results) {
+	// results = [
+	//	{ id: 1, parentId: null, name: 'a', children: [
+	//		{ id: 2, parentId: 1, name: 'ab', children: [
+	//			{ id: 3, parentId: 2, name: 'abc' }
+	//		] }
+	//	] }
+	// ]
+});
 
-	// get all the descendents of a particular item
-	folder.find({ where: { name: 'a' }, include: { model: folder, as: 'descendents', hierarchy: true } }).then(function(result) {
-		// result =
-		// { id: 1, parentId: null, name: 'a', children: [
-		//		{ id: 2, parentId: 1, name: 'ab', children: [
-		//			{ id: 3, parentId: 2, name: 'abc' }
-		//		] }
-		// ] }
-	})
+// get all the descendents of a particular item
+folder.find({ where: { name: 'a' }, include: { model: folder, as: 'descendents', hierarchy: true } }).then(function(result) {
+	// result =
+	// { id: 1, parentId: null, name: 'a', children: [
+	//		{ id: 2, parentId: 1, name: 'ab', children: [
+	//			{ id: 3, parentId: 2, name: 'abc' }
+	//		] }
+	// ] }
+});
 
-	// get all the ancestors (i.e. parent and parent's parent and so on)
-	folder.find({
-		where: { name: 'abc' },
-		include: [ { model: folder, as: 'ancestors' } ],
-		order: [ [ { model: folder, as: 'ancestors' }, 'hierarchyLevel' ] ]
-	}).then(function(result) {
-		// results = [
-		//	{ id: 3, parentId: 2, name: 'abc', ancestors: [
-		//		{ id: 1, parentId: null, name: 'a' },
-		//		{ id: 2, parentId: 1, name: 'ab' }
-		//	] }
-		// ]
-	})
+// get all the ancestors (i.e. parent and parent's parent and so on)
+folder.find({
+	where: { name: 'abc' },
+	include: [ { model: folder, as: 'ancestors' } ],
+	order: [ [ { model: folder, as: 'ancestors' }, 'hierarchyLevel' ] ]
+}).then(function(result) {
+	// results = [
+	//	{ id: 3, parentId: 2, name: 'abc', ancestors: [
+	//		{ id: 1, parentId: null, name: 'a' },
+	//		{ id: 2, parentId: 1, name: 'ab' }
+	//	] }
+	// ]
+});
+```
 
 The forms with `{ hierarchy: true }` are equivalent to using `folder.findAll({ include: { model: folder, as: 'children' } })` except that the include is recursed however deeply the tree structure goes.
 
@@ -129,10 +141,12 @@ The forms with `{ hierarchy: true }` are equivalent to using `folder.findAll({ i
 
 Accessors are also supported:
 
-	thisFolder.getParent()
-	thisFolder.getChildren()
-	thisFolder.getAncestors()
-	thisFolder.getDescendents()
+```js
+thisFolder.getParent()
+thisFolder.getChildren()
+thisFolder.getAncestors()
+thisFolder.getDescendents()
+```
 
 ### Options
 
@@ -175,7 +189,9 @@ These affect the naming of accessors e.g. `instance.getParent()`
 
 To build the hierarchy data on an existing table, or if hierarchy data gets corrupted in some way (e.g. by changes to parentId being made directly in the database not through Sequelize), you can rebuild it with:
 
-	folder.rebuildHierarchy()
+```js
+folder.rebuildHierarchy()
+```
 
 ## Tests
 
