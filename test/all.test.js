@@ -110,6 +110,12 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 			});
 		});
 
+		afterEach(function() {
+			// set parentId of all folders to null
+			// (to avoid foreign constraint error in SQLite when dropping table)
+			return this.folder.update({parentId: null}, {where: {parentId: {ne: null}}, hooks: false});
+		});
+
 		describe('#create', function() {
 			describe('for root level', function() {
 				it('sets hierarchyLevel', function() {
@@ -850,7 +856,7 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 			beforeEach(function() {
 				return this.folderAncestor.destroy({truncate: true}).bind(this)
 				.then(function() {
-					return this.folder.update({hierarchyLevel: 999}, {where: {}});
+					return this.folder.update({hierarchyLevel: 999}, {where: {id: {ne: 0}}});
 				})
 				.then(function() {
 					return this.folder.rebuildHierarchy();
