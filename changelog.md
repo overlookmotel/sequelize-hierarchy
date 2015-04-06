@@ -146,5 +146,6 @@ Now supports all Sequelize dialects.
 * Tests support for Microsoft SQL Server
 * Remove use of deprecated sequelize API
 * Code tidy in test/support.js
+* Tests always use options.camelThrough=true
 * Travis runs tests against node 0.10 and 0.12
 * Correct typo in changelog

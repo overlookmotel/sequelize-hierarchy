@@ -24,7 +24,7 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 				name: Sequelize.STRING
 			});
 
-			folder.isHierarchy();
+			folder.isHierarchy({camelThrough: true});
 
 			expect(folder.hierarchy).to.be.ok;
 		});
@@ -33,7 +33,7 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 			var folder = this.sequelize.define('folder', {
 				name: Sequelize.STRING
 			}, {
-				hierarchy: true
+				hierarchy: {camelThrough: true}
 			});
 
 			expect(folder.hierarchy).to.be.ok;
@@ -45,7 +45,7 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 				parId: {
 					type: Sequelize.INTEGER.UNSIGNED,
 					allowNull: true,
-					hierarchy: true
+					hierarchy: {camelThrough: true}
 				}
 			});
 
@@ -61,7 +61,7 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 				parentId: Sequelize.INTEGER
 			});
 
-			folder.isHierarchy();
+			folder.isHierarchy({camelThrough: true});
 
 			expect(folder.attributes.hierarchyLevel.type).not.to.equal(Sequelize.STRING);
 			expect(folder.attributes.parentId.references).to.equal('folders');
