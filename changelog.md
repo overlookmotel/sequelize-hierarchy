@@ -149,5 +149,6 @@ Now supports all Sequelize dialects.
 * Code tidy in test/support.js
 * Tests always use options.camelThrough=true
 * Travis runs tests against node 0.10 and 0.12
+* Travis uses correct database users
 * README code examples tagged as Javascript
 * Correct typo in changelog

@@ -1,7 +1,9 @@
 before_script:
   - "mysql -e 'create database sequelize_test;'"
   - "psql -c 'create database sequelize_test;' -U postgres"
-  - "export SEQ_USER=travis"
+  - "export SEQ_MYSQL_USER=root"
+  - "export SEQ_PG_USER=postgres"
+  - "export SEQ_PG_PW=postgres"
 
 script:
   - "make test"
