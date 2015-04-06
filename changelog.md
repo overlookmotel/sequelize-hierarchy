@@ -144,6 +144,7 @@ Now supports all Sequelize dialects.
 * Update dev dependencies in line with sequelize v2.0.5
 * Update test support files in line with sequelize v2.0.5
 * Tests support for Microsoft SQL Server
+* Remove use of deprecated sequelize API
 * Code tidy in test/support.js
 * Travis runs tests against node 0.10 and 0.12
 * Correct typo in changelog
