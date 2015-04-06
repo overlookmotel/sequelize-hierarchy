@@ -143,7 +143,7 @@ Now supports all Sequelize dialects.
 * Update sequelize dependency to v2.0.0+
 * Update dev dependencies in line with sequelize v2.0.5
 * Update test support files in line with sequelize v2.0.5
-* Tests support for Microsoft SQL Server
+* Support for Microsoft SQL Server
 * Remove use of deprecated sequelize API
 * Code tidy in test/support.js
 * Tests always use options.camelThrough=true

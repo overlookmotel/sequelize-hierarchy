@@ -23,7 +23,7 @@ This plugin for [Sequelize](http://sequelizejs.com/) solves this problem.
 [![Build Status](https://secure.travis-ci.org/overlookmotel/sequelize-hierarchy.png?branch=master)](http://travis-ci.org/overlookmotel/sequelize-hierarchy)
 [![Dependency Status](https://david-dm.org/overlookmotel/sequelize-hierarchy.png)](https://david-dm.org/overlookmotel/sequelize-hierarchy)
 
-API is stable. All features and options are fairly well tested. Works with all dialects of SQL supported by Sequelize (MySQL, Postgres, SQLite).
+API is stable. All features and options are fairly well tested. Works with all dialects of SQL supported by Sequelize (MySQL, Postgres, SQLite, Microsoft SQL Server).
 
 Requires Sequelize v2.0.0 or later.
 

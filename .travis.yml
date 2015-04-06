@@ -12,6 +12,7 @@ env:
   - DB=mysql DIALECT=postgres-native
   - DB=mysql DIALECT=sqlite
   - DB=mysql DIALECT=mariadb
+  - DB=mysql DIALECT=mssql
 
 language: node_js
 
