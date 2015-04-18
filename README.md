@@ -183,7 +183,7 @@ These affect the naming of accessors e.g. `instance.getParent()`
 
 #### Misc
 
-* `labels`: When `true`, creates an attribute `label` on the created `parentId` and `hierarchyField` which is a human-readable version of the field name. Inherits from sequelize define options or `false`
+* `labels`: When `true`, creates an attribute `label` on the created `parentId` and `hierarchyLevel` fields which is a human-readable version of the field name. Inherits from sequelize define options or `false`
 
 ### Rebuilding the hierarchy
 #### Model#rebuildHierarchy( [options] )

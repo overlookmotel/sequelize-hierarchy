@@ -157,3 +157,4 @@ Now supports all Sequelize dialects.
 
 * Allow primaryKey customization (thanks @devlato)
 * `make all` runs tests for Microsoft SQL Server
+* README typo
