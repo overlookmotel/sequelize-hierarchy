@@ -153,7 +153,7 @@ Now supports all Sequelize dialects.
 * README code examples tagged as Javascript
 * Correct typo in changelog
 
-## Next
+## 0.2.10
 
 * Allow primaryKey customization (thanks @devlato)
 * `make all` runs tests for Microsoft SQL Server
