@@ -167,6 +167,7 @@ These affect the naming of accessors e.g. `instance.getParent()`
 * `levelFieldName`: Name of the hierarchy depth field. Defaults to `'hierarchyLevel'`
 * `levelFieldType`: Type of the hierarchy depth field. Defaults to `Sequelize.INTEGER.UNSIGNED`
 * `levelFieldAttributes`: Attributes to add to the hierarchy depth field. Defaults to `undefined`
+* `primaryKey`: Name of the primary key. Defaults to model's `primaryKeyAttribute`
 * `foreignKey`: Name of the parent field. Defaults to `'parentId'`
 * `foreignKeyAttributes`: Attributes to add to the parent field. Defaults to `undefined`
 * `throughKey`: Name of the instance field in hierarchy (through) table. Defaults to `'<model name>Id'`
