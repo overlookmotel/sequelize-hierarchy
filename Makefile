@@ -40,6 +40,6 @@ pgsql: postgres
 postgresn: postgres-native
 
 # test all the dialects \o/
-all: sqlite mysql postgres postgres-native mariadb
+all: sqlite mysql postgres postgres-native mariadb mssql
 
-.PHONY: sqlite mysql postgres pgsql postgres-native postgresn all test
+.PHONY: sqlite mysql postgres pgsql postgres-native postgresn mssql all test

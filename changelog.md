@@ -152,3 +152,7 @@ Now supports all Sequelize dialects.
 * Travis uses correct database users
 * README code examples tagged as Javascript
 * Correct typo in changelog
+
+## Next
+
+* `make all` runs tests for Microsoft SQL Server
