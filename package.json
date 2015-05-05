@@ -20,9 +20,9 @@
     "sequelize": "^2.0.0"
   },
   "devDependencies": {
-    "mocha": "~2.0.0",
-    "chai": "~1.9.2",
-    "chai-as-promised": "^4.1.1",
+    "mocha": "^2.2.4",
+    "chai": "^2.3.0",
+    "chai-as-promised": "^5.0.0",
     "sequelize": "^2.0.0",
     "mysql": "~2.6.2",
     "sqlite3": "^3.0.5",
@@ -30,7 +30,7 @@
     "pg-hstore": "^2.3.1",
     "pg-native": "^1.8.0",
     "tedious": "^1.7.0",
-    "jshint": "~2.6.0"
+    "jshint": "^2.7.0"
   },
   "keywords": [
     "sequelize",
