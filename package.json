@@ -14,7 +14,7 @@
     "url": "https://github.com/overlookmotel/sequelize-hierarchy/issues"
   },
   "dependencies": {
-    "lodash": "2.4.1"
+    "lodash": "3.8.0"
   },
   "peerDependencies": {
     "sequelize": "^2.0.0"
