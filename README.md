@@ -213,3 +213,12 @@ See changelog.md
 * All hooks should be within transactions
 
 If you discover a bug, please raise an issue on Github. https://github.com/overlookmotel/sequelize-hierarchy/issues
+
+## Contribution
+
+Pull requests are very welcome. Please:
+
+* ensure all tests pass before submitting PR
+* add an entry to changelog
+* add tests for new features
+* document new functionality/API additions in README

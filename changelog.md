@@ -165,3 +165,4 @@ Now supports all Sequelize dialects.
 * Update mysql module dependency in line with sequelize v2.1.0
 * Update lodash dependency
 * Update dev dependencies
+* README contribution section
