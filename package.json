@@ -17,14 +17,14 @@
     "lodash": "2.4.1"
   },
   "peerDependencies": {
-    "sequelize": "~2.0.0"
+    "sequelize": "^2.0.0"
   },
   "devDependencies": {
     "mocha": "~2.0.0",
     "chai": "~1.9.2",
     "chai-as-promised": "^4.1.1",
-    "sequelize": "~2.0.0",
     "mysql": "~2.5.0",
+    "sequelize": "^2.0.0",
     "sqlite3": "^3.0.5",
     "pg": "^4.2.0",
     "pg-hstore": "^2.3.1",
