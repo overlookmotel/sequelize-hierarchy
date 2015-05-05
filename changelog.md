@@ -159,7 +159,7 @@ Now supports all Sequelize dialects.
 * `make all` runs tests for Microsoft SQL Server
 * README typo
 
-## Next
+## 0.2.11
 
 * Loosen sequelize dependency version to v2.x.x
 * Update mysql module dependency in line with sequelize v2.1.0
