@@ -167,7 +167,7 @@ Now supports all Sequelize dialects.
 * Update dev dependencies
 * README contribution section
 
-## Next
+## 0.2.12
 
 * Replace `utils.endsWith` with `_.endsWith`
 * Tidy up changelog
