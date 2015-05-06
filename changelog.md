@@ -166,3 +166,7 @@ Now supports all Sequelize dialects.
 * Update lodash dependency
 * Update dev dependencies
 * README contribution section
+
+## Next
+
+* Replace `utils.endsWith` with `_.endsWith`
