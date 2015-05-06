@@ -21,7 +21,7 @@
 * Transactionalised if operations to alter tables are called within a transaction
 * Do not pass results back from hooks (not needed by Sequelize)
 * Replaced usage of Promise.resolve().then() with Promise.try()
-* Changed uses of Utils._.str.capitalize() to Utils.uppercaseFirst() to reflect removal of underscore.string dependency from sequelize
+* Changed uses of `Utils._.str.capitalize()` to `Utils.uppercaseFirst()` to reflect removal of underscore.string dependency from sequelize
 * Adjusted capitalization to reflect that model names and tables names are no longer capitalized
 * Changed 'childs' to 'children' as pluralization now performed through Inflection library which pluralizes "child" correctly
 
@@ -170,3 +170,4 @@ Now supports all Sequelize dialects.
 ## Next
 
 * Replace `utils.endsWith` with `_.endsWith`
+* Tidy up changelog
