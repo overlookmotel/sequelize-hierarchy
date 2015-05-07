@@ -171,3 +171,7 @@ Now supports all Sequelize dialects.
 
 * Replace `utils.endsWith` with `_.endsWith`
 * Tidy up changelog
+
+## Next
+
+* Remove relative path to sequelize in tests
