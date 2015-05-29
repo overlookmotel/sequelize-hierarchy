@@ -390,7 +390,7 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 			});
 
 			it('throws error if try to destroy a record which has children', function() {
-				var promise = this.folder.destroy({where: {parentId: this.folders.ab.id}}).bind(this)
+				var promise = this.folder.destroy({where: {parentId: this.folders.ab.id}}).bind(this);
 				return expect(promise).to.be.rejected;
 			});
 		});
@@ -584,7 +584,7 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 					.then(function(folder) {
 						expect(folder.name).to.equal('a');
 
-						var drive = folder.drive
+						var drive = folder.drive;
 						expect(drive.folders).to.be.ok;
 						expect(drive.folders.length).to.equal(1);
 

@@ -181,3 +181,4 @@ Now supports all Sequelize dialects.
 * Support for Sequelize v3.x.x
 * Travis runs tests with Sequelize v3 and v2
 * Disable Travis dependency cache
+* Missing semicolons in tests
