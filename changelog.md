@@ -183,3 +183,4 @@ Now supports all Sequelize dialects.
 * Disable Travis dependency cache
 * Missing semicolons in tests
 * Run jshint on tests
+* Update README badges to use shields.io

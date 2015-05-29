@@ -20,8 +20,10 @@ This plugin for [Sequelize](http://sequelizejs.com/) solves this problem.
 
 ## Current status
 
-[![Build Status](https://secure.travis-ci.org/overlookmotel/sequelize-hierarchy.png?branch=master)](http://travis-ci.org/overlookmotel/sequelize-hierarchy)
-[![Dependency Status](https://david-dm.org/overlookmotel/sequelize-hierarchy.png)](https://david-dm.org/overlookmotel/sequelize-hierarchy)
+[![NPM version](https://img.shields.io/npm/v/sequelize-hierarchy.svg)](https://www.npmjs.com/package/sequelize-hierarchy)
+[![Build Status](https://img.shields.io/travis/overlookmotel/sequelize-hierarchy/master.svg)](http://travis-ci.org/overlookmotel/sequelize-hierarchy)
+[![Dependency Status](https://img.shields.io/david/overlookmotel/sequelize-hierarchy.svg)](https://david-dm.org/overlookmotel/sequelize-hierarchy)
+[![Dev dependency Status](https://img.shields.io/david/dev/overlookmotel/sequelize-hierarchy.svg)](https://david-dm.org/overlookmotel/sequelize-hierarchy)
 
 API is stable. All features and options are fairly well tested. Works with all dialects of SQL supported by Sequelize (MySQL, Postgres, SQLite, Microsoft SQL Server).
 
