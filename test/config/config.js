@@ -1,5 +1,7 @@
 'use strict';
 
+/* jshint ignore:start */
+
 module.exports = {
   username: process.env.SEQ_USER || 'sequelize_test',
   password: process.env.SEQ_PW   || null,

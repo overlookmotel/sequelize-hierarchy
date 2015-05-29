@@ -20,6 +20,9 @@ chai.config.includeStack = true;
 
 // tests
 
+/* jshint expr: true */
+/* global describe, it, beforeEach, afterEach */
+
 console.log('Sequelize version:', sequelizeVersion);
 
 describe(Support.getTestDialectTeaser('Tests'), function () {

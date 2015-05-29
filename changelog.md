@@ -182,3 +182,4 @@ Now supports all Sequelize dialects.
 * Travis runs tests with Sequelize v3 and v2
 * Disable Travis dependency cache
 * Missing semicolons in tests
+* Run jshint on tests

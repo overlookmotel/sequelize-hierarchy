@@ -19,7 +19,7 @@ test:
 	fi
 
 jshint:
-	./node_modules/.bin/jshint lib
+	./node_modules/.bin/jshint lib test
 
 mariadb:
 	@DIALECT=mariadb make test
