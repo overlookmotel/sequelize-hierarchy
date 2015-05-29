@@ -184,3 +184,4 @@ Now supports all Sequelize dialects.
 * Missing semicolons in tests
 * Run jshint on tests
 * Update README badges to use shields.io
+* README TODOs

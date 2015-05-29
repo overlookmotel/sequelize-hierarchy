@@ -208,6 +208,8 @@ See changelog.md
 ## TODO
 
 * Create more efficient function for bulkCreate (+ alter sequelize bulkCreate to do single multi-row insertion?). Would not affect API or behaviour, just improve performance.
+* Ensure all tests work within transactions
+* Pass `options.logging` to all all queries within hooks
 
 ## Known issues
 
