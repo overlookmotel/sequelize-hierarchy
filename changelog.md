@@ -185,3 +185,7 @@ Now supports all Sequelize dialects.
 * Run jshint on tests
 * Update README badges to use shields.io
 * README TODOs
+
+## Next
+
+* Update sqlite dev dependency in line with Sequelize v3.1.1
