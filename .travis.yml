@@ -27,10 +27,6 @@ branches:
     - master
     - dev
 
-cache:
-  directories:
-    - node_modules
-
 addons:
   postgresql: "9.3"
 
