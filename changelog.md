@@ -176,7 +176,7 @@ Now supports all Sequelize dialects.
 
 * Remove relative path to sequelize in tests
 
-## Next
+## 0.3.0
 
 * Support for Sequelize v3.x.x
 * Travis runs tests with Sequelize v3 and v2
