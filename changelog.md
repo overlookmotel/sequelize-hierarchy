@@ -178,4 +178,5 @@ Now supports all Sequelize dialects.
 
 ## Next
 
+* Support for Sequelize v3.x.x
 * Disable Travis dependency cache

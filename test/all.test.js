@@ -9,13 +9,18 @@ var chai = require('chai'),
 	promised = require('chai-as-promised'),
 	Support = require(__dirname + '/support'),
 	Sequelize = Support.Sequelize,
-	Promise = Sequelize.Promise;
+	Promise = Sequelize.Promise,
+	semver = require('semver');
+
+var sequelizeVersion = require('sequelize/package.json').version;
 
 // init
 chai.use(promised);
 chai.config.includeStack = true;
 
 // tests
+
+console.log('Sequelize version:', sequelizeVersion);
 
 describe(Support.getTestDialectTeaser('Tests'), function () {
 	describe('Hierarchy creation', function() {
@@ -64,7 +69,12 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 			folder.isHierarchy({camelThrough: true});
 
 			expect(folder.attributes.hierarchyLevel.type).not.to.equal(Sequelize.STRING);
-			expect(folder.attributes.parentId.references).to.equal('folders');
+
+			if (semver.satisfies(sequelizeVersion, '<3.0.1')) {
+				expect(folder.attributes.parentId.references).to.equal('folders');
+			} else {
+				expect(folder.attributes.parentId.references).to.deep.equal({model: 'folders', key: 'id'});
+			}
 		});
 	});
 

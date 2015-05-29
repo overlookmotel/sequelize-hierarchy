@@ -14,16 +14,17 @@
     "url": "https://github.com/overlookmotel/sequelize-hierarchy/issues"
   },
   "dependencies": {
-    "lodash": "3.8.0"
+    "lodash": "3.8.0",
+    "semver": "4.3.4"
   },
   "peerDependencies": {
-    "sequelize": "^2.0.0"
+    "sequelize": "2.0.0 - 3.x.x"
   },
   "devDependencies": {
     "mocha": "^2.2.4",
     "chai": "^2.3.0",
     "chai-as-promised": "^5.0.0",
-    "sequelize": "^2.0.0",
+    "sequelize": "2.0.0 - 3.x.x",
     "mysql": "~2.6.2",
     "sqlite3": "^3.0.5",
     "pg": "^4.2.0",
