@@ -189,3 +189,7 @@ Now supports all Sequelize dialects.
 ## 0.3.1
 
 * Update sqlite dev dependency in line with Sequelize v3.1.1
+
+## Next
+
+* Test code coverage & Travis sends to coveralls

@@ -31,7 +31,9 @@
     "pg-hstore": "^2.3.1",
     "pg-native": "^1.8.0",
     "tedious": "^1.7.0",
-    "jshint": "^2.7.0"
+    "jshint": "^2.7.0",
+    "istanbul": "^0.3.14",
+    "coveralls": "^2.11.2"
   },
   "keywords": [
     "sequelize",
@@ -41,7 +43,8 @@
     "tree"
   ],
   "scripts": {
-    "test": "make all"
+    "test": "make all",
+    "cover": "make cover"
   },
   "engines": {
     "node": ">=0.6.21"

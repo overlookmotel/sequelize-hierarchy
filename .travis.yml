@@ -34,6 +34,14 @@ branches:
     - master
     - dev
 
+matrix:
+  fast_finish: true
+  include:
+    - node_js: "0.10"
+      env: DB=mysql DIALECT=mysql COVERAGE=true
+  allow_failures:
+    - env: DB=mysql DIALECT=mysql COVERAGE=true
+
 addons:
   postgresql: "9.3"
 
