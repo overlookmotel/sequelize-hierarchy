@@ -209,7 +209,7 @@ See changelog.md
 
 ## TODO
 
-* Create more efficient function for bulkCreate (+ alter sequelize bulkCreate to do single multi-row insertion?). Would not affect API or behaviour, just improve performance.
+* Create more efficient function for bulkCreate (+ alter sequelize bulkCreate to do single multi-row insertion?). Would not affect API or behavior, just improve performance.
 * Ensure all tests work within transactions
 
 ## Known issues
