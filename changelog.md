@@ -195,4 +195,5 @@ Now supports all Sequelize dialects.
 * Bug fix: proper checking for undefined field labels
 * Pass `options.logging` to all queries inside hooks
 * Use semver-select module for patching Sequelize v2+v3
+* Improved tests for thrown errors
 * Test code coverage & Travis sends to coveralls

@@ -277,7 +277,7 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 			describe('errors', function() {
 				it('throws error if trying to make parent one of descendents', function() {
 					var promise = this.folders.a.updateAttributes({parentId: this.folders.ab.id});
-					return expect(promise).to.be.rejected;
+					return expect(promise).to.be.rejectedWith('Parent cannot be a child of itself');
 				});
 			});
 		});
@@ -295,7 +295,7 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 
 			it('throws error if try to destroy a record which has children', function() {
 				var promise = this.folders.a.destroy();
-				return expect(promise).to.be.rejected;
+				return expect(promise).to.be.rejectedWith(Sequelize.ForeignKeyConstraintError);
 			});
 		});
 
@@ -392,8 +392,8 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 			});
 
 			it('throws error if try to destroy a record which has children', function() {
-				var promise = this.folder.destroy({where: {parentId: this.folders.ab.id}}).bind(this);
-				return expect(promise).to.be.rejected;
+				var promise = this.folder.destroy({where: {parentId: this.folders.ab.id}});
+				return expect(promise).to.be.rejectedWith(Sequelize.ForeignKeyConstraintError);
 			});
 		});
 
