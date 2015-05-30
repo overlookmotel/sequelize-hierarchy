@@ -193,4 +193,5 @@ Now supports all Sequelize dialects.
 ## Next
 
 * Bug fix: proper checking for undefined field labels
+* Pass `options.logging` to all queries inside hooks
 * Test code coverage & Travis sends to coveralls
