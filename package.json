@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "lodash": "3.8.0",
-    "semver": "4.3.4"
+    "semver-select": "^1.0.1"
   },
   "peerDependencies": {
     "sequelize": "2.0.0 - 3.x.x"

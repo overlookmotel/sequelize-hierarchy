@@ -10,7 +10,7 @@ var chai = require('chai'),
 	Support = require(__dirname + '/support'),
 	Sequelize = Support.Sequelize,
 	Promise = Sequelize.Promise,
-	semver = require('semver');
+	semverSelect = require('semver-select');
 
 var sequelizeVersion = require('sequelize/package.json').version;
 
@@ -73,11 +73,10 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 
 			expect(folder.attributes.hierarchyLevel.type).not.to.equal(Sequelize.STRING);
 
-			if (semver.satisfies(sequelizeVersion, '<3.0.1')) {
-				expect(folder.attributes.parentId.references).to.equal('folders');
-			} else {
-				expect(folder.attributes.parentId.references).to.deep.equal({model: 'folders', key: 'id'});
-			}
+			expect(folder.attributes.parentId.references).to.deep.equal(semverSelect(sequelizeVersion, {
+				'<3.0.1': 'folders',
+				'*': {model: 'folders', key: 'id'}
+			}));
 		});
 	});
 
