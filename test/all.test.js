@@ -849,16 +849,23 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 				});
 			});
 
-			describe('illegal throws error', function() {
-				['set', 'add', 'addMultiple', 'create', 'remove'].forEach(function(accessorType) {
-					it(accessorType + 'Descendent', function() {
-						var promise = Promise.try(function() {this.folders.ac[accessorType + 'Descendent'](this.folders.abdg);});
-						return expect(promise).to.be.rejected;
+			describe('illegal methods not present', function() {
+				[
+					{accessor: 'set', plural: true},
+					{accessor: 'add'},
+					{accessor: 'add', plural: true},
+					{accessor: 'create'},
+					{accessor: 'remove'},
+					{accessor: 'remove', plural: true}
+				].forEach(function(params) {
+					var accessor = params.accessor + (params.plural ? 'Descendents' : 'Descendent');
+					it(accessor, function() {
+						expect(this.folders.ac[accessor]).to.be.undefined;
 					});
 
-					it(accessorType + 'Ancestor', function() {
-						var promise = Promise.try(function() {this.folders.ac[accessorType + 'Ancestor'](this.folders.abdg);});
-						return expect(promise).to.be.rejected;
+					accessor = params.accessor + (params.plural ? 'Ancestors' : 'Ancestor');
+					it(accessor, function() {
+						expect(this.folders.ac[accessor]).to.be.undefined;
 					});
 				}.bind(this));
 			});

@@ -192,6 +192,7 @@ Now supports all Sequelize dialects.
 
 ## Next
 
+* Bug fix: Delete removeAncestors and removeDescendents methods
 * Bug fix: proper checking for undefined field labels
 * Pass `options.logging` to all queries inside hooks
 * Use semver-select module for patching Sequelize v2+v3
