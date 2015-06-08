@@ -190,7 +190,7 @@ Now supports all Sequelize dialects.
 
 * Update sqlite dev dependency in line with Sequelize v3.1.1
 
-## Next
+## 0.4.0
 
 * Remove support for Microsoft SQL Server
 * Bug fix: Delete removeAncestors and removeDescendents methods
