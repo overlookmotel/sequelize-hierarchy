@@ -41,6 +41,8 @@ matrix:
       env: DB=mysql DIALECT=mysql COVERAGE=true
   allow_failures:
     - env: DB=mysql DIALECT=mysql COVERAGE=true
+    - env: DB=mysql DIALECT=mssql
+    - env: DB=mysql DIALECT=mssql SEQ_VERSION=2
 
 addons:
   postgresql: "9.3"
