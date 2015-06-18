@@ -203,3 +203,7 @@ Now supports all Sequelize dialects.
 Breaking changes:
 
 * Remove support for Microsoft SQL Server
+
+## Next
+
+* Support for scopes
