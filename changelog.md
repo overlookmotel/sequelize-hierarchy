@@ -204,6 +204,6 @@ Breaking changes:
 
 * Remove support for Microsoft SQL Server
 
-## Next
+## 0.5.0
 
 * Support for scopes
