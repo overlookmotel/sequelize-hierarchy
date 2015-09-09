@@ -211,3 +211,4 @@ Breaking changes:
 ## Next
 
 * Update dependency mysql in line with Sequelize v3.7.1
+* Update dependency lodash
