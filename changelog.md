@@ -207,3 +207,7 @@ Breaking changes:
 ## 0.5.0
 
 * Support for scopes
+
+## Next
+
+* Update dependency mysql in line with Sequelize v3.7.1
