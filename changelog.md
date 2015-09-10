@@ -213,4 +213,5 @@ Breaking changes:
 * Update dependency mysql in line with Sequelize v3.7.1
 * Update dependency lodash
 * Update dev dependencies
+* Skip test for scoped models failing due to Sequelize bug (https://github.com/sequelize/sequelize/issues/4466)
 * Code tidy
