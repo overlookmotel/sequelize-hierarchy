@@ -1,6 +1,6 @@
 {
   "name": "sequelize-hierarchy",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Nested hierarchies for Sequelize",
   "main": "./lib/",
   "author": {
