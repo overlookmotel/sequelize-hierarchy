@@ -214,5 +214,6 @@ Breaking changes:
 * Update dependency lodash
 * Update dev dependencies
 * Fix `getDescendents()` broken by changes in Sequelize v3.5.1
+* Specific error when cannot construct hierarchy due to missing records
 * Skip test for scoped models failing due to Sequelize bug (https://github.com/sequelize/sequelize/issues/4466)
 * Code tidy
