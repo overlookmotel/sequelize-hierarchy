@@ -223,3 +223,7 @@ Breaking changes:
 
 * Rename `SequelizeHierarchyError` to `HierarchyError` (closes #25)
 * Documentation for errors (closes #19)
+
+## Next
+
+* `find()` works with `hierarchy` and `raw` options (closes #9)
