@@ -218,3 +218,7 @@ Breaking changes:
 * Skip test for scoped models failing due to Sequelize bug (https://github.com/sequelize/sequelize/issues/4466)
 * Patches use `Sequelize.version` for version number where available (closes #26)
 * Code tidy
+
+## Next
+
+* Rename `SequelizeHierarchyError` to `HierarchyError` (closes #25)
