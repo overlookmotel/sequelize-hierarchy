@@ -12,7 +12,7 @@ var chai = require('chai'),
 	Promise = Sequelize.Promise,
 	semverSelect = require('semver-select');
 
-var sequelizeVersion = require('sequelize/package.json').version;
+var sequelizeVersion = Sequelize.version || require('sequelize/package.json').version;
 
 // init
 chai.use(promised);
