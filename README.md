@@ -197,6 +197,10 @@ To build the hierarchy data on an existing table, or if hierarchy data gets corr
 folder.rebuildHierarchy()
 ```
 
+### Errors
+
+Errors thrown by the plugin are of type `HierarchyError`. The error class can be accessed at `Sequelize.HierarchyError`.
+
 ## Tests
 
 Use `npm test` to run the tests. Use `npm run cover` to check coverage.
