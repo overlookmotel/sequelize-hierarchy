@@ -228,6 +228,6 @@ Breaking changes:
 
 * `find()` works with `hierarchy` and `raw` options (closes #9)
 
-## Next
+## 0.5.4
 
 * MSSQL config for tests
