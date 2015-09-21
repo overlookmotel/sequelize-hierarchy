@@ -736,9 +736,7 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 					});
 				});
 
-				// this test fails due to bug in Sequelize (https://github.com/sequelize/sequelize/issues/4466)
-				// test is skipped for now
-				it.skip('with both models scoped', function() {
+				it('with both models scoped', function() {
 					return this.scopedFolder.find({
 						where: {name: 'a'},
 						include: [{model: this.scopedFolder, as: 'descendents', hierarchy: true}],
