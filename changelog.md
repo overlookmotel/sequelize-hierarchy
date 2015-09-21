@@ -232,6 +232,6 @@ Breaking changes:
 
 * MSSQL config for tests
 
-## Next
+## 0.5.5
 
 * Re-enable test for scoped models
