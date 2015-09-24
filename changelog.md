@@ -235,3 +235,7 @@ Breaking changes:
 ## 0.5.5
 
 * Re-enable test for scoped models
+
+## Next
+
+* Update `semver-select` dependency
