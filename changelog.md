@@ -240,3 +240,7 @@ Breaking changes:
 
 * README update (closes #31)
 * Update `semver-select` dependency
+
+## Next
+
+* README update (for #31)
