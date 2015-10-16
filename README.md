@@ -62,8 +62,8 @@ folder.isHierarchy();
 
 * Adds a column `parentId` to Folder model
 * Adds a column `hierarchyLevel` to Folder model (which should not be updated directly)
-* Creates a new model `folderAncestor` which contains the ancestry information
-* Creates hooks into standard Sequelize methods (create, update, destroy etc) to automatically update the ancestry table as details in the folder table change
+* Creates a new model `folderAncestor` which contains the ancestry information (columns `folderId` and `ancestorId`)
+* Creates hooks into standard Sequelize methods (create, update, destroy etc) to automatically update the ancestry table and `hierarchyLevel` field as details in the folder table change
 * Creates hooks into Sequelize's `Model#find()` and `Model#findAll()` methods so that hierarchies can be returned as javascript object tree structures
 
 The column and table names etc can be modified by passing options to `.isHierarchy()`. See below for details.
@@ -209,7 +209,7 @@ Requires a database called 'sequelize_test' and a db user 'sequelize_test' with 
 
 ## Changelog
 
-See changelog.md
+See [changelog.md](https://github.com/overlookmotel/sequelize-hierarchy/blob/master/changelog.md)
 
 ## TODO
 
