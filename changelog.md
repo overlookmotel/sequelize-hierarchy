@@ -236,7 +236,7 @@ Breaking changes:
 
 * Re-enable test for scoped models
 
-## Next
+## 0.5.6
 
 * README update (closes #31)
 * Update `semver-select` dependency
