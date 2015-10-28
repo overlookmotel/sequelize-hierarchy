@@ -37,6 +37,20 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 			expect(folder.hierarchy).to.be.ok;
 		});
 
+		it('allows through options', function() {
+			var folder = this.sequelize.define('folder', {
+				name: Sequelize.STRING
+			});
+
+			folder.isHierarchy({
+				through: 'folderAncestor',
+				throughTable: 'folder_ancestor',
+				throughSchema: 'folder_schema'
+			});
+
+			expect(folder.hierarchy).to.be.ok;
+		});
+
 		it('works via define options', function() {
 			var folder = this.sequelize.define('folder', {
 				name: Sequelize.STRING
