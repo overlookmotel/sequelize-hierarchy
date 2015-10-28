@@ -245,7 +245,7 @@ Breaking changes:
 
 * README update (for #31)
 
-## Next
+## 0.5.8
 
 * Add `throughSchema` option (#41)
 * Tests for `through` options
