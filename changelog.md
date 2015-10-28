@@ -248,3 +248,4 @@ Breaking changes:
 ## Next
 
 * Add `throughSchema` option (#41)
+* Tests for `through` options

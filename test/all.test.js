@@ -37,20 +37,6 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 			expect(folder.hierarchy).to.be.ok;
 		});
 
-		it('allows through options', function() {
-			var folder = this.sequelize.define('folder', {
-				name: Sequelize.STRING
-			});
-
-			folder.isHierarchy({
-				through: 'folderAncestor',
-				throughTable: 'folder_ancestor',
-				throughSchema: 'folder_schema'
-			});
-
-			expect(folder.hierarchy).to.be.ok;
-		});
-
 		it('works via define options', function() {
 			var folder = this.sequelize.define('folder', {
 				name: Sequelize.STRING
@@ -91,6 +77,35 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 				'<3.0.1': 'folders',
 				'*': {model: 'folders', key: 'id'}
 			}));
+		});
+
+		describe('options', function() {
+			beforeEach(function() {
+				this.folder = this.sequelize.define('folder', {
+					name: Sequelize.STRING
+				});
+
+				this.folder.isHierarchy({
+					through: 'folderAncestor',
+					throughTable: 'folder_ancestor',
+					throughSchema: 'folder_schema'
+				});
+
+				this.throughModel = this.sequelize.models.folderAncestor;
+			});
+
+			it('`through`', function() {
+				expect(this.folder.hierarchy).to.be.ok;
+				expect(this.throughModel).to.be.ok;
+			});
+
+			it('`throughTable`', function() {
+				expect(this.throughModel.tableName).to.equal('folder_ancestor');
+			});
+
+			it('`throughSchema`', function() {
+				expect(this.throughModel.getTableName().schema).to.equal('folder_schema');
+			});
 		});
 	});
 
