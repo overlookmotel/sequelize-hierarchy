@@ -179,108 +179,7 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 			return this.folder.update({parentId: null}, {where: {parentId: {ne: null}}, hooks: false});
 		});
 
-		describe('#updateAttributes', function() {
-			describe('for root level', function() {
-				beforeEach(function() {
-					return this.folders.abdf.updateAttributes({parentId: null});
-				});
-
-				it('sets hierarchyLevel', function() {
-					return this.folder.find({where: {name: 'abdf'}})
-						.then(function(folder) {
-							expect(folder.hierarchyLevel).to.equal(1);
-						});
-				});
-
-				it('updates hierarchy table records', function() {
-					return this.folderAncestor.findAll({where: {folderId: this.folders.abdf.id}}).bind(this)
-						.then(function(ancestors) {
-							expect(ancestors.length).to.equal(0);
-						});
-				});
-			});
-
-			describe('for 2nd level', function() {
-				beforeEach(function() {
-					return this.folders.abdf.updateAttributes({parentId: this.folders.a.id});
-				});
-
-				it('sets hierarchyLevel', function() {
-					return this.folder.find({where: {name: 'abdf'}})
-						.then(function(folder) {
-							expect(folder.hierarchyLevel).to.equal(2);
-						});
-				});
-
-				it('updates hierarchy table records', function() {
-					return this.folderAncestor.findAll({where: {folderId: this.folders.abdf.id}}).bind(this)
-						.then(function(ancestors) {
-							expect(ancestors.length).to.equal(1);
-							expect(ancestors[0].ancestorId).to.equal(this.folders.a.id);
-						});
-				});
-			});
-
-			describe('for 3rd level', function() {
-				beforeEach(function() {
-					return this.folders.abdf.updateAttributes({parentId: this.folders.ab.id});
-				});
-
-				it('sets hierarchyLevel', function() {
-					return this.folder.find({where: {name: 'abdf'}})
-						.then(function(folder) {
-							expect(folder.hierarchyLevel).to.equal(3);
-						});
-				});
-
-				it('updates hierarchy table records', function() {
-					return this.folderAncestor.findAll({where: {folderId: this.folders.abdf.id}, order: [['ancestorId']]}).bind(this)
-						.then(function(ancestors) {
-							expect(ancestors.length).to.equal(2);
-							expect(ancestors[0].ancestorId).to.equal(this.folders.a.id);
-							expect(ancestors[1].ancestorId).to.equal(this.folders.ab.id);
-						});
-				});
-			});
-
-			describe('descendents', function() {
-				beforeEach(function() {
-					return this.folders.ab.updateAttributes({parentId: this.folders.ac.id});
-				});
-
-				it('sets hierarchyLevel for descendents', function() {
-					return this.folder.find({where: {name: 'abdf'}})
-						.then(function(folder) {
-							expect(folder.hierarchyLevel).to.equal(5);
-						});
-				});
-
-				it('updates hierarchy table records for descendents', function() {
-					return this.folder.find({
-						where: {id: this.folders.abdf.id},
-						include: [{model: this.folder, as: 'ancestors'}],
-						order: [[{model: this.folder, as: 'ancestors'}, 'hierarchyLevel']]
-					}).bind(this)
-						.then(function(folder) {
-							var ancestors = folder.ancestors;
-							expect(ancestors.length).to.equal(4);
-							expect(ancestors[0].id).to.equal(this.folders.a.id);
-							expect(ancestors[1].id).to.equal(this.folders.ac.id);
-							expect(ancestors[2].id).to.equal(this.folders.ab.id);
-							expect(ancestors[3].id).to.equal(this.folders.abd.id);
-						});
-				});
-			});
-
-			describe('errors', function() {
-				it('throws error if trying to make parent one of descendents', function() {
-					var promise = this.folders.a.updateAttributes({parentId: this.folders.ab.id});
-					return expect(promise).to.be.rejectedWith('Parent cannot be a child of itself');
-				});
-			});
-		});
-
-
+		commonTest();
 	});
 
 	describe('Methods', function() {
@@ -348,7 +247,11 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 			return this.folder.update({parentId: null}, {where: {parentId: {ne: null}}, hooks: false});
 		});
 
-		describe('#create', function() {
+		commonTest();	
+	});
+
+	function commonTest(){
+				describe('#create', function() {
 			describe('for root level', function() {
 				it('sets hierarchyLevel', function() {
 					return this.folder.find({where: {name: 'a'}})
@@ -1260,5 +1163,5 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 				});
 			});
 		});
-	});
+	}
 });

@@ -108,7 +108,7 @@ var Support = {
 		var seq = new Sequelize(db, user, pass, options);
 
 		if(process.env.DIALECT === 'postgres' || process.env.DIALECT === 'postgres-native'){
-			seq.query('create schema schematest');
+			seq.query('CREATE SCHEMA IF NOT EXISTS "schematest"');
 		}
 
 		return seq;
