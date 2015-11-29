@@ -111,10 +111,12 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 
 	describe('Methods with schema', function() {
 		beforeEach(function() {
+			var schemaName = 'schematest';
+
 			this.folder = this.sequelize.define('folder', {
 				name: Sequelize.STRING
 			},{
-				schema: 'hr',
+				schema: schemaName,
 				// scopes do not affect the behavior of the model unless
 				// 'switched on' with a Model.scope(name) call
 				scopes: {
@@ -129,14 +131,14 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 				}
 			});
 
-			this.folder.isHierarchy({camelThrough: true, throughSchema: 'hr'});
+			this.folder.isHierarchy({camelThrough: true, throughSchema: schemaName});
 
 			this.folderAncestor = this.sequelize.models.folderAncestor;
 
 			this.drive = this.sequelize.define('drive', {
 				name: Sequelize.STRING
 			},{
-				schema: 'hr'
+				schema: schemaName
 			});
 
 			this.drive.hasMany(this.folder);
@@ -280,7 +282,7 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 
 
 	});
-	
+
 	describe('Methods', function() {
 		beforeEach(function() {
 			this.folder = this.sequelize.define('folder', {
