@@ -109,6 +109,178 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 		});
 	});
 
+	describe('Methods with schema', function() {
+		beforeEach(function() {
+			this.folder = this.sequelize.define('folder', {
+				name: Sequelize.STRING
+			},{
+				schema: 'hr',
+				// scopes do not affect the behavior of the model unless
+				// 'switched on' with a Model.scope(name) call
+				scopes: {
+					// return the objects with the drive populated
+					withDrive: (function () {
+						return {
+							include: [{
+								model: this.drive
+							}]
+						};
+					}).bind(this)
+				}
+			});
+
+			this.folder.isHierarchy({camelThrough: true, throughSchema: 'hr'});
+
+			this.folderAncestor = this.sequelize.models.folderAncestor;
+
+			this.drive = this.sequelize.define('drive', {
+				name: Sequelize.STRING
+			},{
+				schema: 'hr'
+			});
+
+			this.drive.hasMany(this.folder);
+			this.folder.belongsTo(this.drive);
+
+			return this.sequelize.sync({ force: true }).bind(this)
+				.then(function () {
+					return this.drive.create({name: 'a'});
+				})
+				.then(function(drive) {
+					this.drives = {a: drive};
+					this.folders = {};
+
+					return Promise.each([
+						{name: 'a', parentName: null},
+						{name: 'ab', parentName: 'a'},
+						{name: 'ac', parentName: 'a'},
+						{name: 'abd', parentName: 'ab'},
+						{name: 'abe', parentName: 'ab'},
+						{name: 'abdf', parentName: 'abd'},
+						{name: 'abdg', parentName: 'abd'}
+					], function(folderParams) {
+						// get parent
+						var parent = this.folders[folderParams.parentName];
+						folderParams.parentId = parent ? parent.id : null;
+
+						return drive.createFolder({name: folderParams.name, parentId: folderParams.parentId}).bind(this)
+							.then(function(folder) {
+								this.folders[folder.name] = folder;
+							});
+					}.bind(this));
+				});
+		});
+
+		afterEach(function() {
+			// set parentId of all folders to null
+			// (to avoid foreign constraint error in SQLite when dropping table)
+			return this.folder.update({parentId: null}, {where: {parentId: {ne: null}}, hooks: false});
+		});
+
+		describe('#updateAttributes', function() {
+			describe('for root level', function() {
+				beforeEach(function() {
+					return this.folders.abdf.updateAttributes({parentId: null});
+				});
+
+				it('sets hierarchyLevel', function() {
+					return this.folder.find({where: {name: 'abdf'}})
+						.then(function(folder) {
+							expect(folder.hierarchyLevel).to.equal(1);
+						});
+				});
+
+				it('updates hierarchy table records', function() {
+					return this.folderAncestor.findAll({where: {folderId: this.folders.abdf.id}}).bind(this)
+						.then(function(ancestors) {
+							expect(ancestors.length).to.equal(0);
+						});
+				});
+			});
+
+			describe('for 2nd level', function() {
+				beforeEach(function() {
+					return this.folders.abdf.updateAttributes({parentId: this.folders.a.id});
+				});
+
+				it('sets hierarchyLevel', function() {
+					return this.folder.find({where: {name: 'abdf'}})
+						.then(function(folder) {
+							expect(folder.hierarchyLevel).to.equal(2);
+						});
+				});
+
+				it('updates hierarchy table records', function() {
+					return this.folderAncestor.findAll({where: {folderId: this.folders.abdf.id}}).bind(this)
+						.then(function(ancestors) {
+							expect(ancestors.length).to.equal(1);
+							expect(ancestors[0].ancestorId).to.equal(this.folders.a.id);
+						});
+				});
+			});
+
+			describe('for 3rd level', function() {
+				beforeEach(function() {
+					return this.folders.abdf.updateAttributes({parentId: this.folders.ab.id});
+				});
+
+				it('sets hierarchyLevel', function() {
+					return this.folder.find({where: {name: 'abdf'}})
+						.then(function(folder) {
+							expect(folder.hierarchyLevel).to.equal(3);
+						});
+				});
+
+				it('updates hierarchy table records', function() {
+					return this.folderAncestor.findAll({where: {folderId: this.folders.abdf.id}, order: [['ancestorId']]}).bind(this)
+						.then(function(ancestors) {
+							expect(ancestors.length).to.equal(2);
+							expect(ancestors[0].ancestorId).to.equal(this.folders.a.id);
+							expect(ancestors[1].ancestorId).to.equal(this.folders.ab.id);
+						});
+				});
+			});
+
+			describe('descendents', function() {
+				beforeEach(function() {
+					return this.folders.ab.updateAttributes({parentId: this.folders.ac.id});
+				});
+
+				it('sets hierarchyLevel for descendents', function() {
+					return this.folder.find({where: {name: 'abdf'}})
+						.then(function(folder) {
+							expect(folder.hierarchyLevel).to.equal(5);
+						});
+				});
+
+				it('updates hierarchy table records for descendents', function() {
+					return this.folder.find({
+						where: {id: this.folders.abdf.id},
+						include: [{model: this.folder, as: 'ancestors'}],
+						order: [[{model: this.folder, as: 'ancestors'}, 'hierarchyLevel']]
+					}).bind(this)
+						.then(function(folder) {
+							var ancestors = folder.ancestors;
+							expect(ancestors.length).to.equal(4);
+							expect(ancestors[0].id).to.equal(this.folders.a.id);
+							expect(ancestors[1].id).to.equal(this.folders.ac.id);
+							expect(ancestors[2].id).to.equal(this.folders.ab.id);
+							expect(ancestors[3].id).to.equal(this.folders.abd.id);
+						});
+				});
+			});
+
+			describe('errors', function() {
+				it('throws error if trying to make parent one of descendents', function() {
+					var promise = this.folders.a.updateAttributes({parentId: this.folders.ab.id});
+					return expect(promise).to.be.rejectedWith('Parent cannot be a child of itself');
+				});
+			});
+		});
+
+
+	});
+	
 	describe('Methods', function() {
 		beforeEach(function() {
 			this.folder = this.sequelize.define('folder', {
