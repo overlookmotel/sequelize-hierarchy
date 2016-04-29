@@ -109,6 +109,79 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 		});
 	});
 
+	describe('Methods with schema', function() {
+		beforeEach(function() {
+			var schemaName = 'schematest';
+
+			this.folder = this.sequelize.define('folder', {
+				name: Sequelize.STRING
+			},{
+				schema: schemaName,
+				// scopes do not affect the behavior of the model unless
+				// 'switched on' with a Model.scope(name) call
+				scopes: {
+					// return the objects with the drive populated
+					withDrive: (function () {
+						return {
+							include: [{
+								model: this.drive
+							}]
+						};
+					}).bind(this)
+				}
+			});
+
+			this.folder.isHierarchy({camelThrough: true, throughSchema: schemaName});
+
+			this.folderAncestor = this.sequelize.models.folderAncestor;
+
+			this.drive = this.sequelize.define('drive', {
+				name: Sequelize.STRING
+			},{
+				schema: schemaName
+			});
+
+			this.drive.hasMany(this.folder);
+			this.folder.belongsTo(this.drive);
+
+			return this.sequelize.sync({ force: true }).bind(this)
+				.then(function () {
+					return this.drive.create({name: 'a'});
+				})
+				.then(function(drive) {
+					this.drives = {a: drive};
+					this.folders = {};
+
+					return Promise.each([
+						{name: 'a', parentName: null},
+						{name: 'ab', parentName: 'a'},
+						{name: 'ac', parentName: 'a'},
+						{name: 'abd', parentName: 'ab'},
+						{name: 'abe', parentName: 'ab'},
+						{name: 'abdf', parentName: 'abd'},
+						{name: 'abdg', parentName: 'abd'}
+					], function(folderParams) {
+						// get parent
+						var parent = this.folders[folderParams.parentName];
+						folderParams.parentId = parent ? parent.id : null;
+
+						return drive.createFolder({name: folderParams.name, parentId: folderParams.parentId}).bind(this)
+							.then(function(folder) {
+								this.folders[folder.name] = folder;
+							});
+					}.bind(this));
+				});
+		});
+
+		afterEach(function() {
+			// set parentId of all folders to null
+			// (to avoid foreign constraint error in SQLite when dropping table)
+			return this.folder.update({parentId: null}, {where: {parentId: {ne: null}}, hooks: false});
+		});
+
+		commonTest();
+	});
+
 	describe('Methods', function() {
 		beforeEach(function() {
 			this.folder = this.sequelize.define('folder', {
@@ -173,6 +246,11 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 			// (to avoid foreign constraint error in SQLite when dropping table)
 			return this.folder.update({parentId: null}, {where: {parentId: {ne: null}}, hooks: false});
 		});
+
+		commonTest();
+	});
+
+	function commonTest() {
 
 		describe('#create', function() {
 			describe('for root level', function() {
@@ -1086,5 +1164,5 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 				});
 			});
 		});
-	});
+	}
 });
