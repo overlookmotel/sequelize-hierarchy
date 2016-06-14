@@ -2,6 +2,12 @@
 
 # Nested hierarchies for Sequelize
 
+[![NPM version](https://img.shields.io/npm/v/sequelize-hierarchy.svg)](https://www.npmjs.com/package/sequelize-hierarchy)
+[![Build Status](https://img.shields.io/travis/overlookmotel/sequelize-hierarchy/master.svg)](http://travis-ci.org/overlookmotel/sequelize-hierarchy)
+[![Dependency Status](https://img.shields.io/david/overlookmotel/sequelize-hierarchy.svg)](https://david-dm.org/overlookmotel/sequelize-hierarchy)
+[![Dev dependency Status](https://img.shields.io/david/dev/overlookmotel/sequelize-hierarchy.svg)](https://david-dm.org/overlookmotel/sequelize-hierarchy)
+[![Coverage Status](https://img.shields.io/coveralls/overlookmotel/sequelize-hierarchy/master.svg)](https://coveralls.io/r/overlookmotel/sequelize-hierarchy)
+
 ## What's it for?
 
 Relational databases aren't very good at dealing with nested hierarchies.
@@ -19,12 +25,6 @@ Fetching the parent or children of any record is easy, but if you want to retrie
 This plugin for [Sequelize](http://sequelizejs.com/) solves this problem.
 
 ## Current status
-
-[![NPM version](https://img.shields.io/npm/v/sequelize-hierarchy.svg)](https://www.npmjs.com/package/sequelize-hierarchy)
-[![Build Status](https://img.shields.io/travis/overlookmotel/sequelize-hierarchy/master.svg)](http://travis-ci.org/overlookmotel/sequelize-hierarchy)
-[![Dependency Status](https://img.shields.io/david/overlookmotel/sequelize-hierarchy.svg)](https://david-dm.org/overlookmotel/sequelize-hierarchy)
-[![Dev dependency Status](https://img.shields.io/david/dev/overlookmotel/sequelize-hierarchy.svg)](https://david-dm.org/overlookmotel/sequelize-hierarchy)
-[![Coverage Status](https://img.shields.io/coveralls/overlookmotel/sequelize-hierarchy/master.svg)](https://coveralls.io/r/overlookmotel/sequelize-hierarchy)
 
 API is stable. All features and options are fairly well tested. Works with all dialects of SQL supported by Sequelize (MySQL, Postgres, SQLite) except for Microsoft SQL Server.
 
@@ -54,7 +54,7 @@ require('sequelize-hierarchy')(Sequelize);
 ```js
 var sequelize = new Sequelize('database', 'user', 'password');
 
-var folder = sequelize.define('folder', name: { type: Sequelize.STRING });
+var folder = sequelize.define('folder', { name: { type: Sequelize.STRING } });
 folder.isHierarchy();
 ```
 
@@ -158,8 +158,21 @@ thisFolder.getDescendents()
 
 ### Options
 
-The following options can be passed to `Model#isHierarchy( options )`.
+The following options can be passed to `Model#isHierarchy( { /* options */ } )` or in a model definition:
+
+```js
+var folder = sequelize.define('folder', { name: Sequelize.STRING }, { hierarchy: { /* options */ } });
+```
+
 Defaults are inherited from `sequelize.options.hierarchy` if defined in call to `new Sequelize()`.
+
+Examples:
+
+```js
+folder.isHierarchy( { as: 'above' } );
+
+var folder = sequelize.define('folder', { name: Sequelize.STRING }, { hierarchy: { as: 'above' } });
+```
 
 #### Aliases for relations
 
@@ -216,15 +229,7 @@ Requires a database called 'sequelize_test' and a db user 'sequelize_test' with 
 
 See [changelog.md](https://github.com/overlookmotel/sequelize-hierarchy/blob/master/changelog.md)
 
-## TODO
-
-* Create more efficient function for bulkCreate (+ alter sequelize bulkCreate to do single multi-row insertion?). Would not affect API or behavior, just improve performance.
-* Ensure all tests work within transactions
-
-## Known issues
-
-* beforeUpdate hook function assumes that item has not been updated since it was originally retrieved from DB
-* All hooks should be within transactions
+## Issues
 
 If you discover a bug, please raise an issue on Github. https://github.com/overlookmotel/sequelize-hierarchy/issues
 
