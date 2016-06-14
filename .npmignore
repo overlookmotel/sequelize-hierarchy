@@ -1,4 +1,7 @@
 test
-README.md
-changelog.md
 coverage
+.editorconfig
+.gitignore
+.jshintrc
+.npmignore
+.travis.yml

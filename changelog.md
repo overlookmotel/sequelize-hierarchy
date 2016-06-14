@@ -255,4 +255,5 @@ Breaking changes:
 * Only support node v0.10 upwards
 * Replace `Makefile` with npm scripts
 * Travis tests node v4 + v6
+* Update `.npmignore`
 * Update license
