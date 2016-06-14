@@ -7,7 +7,7 @@ node_js:
   - "6"
 
 script:
-  - "make test"
+  - "npm test"
 
 before_script:
   - "mysql -e 'create database sequelize_test;'"
