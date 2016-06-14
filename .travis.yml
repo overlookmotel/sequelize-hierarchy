@@ -1,3 +1,14 @@
+language: node_js
+
+node_js:
+  - "0.10"
+  - "0.12"
+  - "4"
+  - "6"
+
+script:
+  - "make test"
+
 before_script:
   - "mysql -e 'create database sequelize_test;'"
   - "psql -c 'create database sequelize_test;' -U postgres"
@@ -6,45 +17,44 @@ before_script:
   - "export SEQ_PG_PW=postgres"
   - 'if [ "$SEQ_VERSION" ]; then npm install sequelize@^$SEQ_VERSION.0.0; fi'
 
-script:
-  - "make test"
-
 env:
-  - DB=mysql DIALECT=mysql
-  - DB=mysql DIALECT=postgres
-  - DB=mysql DIALECT=postgres-native
-  - DB=mysql DIALECT=sqlite
-  - DB=mysql DIALECT=mariadb
-  - DB=mysql DIALECT=mssql
-  - DB=mysql DIALECT=mysql SEQ_VERSION=2
-  - DB=mysql DIALECT=postgres SEQ_VERSION=2
-  - DB=mysql DIALECT=postgres-native SEQ_VERSION=2
-  - DB=mysql DIALECT=sqlite SEQ_VERSION=2
-  - DB=mysql DIALECT=mariadb SEQ_VERSION=2
-  - DB=mysql DIALECT=mssql SEQ_VERSION=2
-
-language: node_js
-
-node_js:
-  - "0.10"
-  - "0.12"
-
-branches:
-  only:
-    - master
-    - dev
+  global:
+    - CXX=g++-4.8
+  matrix:
+    - DB=mysql DIALECT=mysql
+    - DB=mysql DIALECT=postgres
+    - DB=mysql DIALECT=postgres-native
+    - DB=mysql DIALECT=sqlite
+    - DB=mysql DIALECT=mariadb
+    - DB=mysql DIALECT=mssql
+    - DB=mysql DIALECT=mysql SEQ_VERSION=2
+    - DB=mysql DIALECT=postgres SEQ_VERSION=2
+    - DB=mysql DIALECT=postgres-native SEQ_VERSION=2
+    - DB=mysql DIALECT=sqlite SEQ_VERSION=2
+    - DB=mysql DIALECT=mariadb SEQ_VERSION=2
+    - DB=mysql DIALECT=mssql SEQ_VERSION=2
 
 matrix:
   fast_finish: true
   include:
-    - node_js: "0.10"
+    - node_js: "4"
       env: DB=mysql DIALECT=mysql COVERAGE=true
   allow_failures:
     - env: DB=mysql DIALECT=mysql COVERAGE=true
     - env: DB=mysql DIALECT=mssql
     - env: DB=mysql DIALECT=mssql SEQ_VERSION=2
 
+branches:
+  only:
+    - master
+    - dev
+
 addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8
   postgresql: "9.3"
 
 sudo: false

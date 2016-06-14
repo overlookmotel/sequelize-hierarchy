@@ -252,4 +252,5 @@ Breaking changes:
 
 ## Next
 
+* Travis tests node v4 + v6
 * Update license
