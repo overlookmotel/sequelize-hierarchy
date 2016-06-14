@@ -253,6 +253,7 @@ Breaking changes:
 ## Next
 
 * Update database module dependencies in line with `sequelize` v3.23.3
+* Update dev dependencies
 * Only support node v0.10 upwards
 * Replace `Makefile` with npm scripts
 * Travis tests node v4 + v6
