@@ -249,3 +249,7 @@ Breaking changes:
 
 * Add `throughSchema` option (#41)
 * Tests for `through` options
+
+## Next
+
+* Update license
