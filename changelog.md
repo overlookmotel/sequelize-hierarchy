@@ -252,5 +252,6 @@ Breaking changes:
 
 ## Next
 
+* Only support node v0.10 upwards
 * Travis tests node v4 + v6
 * Update license
