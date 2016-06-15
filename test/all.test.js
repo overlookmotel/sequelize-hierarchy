@@ -27,11 +27,30 @@ console.log('Sequelize version:', sequelizeVersion);
 console.log('Dialect:', Support.sequelize.options.dialect);
 
 describe(Support.getTestDialectTeaser('Tests'), function () {
-	before(function() {
-		// if postgres, create schema
-		if (Support.sequelize.options.dialect == 'postgres') return Support.sequelize.query('CREATE SCHEMA IF NOT EXISTS "schematest"');
+	// run tests
+	beforeEach(function() {
+		this.schema = undefined;
 	});
 
+	tests();
+
+	// if postgres, run tests again with schemas
+	if (Support.sequelize.options.dialect == 'postgres') {
+		describe('With schemas', function() {
+			before(function() {
+				return Support.sequelize.query('CREATE SCHEMA IF NOT EXISTS "schematest"');
+			});
+
+			beforeEach(function() {
+				this.schema = 'schematest';
+			});
+
+			tests();
+		});
+	}
+});
+
+function tests() {
 	describe('Hierarchy creation', function() {
 		it('works via isHierarchy()', function() {
 			var folder = this.sequelize.define('folder', {
@@ -116,18 +135,6 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 	});
 
 	describe('Methods', function() {
-		this.schema = undefined;
-		methodTests();
-	});
-
-	if (Support.sequelize.options.dialect == 'postgres') {
-		describe('Methods with schemas', function() {
-			this.schema = 'schematest';
-			methodTests();
-		});
-	}
-
-	function methodTests() {
 		beforeEach(function() {
 			this.folder = this.sequelize.define('folder', {
 				name: Sequelize.STRING
@@ -1122,5 +1129,5 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 				});
 			});
 		});
-	}
-});
+	});
+}

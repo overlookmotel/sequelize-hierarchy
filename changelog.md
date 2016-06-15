@@ -269,6 +269,7 @@ Breaking changes:
 * `update` throws error if item is its own parent (closes #23)
 * `create` throws error if item is its own parent
 * Throw specific error if try to create child of non-existent parent (closes #21)
+* Run all tests with schemas (closes #59)
 * Support sequelize's `fields` option
 * Refactor
 * Tests refactor
