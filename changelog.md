@@ -256,6 +256,7 @@ Breaking changes:
 * Update database module dependencies in line with `sequelize` v3.23.3
 * Update dev dependencies
 * Only support node v0.10 upwards
+* Remove testing on Travis for `mariadb` dialect
 * Replace `Makefile` with npm scripts
 * Travis tests node v4 + v6
 * README update
