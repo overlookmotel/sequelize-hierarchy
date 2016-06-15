@@ -263,3 +263,7 @@ Breaking changes:
 * README update
 * Update `.npmignore`
 * Update license
+
+## Next
+
+* Increase tests timeout for coveralls
