@@ -267,4 +267,5 @@ Breaking changes:
 ## Next
 
 * Support sequelize's `fields` option
+* Refactor
 * Increase tests timeout for coveralls
