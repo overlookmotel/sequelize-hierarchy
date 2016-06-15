@@ -244,6 +244,16 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 					});
 				});
 			});
+
+			describe('throws', function() {
+				it('if creating child of itself', function() {
+					return this.folder.max('id').bind(this).then(function(id) {
+						return expect(
+							this.folder.create({id: id + 1, parentId: id + 1})
+						).to.be.rejectedWith(this.sequelize.HierarchyError, 'Parent cannot be a child of itself');
+					});
+				});
+			});
 		});
 
 		describe('#updateAttributes', function() {
