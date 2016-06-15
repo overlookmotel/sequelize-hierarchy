@@ -21,11 +21,18 @@ chai.config.includeStack = true;
 // tests
 
 /* jshint expr: true */
-/* global describe, it, beforeEach, afterEach */
+/* global describe, it, before, beforeEach, afterEach */
 
 console.log('Sequelize version:', sequelizeVersion);
 
+var isPostgres = (['postgres', 'postgres-native'].indexOf(Support.sequelize.options.dialect) != -1);
+
 describe(Support.getTestDialectTeaser('Tests'), function () {
+	before(function() {
+		// if postgres, create schema
+		if (isPostgres) return Support.sequelize.query('CREATE SCHEMA IF NOT EXISTS "schematest"');
+	});
+
 	describe('Hierarchy creation', function() {
 		it('works via isHierarchy()', function() {
 			var folder = this.sequelize.define('folder', {
@@ -110,6 +117,18 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 	});
 
 	describe('Methods', function() {
+		this.schema = undefined;
+		methodTests();
+	});
+
+	if (isPostgres) {
+		describe('Methods with schemas', function() {
+			this.schema = 'schematest';
+			methodTests();
+		});
+	}
+
+	function methodTests() {
 		beforeEach(function() {
 			this.folder = this.sequelize.define('folder', {
 				name: Sequelize.STRING
@@ -125,7 +144,8 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 							}]
 						};
 					}).bind(this)
-				}
+				},
+				schema: this.schema
 			});
 
 			this.folder.isHierarchy({camelThrough: true});
@@ -1055,7 +1075,7 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 
 		describe('#rebuildHierarchy', function() {
 			beforeEach(function() {
-				return this.folderAncestor.destroy({truncate: true}).bind(this)
+				return this.folderAncestor.destroy({where: {}}).bind(this)
 				.then(function() {
 					return this.folder.update({hierarchyLevel: 999}, {where: {id: {ne: 0}}});
 				})
@@ -1086,5 +1106,5 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 				});
 			});
 		});
-	});
+	}
 });

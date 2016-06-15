@@ -252,6 +252,7 @@ Breaking changes:
 
 ## Next
 
+* Schemas support (closes #46)
 * Update `lodash` dependency
 * Update database module dependencies in line with `sequelize` v3.23.3
 * Update dev dependencies
