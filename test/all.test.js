@@ -349,10 +349,17 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 				});
 			});
 
-			describe('errors', function() {
-				it('throws error if trying to make parent one of descendents', function() {
-					var promise = this.folders.a.updateAttributes({parentId: this.folders.ab.id});
-					return expect(promise).to.be.rejectedWith('Parent cannot be a child of itself');
+			describe('throws', function() {
+				it('if making item child of itself', function() {
+					return expect(
+						this.folders.a.updateAttributes({parentId: this.folders.a.id})
+					).to.be.rejectedWith(this.sequelize.HierarchyError, 'Parent cannot be a child of itself');
+				});
+
+				it('if making item child of one of its own descendents', function() {
+					return expect(
+						this.folders.a.updateAttributes({parentId: this.folders.ab.id})
+					).to.be.rejectedWith(this.sequelize.HierarchyError, 'Parent cannot be a child of itself');
 				});
 			});
 		});

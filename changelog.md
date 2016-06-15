@@ -266,6 +266,7 @@ Breaking changes:
 
 ## Next
 
+* `update` throws error if item is its own parent (closes #23)
 * `create` throws error if item is its own parent
 * Throw specific error if try to create child of non-existent parent (closes #21)
 * Support sequelize's `fields` option
