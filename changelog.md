@@ -250,7 +250,7 @@ Breaking changes:
 * Add `throughSchema` option (#41)
 * Tests for `through` options
 
-## Next
+## 0.6.0
 
 * Schemas support (closes #46)
 * Update `lodash` dependency
