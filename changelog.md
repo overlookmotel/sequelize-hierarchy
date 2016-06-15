@@ -266,6 +266,7 @@ Breaking changes:
 
 ## Next
 
+* Throw specific error if try to create child of non-existent parent (closes #21)
 * Support sequelize's `fields` option
 * Refactor
 * Increase tests timeout for coveralls
