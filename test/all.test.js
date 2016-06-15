@@ -24,13 +24,12 @@ chai.config.includeStack = true;
 /* global describe, it, before, beforeEach, afterEach */
 
 console.log('Sequelize version:', sequelizeVersion);
-
-var isPostgres = (['postgres', 'postgres-native'].indexOf(Support.sequelize.options.dialect) != -1);
+console.log('Dialect:', Support.sequelize.options.dialect);
 
 describe(Support.getTestDialectTeaser('Tests'), function () {
 	before(function() {
 		// if postgres, create schema
-		if (isPostgres) return Support.sequelize.query('CREATE SCHEMA IF NOT EXISTS "schematest"');
+		if (Support.sequelize.options.dialect == 'postgres') return Support.sequelize.query('CREATE SCHEMA IF NOT EXISTS "schematest"');
 	});
 
 	describe('Hierarchy creation', function() {
@@ -121,7 +120,7 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 		methodTests();
 	});
 
-	if (isPostgres) {
+	if (Support.sequelize.options.dialect == 'postgres') {
 		describe('Methods with schemas', function() {
 			this.schema = 'schematest';
 			methodTests();
