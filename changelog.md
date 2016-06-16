@@ -264,7 +264,7 @@ Breaking changes:
 * Update `.npmignore`
 * Update license
 
-## Next
+## 0.7.0
 
 * `throughSchema` option defaults to `model.options.schema` (closes #60)
 * `update` throws error if item is its own parent (closes #23)
