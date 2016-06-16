@@ -266,6 +266,7 @@ Breaking changes:
 
 ## Next
 
+* `throughSchema` option defaults to `model.options.schema` (closes #60)
 * `update` throws error if item is its own parent (closes #23)
 * `create` throws error if item is its own parent
 * Throw specific error if try to create child of non-existent parent (closes #21)
@@ -274,3 +275,7 @@ Breaking changes:
 * Refactor
 * Tests refactor
 * Increase tests timeout for coveralls
+
+Breaking changes:
+
+* `throughSchema` option defaults to `model.options.schema`

@@ -198,7 +198,7 @@ These affect the naming of accessors e.g. `instance.getParent()`
 
 * `through`: Name of hierarchy (through) model. Defaults to `'<model name>ancestor'`
 * `throughTable`: Name of hierarchy (through) table. Defaults to `'<model name plural>ancestors'`
-* `throughSchema`: Schema of hierarchy (through) table. Defaults to `undefined`, and is optional.
+* `throughSchema`: Schema of hierarchy (through) table. Defaults to `model.options.schema`, and is optional.
 * `freezeTableName`: When `true`, through table name is same as through model name. Inherits from sequelize define options
 * `camelThrough`: When `true`, through model name and table name are camelized (i.e. `folderAncestor` not `folderancestor`). Inherits from sequelize define options
 
