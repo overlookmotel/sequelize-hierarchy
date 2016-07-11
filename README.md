@@ -54,7 +54,7 @@ require('sequelize-hierarchy')(Sequelize);
 ```js
 var sequelize = new Sequelize('database', 'user', 'password');
 
-var folder = sequelize.define('folder', { name: { type: Sequelize.STRING } });
+var folder = sequelize.define('folder', { name: Sequelize.STRING });
 folder.isHierarchy();
 ```
 
@@ -78,7 +78,11 @@ The column and table names etc can be modified by passing options to `.isHierarc
 Hierarchies can also be created in `define()`:
 
 ```js
-var folder = sequelize.define('folder', { name: Sequelize.STRING }, { hierarchy: true });
+var folder = sequelize.define('folder', {
+    name: Sequelize.STRING
+}, {
+    hierarchy: true
+});
 ```
 
 or on an attribute in `define()`:
@@ -87,7 +91,7 @@ or on an attribute in `define()`:
 var folder = sequelize.define('folder', {
 	name: Sequelize.STRING,
 	parentId: {
-		type: Sequelize.INTEGER.UNSIGNED,
+		type: Sequelize.INTEGER,
 		hierarchy: true
 	}
 });
@@ -119,7 +123,14 @@ folder.findAll({ hierarchy: true }).then(function(results) {
 });
 
 // get all the descendents of a particular item
-folder.find({ where: { name: 'a' }, include: { model: folder, as: 'descendents', hierarchy: true } }).then(function(result) {
+folder.find({
+    where: { name: 'a' },
+    include: {
+        model: folder,
+        as: 'descendents',
+        hierarchy: true
+    }
+}).then(function(result) {
 	// result =
 	// { id: 1, parentId: null, name: 'a', children: [
 	//		{ id: 2, parentId: 1, name: 'ab', children: [
@@ -161,7 +172,11 @@ thisFolder.getDescendents()
 The following options can be passed to `Model#isHierarchy( { /* options */ } )` or in a model definition:
 
 ```js
-var folder = sequelize.define('folder', { name: Sequelize.STRING }, { hierarchy: { /* options */ } });
+var folder = sequelize.define('folder', {
+    name: Sequelize.STRING
+}, {
+    hierarchy: { /* options */ }
+});
 ```
 
 Defaults are inherited from `sequelize.options.hierarchy` if defined in call to `new Sequelize()`.
@@ -171,7 +186,11 @@ Examples:
 ```js
 folder.isHierarchy( { as: 'above' } );
 
-var folder = sequelize.define('folder', { name: Sequelize.STRING }, { hierarchy: { as: 'above' } });
+var folder = sequelize.define('folder', {
+    name: Sequelize.STRING
+}, {
+    hierarchy: { as: 'above' }
+});
 ```
 
 #### Aliases for relations
