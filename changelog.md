@@ -285,7 +285,7 @@ Breaking changes:
 * Fix: `primaryKey` option (closes #67)
 * Tidy npm scripts
 
-## Next
+## 0.7.2
 
 * Fix: Wrong ordering of children (closes #32)
 * Fix: When deleting instance attributes from `dataValues`, check is a Sequelize Model instance
