@@ -283,3 +283,4 @@ Breaking changes:
 ## Next
 
 * Fix: `primaryKey` option (closes #67)
+* Tidy npm scripts
