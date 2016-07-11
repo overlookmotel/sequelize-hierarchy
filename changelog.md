@@ -279,3 +279,7 @@ Breaking changes:
 Breaking changes:
 
 * `throughSchema` option defaults to `model.options.schema`
+
+## Next
+
+* Fix: `primaryKey` option (closes #67)
