@@ -223,6 +223,8 @@ Errors thrown by the plugin are of type `HierarchyError`. The error class can be
 
 Use `npm test` to run the tests. Use `npm run cover` to check coverage.
 
+To run tests on a particular database, use `npm run test-mysql`, `npm run test-postgres`, `npm run test-postgres-native`, `npm run test-sqlite` or `npm run test-mssql`.
+
 Requires a database called 'sequelize_test' and a db user 'sequelize_test' with no password.
 
 ## Changelog
