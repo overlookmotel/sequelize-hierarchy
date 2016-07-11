@@ -280,7 +280,7 @@ Breaking changes:
 
 * `throughSchema` option defaults to `model.options.schema`
 
-## Next
+## 0.7.1
 
 * Fix: `primaryKey` option (closes #67)
 * Tidy npm scripts
