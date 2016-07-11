@@ -173,14 +173,16 @@ function tests() {
 				this.drives = {a: drive};
 				this.folders = {};
 
+				// NB folders are created not in name order to ensure ordering works correctly in later tests
+				// https://github.com/overlookmotel/sequelize-hierarchy/issues/32
 				return Promise.each([
 					{name: 'a', parentName: null},
-					{name: 'ab', parentName: 'a'},
 					{name: 'ac', parentName: 'a'},
-					{name: 'abd', parentName: 'ab'},
+					{name: 'ab', parentName: 'a'},
 					{name: 'abe', parentName: 'ab'},
-					{name: 'abdf', parentName: 'abd'},
-					{name: 'abdg', parentName: 'abd'}
+					{name: 'abd', parentName: 'ab'},
+					{name: 'abdg', parentName: 'abd'},
+					{name: 'abdf', parentName: 'abd'}
 				], function(folderParams) {
 					// get parent
 					var parent = this.folders[folderParams.parentName];
@@ -625,7 +627,8 @@ function tests() {
 							model: this.folder,
 							where: {name: 'a'},
 							include: {model: this.folder, as: 'descendents', hierarchy: true}
-						}
+						},
+						order: [[{model: this.folder}, {model: this.folder, as: 'descendents'}, 'name']]
 					})
 					.then(function(drives) {
 						expect(drives.length).to.equal(1);
@@ -669,7 +672,8 @@ function tests() {
 								where: {name: 'a'},
 								include: {model: this.folder, as: 'descendents', hierarchy: true}
 							}
-						}
+						},
+						order: [[{model: this.drive}, {model: this.folder}, {model: this.folder, as: 'descendents'}, 'name']]
 					})
 					.then(function(folder) {
 						expect(folder.name).to.equal('a');
@@ -1120,12 +1124,12 @@ function tests() {
 				return this.folderAncestor.findAll({where: {ancestorId: this.folders.a.id}, order: [['folderId']]}).bind(this)
 				.then(function(descendents) {
 					expect(descendents.length).to.equal(6);
-					expect(descendents[0].folderId).to.equal(this.folders.ab.id);
-					expect(descendents[1].folderId).to.equal(this.folders.ac.id);
-					expect(descendents[2].folderId).to.equal(this.folders.abd.id);
-					expect(descendents[3].folderId).to.equal(this.folders.abe.id);
-					expect(descendents[4].folderId).to.equal(this.folders.abdf.id);
-					expect(descendents[5].folderId).to.equal(this.folders.abdg.id);
+					expect(descendents[0].folderId).to.equal(this.folders.ac.id);
+					expect(descendents[1].folderId).to.equal(this.folders.ab.id);
+					expect(descendents[2].folderId).to.equal(this.folders.abe.id);
+					expect(descendents[3].folderId).to.equal(this.folders.abd.id);
+					expect(descendents[4].folderId).to.equal(this.folders.abdg.id);
+					expect(descendents[5].folderId).to.equal(this.folders.abdf.id);
 				});
 			});
 		});

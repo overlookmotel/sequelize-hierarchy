@@ -284,3 +284,7 @@ Breaking changes:
 
 * Fix: `primaryKey` option (closes #67)
 * Tidy npm scripts
+
+## Next
+
+* Fix: Wrong ordering of children (closes #32)
