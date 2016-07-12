@@ -112,7 +112,8 @@ var Support = {
 			.getQueryInterface()
 			.dropAllTables()
 			.then(function() {
-				sequelize.modelManager.daos = [];
+				if (sequelize.modelManager.daos) sequelize.modelManager.daos = [];
+				if (sequelize.modelManager.models) sequelize.modelManager.models = [];
 				sequelize.models = {};
 
 				return sequelize

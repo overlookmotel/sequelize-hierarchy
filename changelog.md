@@ -291,3 +291,7 @@ Breaking changes:
 * Fix: When deleting instance attributes from `dataValues`, check is a Sequelize Model instance
 * npm scripts for running tests on different databases
 * README update
+
+## Next
+
+* Tests `Support.clearDatabase()` clears all models in Sequelize v3.x
