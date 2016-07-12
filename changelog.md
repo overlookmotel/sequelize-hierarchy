@@ -292,7 +292,7 @@ Breaking changes:
 * npm scripts for running tests on different databases
 * README update
 
-## Next
+## 0.7.3
 
 * Tests `Support.clearDatabase()` clears all models in Sequelize v3.x
 * Travis CI runs on all branches (to support greenkeeper.io)
