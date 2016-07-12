@@ -295,3 +295,4 @@ Breaking changes:
 ## Next
 
 * Tests `Support.clearDatabase()` clears all models in Sequelize v3.x
+* Travis CI runs on all branches (to support greenkeeper.io)

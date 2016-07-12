@@ -42,11 +42,6 @@ matrix:
     - env: DB=mysql DIALECT=mssql
     - env: DB=mysql DIALECT=mssql SEQ_VERSION=2
 
-branches:
-  only:
-    - master
-    - dev
-
 addons:
   apt:
     sources:
