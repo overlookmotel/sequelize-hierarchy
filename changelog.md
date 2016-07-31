@@ -305,3 +305,4 @@ Breaking changes:
 
 * Fix: Support primary keys which are not called 'id'
 * Refactor: Use `.slice()` to clone arrays
+* Refactor `rebuildHierarchy()` for clarity
