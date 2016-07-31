@@ -304,5 +304,6 @@ Breaking changes:
 ## Next
 
 * Fix: Support primary keys which are not called 'id'
+* Fix: Support model fields with different table field names (closes #70)
 * Refactor: Use `.slice()` to clone arrays
 * Refactor `rebuildHierarchy()` for clarity
