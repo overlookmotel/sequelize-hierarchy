@@ -300,3 +300,7 @@ Breaking changes:
 ## 0.7.4
 
 * Refactor nesting of children (more robust fix for #32)
+
+## Next
+
+* Fix: Support primary keys which are not called 'id'
