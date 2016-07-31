@@ -301,7 +301,7 @@ Breaking changes:
 
 * Refactor nesting of children (more robust fix for #32)
 
-## Next
+## 0.7.5
 
 * Fix: Support primary keys which are not called 'id'
 * Fix: Support model fields with different table field names (closes #70)
