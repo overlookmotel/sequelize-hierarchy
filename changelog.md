@@ -304,3 +304,4 @@ Breaking changes:
 ## Next
 
 * Fix: Support primary keys which are not called 'id'
+* Refactor: Use `.slice()` to clone arrays
