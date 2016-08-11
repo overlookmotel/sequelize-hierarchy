@@ -24,7 +24,7 @@
     "mocha": "^2.5.3",
     "chai": "^3.5.0",
     "chai-as-promised": "^5.3.0",
-    "sequelize": "2.0.0 - 3.x.x",
+    "sequelize": "3.24.0",
     "mysql": "~2.10.1",
     "sqlite3": "^3.1.4",
     "pg": "^4.4.6",
