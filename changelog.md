@@ -308,7 +308,7 @@ Breaking changes:
 * Refactor: Use `.slice()` to clone arrays
 * Refactor `rebuildHierarchy()` for clarity
 
-## Next
+## 0.7.6
 
 * Fix: `beforeCreate` hook work with `options.fields`
 * Fix: Clone `options.fields` before mutating it to prevent `options` object being mutated externally
