@@ -310,4 +310,5 @@ Breaking changes:
 
 ## Next
 
+* Fix: Clone `options.fields` before mutating it to prevent `options` object being mutated externally
 * `.DS_Store` in `.gitignore`
