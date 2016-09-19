@@ -6,6 +6,10 @@ node_js:
   - "4"
   - "6"
 
+branches:
+  except:
+    - /^v\d+\./
+
 script:
   - "npm run travis"
 
