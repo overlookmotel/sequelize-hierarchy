@@ -314,6 +314,6 @@ Breaking changes:
 * Fix: Clone `options.fields` before mutating it to prevent `options` object being mutated externally
 * `.DS_Store` in `.gitignore`
 
-## Next
+## 0.7.7
 
 * Skip Travis CI runs on release tags
