@@ -307,3 +307,7 @@ Breaking changes:
 * Fix: Support model fields with different table field names (closes #70)
 * Refactor: Use `.slice()` to clone arrays
 * Refactor `rebuildHierarchy()` for clarity
+
+## Next
+
+* `.DS_Store` in `.gitignore`
