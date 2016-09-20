@@ -318,7 +318,7 @@ Breaking changes:
 
 * Skip Travis CI runs on release tags
 
-## Next
+## 0.8.0
 
 * Support Sequelize v4.x.x
 * Refactor `lib/modelExtends` to be a function returning an object
