@@ -317,3 +317,7 @@ Breaking changes:
 ## 0.7.7
 
 * Skip Travis CI runs on release tags
+
+## Next
+
+* Refactor `lib/modelExtends` to be a function returning an object
