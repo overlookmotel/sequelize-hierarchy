@@ -321,3 +321,4 @@ Breaking changes:
 ## Next
 
 * Refactor `lib/modelExtends` to be a function returning an object
+* Refactor `lib/errors` to be function not object
