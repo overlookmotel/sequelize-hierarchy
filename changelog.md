@@ -324,4 +324,5 @@ Breaking changes:
 * Refactor `lib/errors` to be function not object
 * Update `lodash` dependency
 * Update dev dependencies
+* Travis CI no tests for Node v0.10 + v0.12
 * Travis CI no tests for MS SQL
