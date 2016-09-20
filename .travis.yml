@@ -29,12 +29,10 @@ env:
     - DB=mysql DIALECT=postgres
     - DB=mysql DIALECT=postgres-native
     - DB=mysql DIALECT=sqlite
-    - DB=mysql DIALECT=mssql
     - DB=mysql DIALECT=mysql SEQ_VERSION=2
     - DB=mysql DIALECT=postgres SEQ_VERSION=2
     - DB=mysql DIALECT=postgres-native SEQ_VERSION=2
     - DB=mysql DIALECT=sqlite SEQ_VERSION=2
-    - DB=mysql DIALECT=mssql SEQ_VERSION=2
 
 matrix:
   fast_finish: true
@@ -43,8 +41,6 @@ matrix:
       env: DB=mysql DIALECT=mysql COVERAGE=true
   allow_failures:
     - env: DB=mysql DIALECT=mysql COVERAGE=true
-    - env: DB=mysql DIALECT=mssql
-    - env: DB=mysql DIALECT=mssql SEQ_VERSION=2
 
 addons:
   apt:
