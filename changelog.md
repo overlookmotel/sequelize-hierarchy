@@ -322,4 +322,5 @@ Breaking changes:
 
 * Refactor `lib/modelExtends` to be a function returning an object
 * Refactor `lib/errors` to be function not object
+* Update `lodash` dependency
 * Travis CI no tests for MS SQL
