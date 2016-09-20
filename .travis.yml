@@ -27,6 +27,10 @@ env:
     - DB=mysql DIALECT=postgres
     - DB=mysql DIALECT=postgres-native
     - DB=mysql DIALECT=sqlite
+    - DB=mysql DIALECT=mysql SEQ_VERSION=3
+    - DB=mysql DIALECT=postgres SEQ_VERSION=3
+    - DB=mysql DIALECT=postgres-native SEQ_VERSION=3
+    - DB=mysql DIALECT=sqlite SEQ_VERSION=3
     - DB=mysql DIALECT=mysql SEQ_VERSION=2
     - DB=mysql DIALECT=postgres SEQ_VERSION=2
     - DB=mysql DIALECT=postgres-native SEQ_VERSION=2
