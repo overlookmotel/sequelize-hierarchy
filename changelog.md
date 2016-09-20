@@ -338,3 +338,4 @@ Breaking changes:
 ## Next
 
 * Added cross-env & swapped single for double quotes to support Windows (#81)
+* Fix: Support `underscored: true` and `underscoredAll: true` options (closes #18)
