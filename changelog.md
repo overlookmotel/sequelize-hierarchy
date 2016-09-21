@@ -328,7 +328,7 @@ Breaking changes:
 * Travis CI no tests for Node v0.10 + v0.12
 * Travis CI no tests for MS SQL
 
-## Next
+## 1.0.0
 
 * Support only Node v4 upwards
 * Fix: Semver version ranges for patches
