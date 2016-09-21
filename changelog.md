@@ -333,3 +333,4 @@ Breaking changes:
 * Support only Node v4 upwards
 * Fix: Semver version ranges for patches
 * Refactor `lib/errors`
+* Increase tests timeout to 30 seconds
