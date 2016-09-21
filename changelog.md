@@ -330,5 +330,6 @@ Breaking changes:
 
 ## Next
 
+* Support only Node v4 upwards
 * Fix: Semver version ranges for patches
 * Refactor `lib/errors`
