@@ -327,3 +327,7 @@ Breaking changes:
 * Update dev dependencies
 * Travis CI no tests for Node v0.10 + v0.12
 * Travis CI no tests for MS SQL
+
+## Next
+
+* Refactor `lib/errors`
