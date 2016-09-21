@@ -330,4 +330,5 @@ Breaking changes:
 
 ## Next
 
+* Fix: Semver version ranges for patches
 * Refactor `lib/errors`
