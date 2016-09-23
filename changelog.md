@@ -334,3 +334,7 @@ Breaking changes:
 * Fix: Semver version ranges for patches
 * Refactor `lib/errors`
 * Increase tests timeout to 30 seconds
+
+## Next
+
+* Added cross-env & swapped single for double quotes to support Windows (#81)
