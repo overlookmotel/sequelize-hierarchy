@@ -18,7 +18,7 @@
     "semver-select": "^1.1.0"
   },
   "peerDependencies": {
-    "sequelize": "2.0.0 - 3.x.x || ^4.0.0-2"
+    "sequelize": "3.24.7"
   },
   "devDependencies": {
     "mocha": "^3.0.2",
