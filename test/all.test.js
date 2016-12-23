@@ -51,6 +51,67 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 });
 
 function tests() {
+	describe('underscored:true', function() {
+		/* jshint camelcase: false */
+		it('underscores fieldNames & foreignKeys', function() {
+			this.folder = this.sequelize.define('folder', {
+				name: Sequelize.STRING
+			}, {
+				underscored: true
+			});
+			this.folder.isHierarchy();
+			expect(this.folder.attributes).to.have.property('hierarchy_level');
+			expect(this.folder.attributes).to.have.property('parent_id');
+			expect(this.folder.associations.ancestors.through.model.attributes).to.have.property('folder_id');
+			expect(this.folder.associations.ancestors.through.model.attributes).to.have.property('ancestor_id');
+			expect(this.folder.associations.ancestors.foreignKey).to.equal('folder_id');
+			expect(this.folder.associations.children.foreignKey).to.equal('parent_id');
+		});
+		it('doesn\'t override user supplied names', function() {
+			this.folder = this.sequelize.define('folder', {
+				name: Sequelize.STRING
+			}, {
+				underscored: true
+			});
+			this.folder.isHierarchy({
+				levelFieldName: 'testFieldName',
+				foreignKey: 'testForeignKey',
+				throughKey: 'testThroughKey',
+				throughForeignKey: 'testThroughForeignKey'
+			});
+
+			expect(this.folder.attributes).to.have.property('testFieldName');
+			expect(this.folder.attributes).to.have.property('testForeignKey');
+			expect(this.folder.associations.ancestors.through.model.attributes).to.have.property('testThroughForeignKey');
+			expect(this.folder.associations.ancestors.through.model.attributes).to.have.property('testThroughKey');
+			expect(this.folder.associations.ancestors.foreignKey).to.equal('testThroughKey');
+			expect(this.folder.associations.children.foreignKey).to.equal('testForeignKey');
+			expect(this.folder.associations.ancestors.through.model.tableName).to.equal('foldersancestors');
+		});
+	});
+
+	describe('underscoredAll:true', function() {
+		/* jshint camelcase: false */
+		it('underscores throughTable', function() {
+			this.sequelize.options.define.underscoredAll = true;
+			this.folder = this.sequelize.define('folder', {
+				name: Sequelize.STRING
+			});
+			this.folder.isHierarchy();
+			expect(this.folder.associations.ancestors.through.model.tableName).to.equal('folders_ancestors');
+		});
+		it('doesn\'t override user supplied throughTable', function() {
+			this.folder = this.sequelize.define('folder', {
+				name: Sequelize.STRING
+			});
+			this.folder.isHierarchy({
+				throughTable: 'testThroughTable'
+			});
+			expect(this.folder.associations.ancestors.through.model.tableName).to.equal('testThroughTable');
+			delete this.sequelize.options.define.underscoredAll;
+		});
+	});
+
 	describe('Hierarchy creation', function() {
 		it('works via isHierarchy()', function() {
 			var folder = this.sequelize.define('folder', {
