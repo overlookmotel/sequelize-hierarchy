@@ -223,6 +223,8 @@ These affect the naming of accessors e.g. `instance.getParent()`
 * `freezeTableName`: When `true`, through table name is same as through model name. Inherits from sequelize define options
 * `camelThrough`: When `true`, through model name and table name are camelized (i.e. `folderAncestor` not `folderancestor`). Inherits from sequelize define options
 
+All auto-created field names respect the setting of `model.options.underscored` and the through table name respects `sequelize.options.define.underscoredAll`.
+
 #### Misc
 
 * `labels`: When `true`, creates an attribute `label` on the created `parentId` and `hierarchyLevel` fields which is a human-readable version of the field name. Inherits from sequelize define options or `false`

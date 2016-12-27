@@ -339,4 +339,7 @@ Breaking changes:
 
 * Remove Sequelize peer dependency to fix Travis fails
 * Added cross-env & swapped single for double quotes to support Windows (#81)
+
+## Next
+
 * Fix: Support `underscored: true` and `underscoredAll: true` options (closes #18)
