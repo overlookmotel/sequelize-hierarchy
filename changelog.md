@@ -343,3 +343,7 @@ Breaking changes:
 ## 1.2.0
 
 * Fix: Support `underscored: true` and `underscoredAll: true` options (closes #18)
+
+## Next
+
+* Fix: Allow `underscored: false` option on model to override global option
