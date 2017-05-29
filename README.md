@@ -1,5 +1,7 @@
 # sequelize-hierarchy.js
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/overlookmotel/sequelize-hierarchy.svg)](https://greenkeeper.io/)
+
 # Nested hierarchies for Sequelize
 
 [![NPM version](https://img.shields.io/npm/v/sequelize-hierarchy.svg)](https://www.npmjs.com/package/sequelize-hierarchy)
