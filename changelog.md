@@ -347,3 +347,4 @@ Breaking changes:
 ## Next
 
 * Fix: Allow `underscored: false` option on model to override global option
+* Run Travis CI on Node v8
