@@ -100,7 +100,7 @@ function tests() {
 
 			expect(folder.attributes.parentId.references).to.deep.equal(semverSelect(sequelizeVersion, {
 				'<3.0.1': 'folders',
-				'>=3.0.1 || ^4.0.0-0': {model: 'folders', key: 'id'}
+				'>=3.0.1 || ^4.0.0': {model: 'folders', key: 'id'}
 			}));
 		});
 
