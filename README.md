@@ -70,7 +70,7 @@ folder.isHierarchy();
   * `folder.hasMany(folder, {as: 'children', foreignKey: 'parentId'})`
   * `folder.belongsToMany(folder, {as: 'descendents', foreignKey: 'ancestorId', through: folderAncestor})`
   * `folder.belongsToMany(folder, {as: 'ancestors', foreignKey: 'folderId', through: folderAncestor})`
-* Creates hooks into standard Sequelize methods (create, update, destroy etc) to automatically update the ancestry table and `hierarchyLevel` field as details in the folder table change
+* Creates hooks into standard Sequelize methods (create, update, destroy, bulkCreate etc) to automatically update the ancestry table and `hierarchyLevel` field as details in the folder table change
 * Creates hooks into Sequelize's `Model#find()` and `Model#findAll()` methods so that hierarchies can be returned as javascript object tree structures
 
 The column and table names etc can be modified by passing options to `.isHierarchy()`. See below for details.
@@ -169,6 +169,8 @@ thisFolder.getAncestors()
 thisFolder.getDescendents()
 ```
 
+Setters work as usual e.g. `thisFolder.setParent()`, `thisFolder.addChild()`.
+
 ### Options
 
 The following options can be passed to `Model#isHierarchy( { /* options */ } )` or in a model definition:
@@ -237,6 +239,12 @@ To build the hierarchy data on an existing table, or if hierarchy data gets corr
 ```js
 folder.rebuildHierarchy()
 ```
+
+NB: In normal circumstances, you should never need to use this method. It is only intended for the above two use cases.
+
+### Bulk creation
+
+You can use `.bulkCreate()` method in the usual way. Ensure that parents are created before their children.
 
 ### Errors
 

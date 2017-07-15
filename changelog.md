@@ -352,3 +352,4 @@ Breaking changes:
 * Update `lodash` dependency
 * Update database library dev dependencies in line with Sequelize v4.3.2
 * Update dev dependencies
+* README update
