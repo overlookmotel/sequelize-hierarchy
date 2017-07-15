@@ -344,7 +344,7 @@ Breaking changes:
 
 * Fix: Support `underscored: true` and `underscoredAll: true` options (closes #18)
 
-## Next
+## 1.3.0
 
 * Fix: Allow `underscored: false` option on model to override global option
 * Fix: `rebuildHierarchy` support custom primary keys
