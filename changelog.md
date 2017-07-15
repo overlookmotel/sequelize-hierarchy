@@ -347,6 +347,7 @@ Breaking changes:
 ## Next
 
 * Fix: Allow `underscored: false` option on model to override global option
+* Fix: `rebuildHierarchy` support custom primary keys
 * Run Travis CI on Node v8
 * Update `sequelize` dev dependency to v4.3.2
 * Update `lodash` dependency
