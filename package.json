@@ -19,20 +19,20 @@
   },
   "devDependencies": {
     "mocha": "^3.0.2",
-    "chai": "^3.5.0",
-    "chai-as-promised": "^5.3.0",
-    "sequelize": "4.0.0-2",
-    "mysql": "~2.10.1",
+    "chai": "^4.1.0",
+    "chai-as-promised": "^7.1.1",
+    "sequelize": "4.3.2",
+    "mysql": "~2.13.0",
     "mysql2": "^1.0.0",
     "sqlite3": "^3.1.4",
     "pg": "^6.0.4",
     "pg-hstore": "^2.3.1",
     "pg-native": "^1.8.0",
-    "tedious": "^1.13.2",
+    "tedious": "^2.0.0",
     "jshint": "^2.9.3",
     "istanbul": "^0.4.5",
     "coveralls": "^2.11.14",
-    "cross-env": "^2.0.1"
+    "cross-env": "^5.0.1"
   },
   "keywords": [
     "sequelize",
