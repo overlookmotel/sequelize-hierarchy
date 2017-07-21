@@ -140,7 +140,7 @@ function tests() {
 		beforeEach(function() {
 			this.folder = this.sequelize.define('folder', {
 				name: Sequelize.STRING
-			},{
+			}, {
 				// scopes do not affect the behavior of the model unless
 				// 'switched on' with a Model.scope(name) call
 				scopes: {
