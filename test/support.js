@@ -109,8 +109,7 @@ var Support = {
 
 	clearDatabase: function(sequelize) {
 		return sequelize
-			.getQueryInterface()
-			.dropAllTables()
+			.drop()
 			.then(function() {
 				if (sequelize.modelManager.daos) sequelize.modelManager.daos = [];
 				if (sequelize.modelManager.models) sequelize.modelManager.models = [];

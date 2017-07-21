@@ -358,3 +358,4 @@ Breaking changes:
 ## Next
 
 * Fix: Tests aimed at Sequelize v4 will also run on v5
+* Tests drop all tables after each test

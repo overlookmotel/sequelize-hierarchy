@@ -30,6 +30,8 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 	// run tests
 	beforeEach(function() {
 		this.schema = undefined;
+
+		return Support.clearDatabase(this.sequelize);
 	});
 
 	tests();
