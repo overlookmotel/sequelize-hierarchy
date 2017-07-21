@@ -162,6 +162,8 @@ function tests() {
 
 			this.drive = this.sequelize.define('drive', {
 				name: Sequelize.STRING
+			}, {
+				schema: this.schema
 			});
 
 			this.drive.hasMany(this.folder);

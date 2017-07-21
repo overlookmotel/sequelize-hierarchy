@@ -358,4 +358,5 @@ Breaking changes:
 ## Next
 
 * Fix: Tests aimed at Sequelize v4 will also run on v5
+* Fix: Tests create `drive` model in correct schema
 * Tests drop all tables after each test
