@@ -354,3 +354,7 @@ Breaking changes:
 * Update database library dev dependencies in line with Sequelize v4.3.2
 * Update dev dependencies
 * README update
+
+## Next
+
+* Fix: Tests aimed at Sequelize v4 will also run on v5
