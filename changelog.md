@@ -355,7 +355,7 @@ Breaking changes:
 * Update dev dependencies
 * README update
 
-## Next
+## 1.3.1
 
 * Fix: Tests aimed at Sequelize v4 will also run on v5
 * Fix: Tests create `drive` model in correct schema
