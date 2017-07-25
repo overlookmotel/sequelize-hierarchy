@@ -30,6 +30,7 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 	// run tests
 	beforeEach(function() {
 		this.schema = undefined;
+		this.dynamicSchema = undefined;
 
 		return Support.clearDatabase(this.sequelize);
 	});
@@ -40,11 +41,25 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 	if (Support.sequelize.options.dialect == 'postgres') {
 		describe('With schemas', function() {
 			before(function() {
+				Support.sequelize.query('DROP TABLE "drive"');
+				Support.sequelize.query('DROP TABLE "folder"');
 				return Support.sequelize.query('CREATE SCHEMA IF NOT EXISTS "schematest"');
 			});
 
 			beforeEach(function() {
 				this.schema = 'schematest';
+			});
+
+			tests();
+
+			before(function() {
+				Support.sequelize.query('DROP SCHEMA "schematest"');
+				return Support.sequelize.query('CREATE SCHEMA IF NOT EXISTS "schematest"');
+			});
+
+			beforeEach(function() {
+				this.schema = undefined;
+				this.dynamicSchema = 'schematest';
 			});
 
 			tests();
@@ -169,9 +184,17 @@ function tests() {
 			this.drive.hasMany(this.folder);
 			this.folder.belongsTo(this.drive);
 
-			return this.sequelize.sync({ force: true }).bind(this)
+			var sync = this.sequelize
+			if (this.dynamicSchema) {
+				sync = sync.schema(this.dynamicSchema)
+			}
+			return sync.sync({ force: true }).bind(this)
 			.then(function () {
-				return this.drive.create({name: 'a'});
+				var drive = this.drive
+				if (this.dynamicSchema) {
+					drive = drive.schema(this.dynamicSchema)
+				}
+				return drive.create({name: 'a'});
 			})
 			.then(function(drive) {
 				this.drives = {a: drive};
