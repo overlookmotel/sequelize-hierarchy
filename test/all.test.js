@@ -39,10 +39,9 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 
 	// if postgres, run tests again with schemas
 	if (Support.sequelize.options.dialect == 'postgres') {
+		
 		describe('With schemas', function() {
 			before(function() {
-				Support.sequelize.query('DROP TABLE "drive"');
-				Support.sequelize.query('DROP TABLE "folder"');
 				return Support.sequelize.query('CREATE SCHEMA IF NOT EXISTS "schematest"');
 			});
 
@@ -51,9 +50,10 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 			});
 
 			tests();
+		});
 
+		describe('With dynamic schemas', function() {
 			before(function() {
-				Support.sequelize.query('DROP SCHEMA "schematest"');
 				return Support.sequelize.query('CREATE SCHEMA IF NOT EXISTS "schematest"');
 			});
 
@@ -64,6 +64,7 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 
 			tests();
 		});
+
 	}
 });
 
@@ -184,11 +185,11 @@ function tests() {
 			this.drive.hasMany(this.folder);
 			this.folder.belongsTo(this.drive);
 
-			var sync = this.sequelize;
+			var syncOptions = { force: true };
 			if (this.dynamicSchema) {
-				sync = sync.schema(this.dynamicSchema);
+				syncOptions.schema = this.dynamicSchema;
 			}
-			return sync.sync({ force: true }).bind(this)
+			return this.sequelize.sync(syncOptions).bind(this)
 			.then(function () {
 				var drive = this.drive;
 				if (this.dynamicSchema) {
