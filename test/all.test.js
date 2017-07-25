@@ -39,7 +39,7 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 
 	// if postgres, run tests again with schemas
 	if (Support.sequelize.options.dialect == 'postgres') {
-		
+
 		describe('With schemas', function() {
 			before(function() {
 				return Support.sequelize.query('CREATE SCHEMA IF NOT EXISTS "schematest"');
@@ -227,7 +227,11 @@ function tests() {
 		afterEach(function() {
 			// set parentId of all folders to null
 			// (to avoid foreign constraint error in SQLite when dropping table)
-			return this.folder.update({parentId: null}, {where: {parentId: {ne: null}}, hooks: false});
+			var folder = this.folder;
+			if (this.dynamicSchema) {
+				folder = folder.schema(this.dynamicSchema);
+			}
+			return folder.update({parentId: null}, {where: {parentId: {ne: null}}, hooks: false});
 		});
 
 		describe('#create', function() {
