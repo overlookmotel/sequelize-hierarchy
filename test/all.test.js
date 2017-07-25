@@ -184,15 +184,15 @@ function tests() {
 			this.drive.hasMany(this.folder);
 			this.folder.belongsTo(this.drive);
 
-			var sync = this.sequelize
+			var sync = this.sequelize;
 			if (this.dynamicSchema) {
-				sync = sync.schema(this.dynamicSchema)
+				sync = sync.schema(this.dynamicSchema);
 			}
 			return sync.sync({ force: true }).bind(this)
 			.then(function () {
-				var drive = this.drive
+				var drive = this.drive;
 				if (this.dynamicSchema) {
-					drive = drive.schema(this.dynamicSchema)
+					drive = drive.schema(this.dynamicSchema);
 				}
 				return drive.create({name: 'a'});
 			})
