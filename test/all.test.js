@@ -1216,4 +1216,48 @@ function tests() {
 			});
 		});
 	});
+
+	describe('Option: onDelete: Cascade', function () {
+		it('Delete node with all childs via onCascade option', function() {
+			var folder = this.sequelize.define('folder', {
+				name: Sequelize.STRING
+			});
+
+			folder.isHierarchy({camelThrough: true, onDelete: 'CASCADE' });
+
+			expect(folder.hierarchy).to.be.ok;
+
+
+			var a10;
+			var a21; // parent_id: a1.0
+			var a22; // parent_id: a1.0
+
+			this.sequelize.sync()
+				.then(() => folder.create( { name: 'a1.0' }))
+				.then((a10folder) => {
+					a10 = a10folder;
+					expect(a10.name).to.eql('a1.0');
+					return folder.create( { name: 'a2.1', parent_id: a10.id });
+				})
+				.then((a21folder) => {
+					a21 = a21folder
+					expect(a21.name).to.eql('a2.1');
+					expect(a22.hierarchy_level).to.eql(2);
+					return folder.create( { name: 'a2.2', parent_id: a10.id});
+				})
+				.then((a22folder) => {
+					a22 = a22folder;
+					expect(a22.name).to.eql('a2.2');
+					expect(a22.hierarchy_level).to.eql(2);
+
+					// removing a1.0 node shoudl remove all nodes:
+					return folder.destroy( { where: { id: a10.id } })
+				})
+				.then(() => folder.findAll({})) // check if all table is empty
+				.then((foundFolders) => {
+					expect(foundFolders).to.be.null;
+				});
+		});
+	});
+
 }
