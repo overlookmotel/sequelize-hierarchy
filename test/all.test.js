@@ -1218,12 +1218,6 @@ function tests() {
 	});
 
 	describe('Option: onDelete: Cascade', function () {
-		afterEach(function() {
-			// set parentId of all folders to null
-			// (to avoid foreign constraint error in SQLite when dropping table)
-			return this.folder.update({parentId: null}, {where: {parentId: {ne: null}}, hooks: false});
-		});
-
 		it('Delete node with all childs via onCascade option', function() {
 			var folder = this.sequelize.define('folder', {
 				name: Sequelize.STRING
@@ -1238,30 +1232,36 @@ function tests() {
 			var a21; // parent_id: a1.0
 			var a22; // parent_id: a1.0
 
-			this.sequelize.sync()
-				.then(() => folder.create( { name: 'a1.0' }))
-				.then((a10folder) => {
+			return this.sequelize.sync()
+				.then(function () {
+					return folder.create( { name: 'a1.0' });
+				})
+				.then(function (a10folder) {
 					a10 = a10folder;
 					expect(a10.name).to.eql('a1.0');
-					return folder.create( { name: 'a2.1', parent_id: a10.id });
+					return folder.create( { name: 'a2.1', parentId: a10.id });
 				})
-				.then((a21folder) => {
-					a21 = a21folder
+				.then(function (a21folder) {
+					a21 = a21folder;
 					expect(a21.name).to.eql('a2.1');
-					expect(a22.hierarchy_level).to.eql(2);
-					return folder.create( { name: 'a2.2', parent_id: a10.id});
+					expect(a21.hierarchyLevel).to.eql(2);
+					return folder.create( { name: 'a2.2', parentId: a10.id});
 				})
-				.then((a22folder) => {
+				.then(function (a22folder) {
 					a22 = a22folder;
 					expect(a22.name).to.eql('a2.2');
-					expect(a22.hierarchy_level).to.eql(2);
+					expect(a22.hierarchyLevel).to.eql(2);
 
-					// removing a1.0 node shoudl remove all nodes:
+					// removing a1.0 node should remove all nodes:
 					return folder.destroy( { where: { id: a10.id } })
 				})
-				.then(() => folder.findAll({})) // check if all table is empty
-				.then((foundFolders) => {
-					expect(foundFolders).to.be.null;
+				.then(function () {
+					// check if all table is empty
+					return folder.findAll({});
+				})
+				.then(function (foundFolders) {
+					expect(foundFolders).to.be.an('array');
+					expect(foundFolders).to.be.empty;
 				});
 		});
 	});
