@@ -18,6 +18,7 @@ before_script:
   - "export SEQ_MYSQL_USER=root"
   - "export SEQ_PG_USER=postgres"
   - "export SEQ_PG_PW=postgres"
+  - npm dedupe
   - 'if [ "$SEQ_VERSION" ]; then npm install sequelize@^$SEQ_VERSION.0.0; fi'
 
 env:
