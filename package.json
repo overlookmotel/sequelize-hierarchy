@@ -18,21 +18,21 @@
     "semver-select": "^1.1.0"
   },
   "devDependencies": {
+    "mocha": "^3.4.2",
     "chai": "^4.1.0",
     "chai-as-promised": "^7.1.1",
-    "coveralls": "^2.13.1",
-    "cross-env": "^5.0.1",
-    "istanbul": "^0.4.5",
-    "jshint": "^2.9.5",
-    "mocha": "^3.4.2",
+    "sequelize": "^4.3.2",
     "mysql": "~2.10.1",
     "mysql2": "^1.2.0",
+    "sqlite3": "^3.1.4",
     "pg": "^6.1.0",
     "pg-hstore": "^2.3.2",
     "pg-native": "^1.10.0",
-    "sequelize": "^4.3.2",
-    "sqlite3": "^3.1.9",
-    "tedious": "^1.14.0"
+    "tedious": "^1.14.0",
+    "jshint": "^2.9.5",
+    "istanbul": "^0.4.5",
+    "coveralls": "^2.13.1",
+    "cross-env": "^5.0.1"
   },
   "keywords": [
     "sequelize",
