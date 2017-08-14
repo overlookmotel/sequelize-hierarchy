@@ -1218,15 +1218,21 @@ function tests() {
 	});
 
 	describe('Option: onDelete: Cascade', function () {
+		afterEach(function() {
+			// set parentId of all folders to null
+			// (to avoid foreign constraint error in SQLite when dropping table)
+			return this.folder.update({parentId: null}, {where: {parentId: {ne: null}}, hooks: false});
+		});
+
 		it('Delete node with all childs via onCascade option', function() {
 			var folder = this.sequelize.define('folder', {
 				name: Sequelize.STRING
 			});
 
+			this.folder = folder;
 			folder.isHierarchy({camelThrough: true, onDelete: 'CASCADE' });
 
 			expect(folder.hierarchy).to.be.ok;
-
 
 			var a10;
 			var a21; // parent_id: a1.0
