@@ -26,7 +26,7 @@ chai.config.includeStack = true;
 console.log('Sequelize version:', sequelizeVersion);
 console.log('Dialect:', Support.sequelize.options.dialect);
 
-describe(Support.getTestDialectTeaser('Tests'), function () {
+describe.skip(Support.getTestDialectTeaser('Tests'), function () {
 	// run tests
 	beforeEach(function() {
 		this.schema = undefined;
