@@ -1,5 +1,7 @@
 # sequelize-hierarchy.js
 
+(this is fork with few fixes/patches)
+
 # Nested hierarchies for Sequelize
 
 [![NPM version](https://img.shields.io/npm/v/sequelize-hierarchy.svg)](https://www.npmjs.com/package/sequelize-hierarchy)
