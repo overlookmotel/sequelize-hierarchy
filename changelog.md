@@ -361,3 +361,9 @@ Breaking changes:
 * Fix: Tests create `drive` model in correct schema
 * Tests drop all tables after each test
 * Code style in tests
+
+## 1.3.2
+
+* Fix: underscoredIf bug
+* Fix: pg@6 vulnerability (upgrade to pg@7 and fix tests for old sequelize)
+* Fix: searchPath parameter support
