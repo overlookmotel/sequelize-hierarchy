@@ -1,6 +1,6 @@
 # sequelize-hierarchy.js
 
-(this is fork with few fixes/patches)
+(this is fork with few fixes/patches - see [Changelog](/changelog.md))
 
 # Nested hierarchies for Sequelize
 
