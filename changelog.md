@@ -361,3 +361,7 @@ Breaking changes:
 * Fix: Tests create `drive` model in correct schema
 * Tests drop all tables after each test
 * Code style in tests
+
+# Next
+
+* Fix: Bug introduced by removal of `Sequelize.Utils._` in Sequelize v4.11.0 (closes #142)
