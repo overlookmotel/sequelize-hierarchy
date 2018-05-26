@@ -21,7 +21,7 @@ chai.config.includeStack = true;
 // tests
 
 /* jshint expr: true */
-/* global describe, it, before, beforeEach, afterEach */
+/* global describe, it, before, beforeEach, after, afterEach */
 
 console.log('Sequelize version:', sequelizeVersion);
 console.log('Dialect:', Support.sequelize.options.dialect);
@@ -32,6 +32,10 @@ describe(Support.getTestDialectTeaser('Tests'), function () {
 		this.schema = undefined;
 
 		return Support.clearDatabase(this.sequelize);
+	});
+
+	after(function() {
+		this.sequelize.close();
 	});
 
 	tests();
