@@ -362,6 +362,10 @@ Breaking changes:
 * Tests drop all tables after each test
 * Code style in tests
 
-# Next
+## 1.3.2
 
 * Fix: Bug introduced by removal of `Sequelize.Utils._` in Sequelize v4.11.0 (closes #142)
+
+## Next
+
+* Fix: Typo in changelog
