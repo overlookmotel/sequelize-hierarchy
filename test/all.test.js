@@ -100,7 +100,7 @@ function tests() {
 				parentId: Sequelize.INTEGER
 			});
 
-			var folderAttributes = shUtils.getModelAttributes(folder);
+			var folderAttributes = shUtils.getModelAttributes(folder, Sequelize);
 
 			folder.isHierarchy({camelThrough: true});
 
@@ -1156,11 +1156,11 @@ function tests() {
 					underscored: true
 				});
 
-				var folderAttributes = shUtils.getModelAttributes(folder);
+				var folderAttributes = shUtils.getModelAttributes(folder, Sequelize);
 
 				folder.isHierarchy();
 
-				var ancestorsAttributes = shUtils.getModelAttributes(folder.associations.ancestors.through.model);
+				var ancestorsAttributes = shUtils.getModelAttributes(folder.associations.ancestors.through.model, Sequelize);
 
 				expect(folderAttributes).to.have.property('hierarchy_level');
 				expect(folderAttributes).to.have.property('parent_id');
@@ -1177,7 +1177,7 @@ function tests() {
 					underscored: true
 				});
 
-				var folderAttributes = shUtils.getModelAttributes(folder);
+				var folderAttributes = shUtils.getModelAttributes(folder, Sequelize);
 
 				folder.isHierarchy({
 					levelFieldName: 'testFieldName',
@@ -1186,7 +1186,7 @@ function tests() {
 					throughForeignKey: 'testThroughForeignKey'
 				});
 
-				var ancestorsAttributes = shUtils.getModelAttributes(folder.associations.ancestors.through.model);
+				var ancestorsAttributes = shUtils.getModelAttributes(folder.associations.ancestors.through.model, Sequelize);
 
 				expect(folderAttributes).to.have.property('testFieldName');
 				expect(folderAttributes).to.have.property('testForeignKey');
