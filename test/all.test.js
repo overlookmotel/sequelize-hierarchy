@@ -98,9 +98,9 @@ function tests() {
 
 			folder.isHierarchy({camelThrough: true});
 
-			expect(folder.attributes.hierarchyLevel.type).not.to.equal(Sequelize.STRING);
+			expect((folder.rawAttributes || folder.attributes).hierarchyLevel.type).not.to.equal(Sequelize.STRING);
 
-			expect(folder.attributes.parentId.references).to.deep.equal(semverSelect(sequelizeVersion, {
+			expect((folder.rawAttributes || folder.attributes).parentId.references).to.deep.equal(semverSelect(sequelizeVersion, {
 				'<3.0.1': 'folders',
 				'>=3.0.1': {model: 'folders', key: 'id'}
 			}));
@@ -209,7 +209,7 @@ function tests() {
 		describe('#create', function() {
 			describe('for root level', function() {
 				it('sets hierarchyLevel', function() {
-					return this.folder.find({where: {name: 'a'}})
+					return this.folder.findOne({where: {name: 'a'}})
 					.then(function(folder) {
 						expect(folder.hierarchyLevel).to.equal(1);
 					});
@@ -225,7 +225,7 @@ function tests() {
 
 			describe('for 2nd level', function() {
 				it('sets hierarchyLevel', function() {
-					return this.folder.find({where: {name: 'ab'}})
+					return this.folder.findOne({where: {name: 'ab'}})
 					.then(function(folder) {
 						expect(folder.hierarchyLevel).to.equal(2);
 					});
@@ -242,7 +242,7 @@ function tests() {
 
 			describe('for 3rd level', function() {
 				it('sets hierarchyLevel', function() {
-					return this.folder.find({where: {name: 'abd'}})
+					return this.folder.findOne({where: {name: 'abd'}})
 					.then(function(folder) {
 						expect(folder.hierarchyLevel).to.equal(3);
 					});
@@ -276,7 +276,7 @@ function tests() {
 				});
 
 				it('sets hierarchyLevel', function() {
-					return this.folder.find({where: {name: 'abdf'}})
+					return this.folder.findOne({where: {name: 'abdf'}})
 					.then(function(folder) {
 						expect(folder.hierarchyLevel).to.equal(1);
 					});
@@ -296,7 +296,7 @@ function tests() {
 				});
 
 				it('sets hierarchyLevel', function() {
-					return this.folder.find({where: {name: 'abdf'}})
+					return this.folder.findOne({where: {name: 'abdf'}})
 					.then(function(folder) {
 						expect(folder.hierarchyLevel).to.equal(2);
 					});
@@ -317,7 +317,7 @@ function tests() {
 				});
 
 				it('sets hierarchyLevel', function() {
-					return this.folder.find({where: {name: 'abdf'}})
+					return this.folder.findOne({where: {name: 'abdf'}})
 					.then(function(folder) {
 						expect(folder.hierarchyLevel).to.equal(3);
 					});
@@ -339,14 +339,14 @@ function tests() {
 				});
 
 				it('sets hierarchyLevel for descendents', function() {
-					return this.folder.find({where: {name: 'abdf'}})
+					return this.folder.findOne({where: {name: 'abdf'}})
 					.then(function(folder) {
 						expect(folder.hierarchyLevel).to.equal(5);
 					});
 				});
 
 				it('updates hierarchy table records for descendents', function() {
-					return this.folder.find({
+					return this.folder.findOne({
 						where: {id: this.folders.abdf.id},
 						include: [{model: this.folder, as: 'ancestors'}],
 						order: [[{model: this.folder, as: 'ancestors'}, 'hierarchyLevel']]
@@ -403,11 +403,11 @@ function tests() {
 			});
 
 			it('sets hierarchyLevel for all rows', function() {
-				return this.folder.find({where: {name: 'abeh'}}).bind(this)
+				return this.folder.findOne({where: {name: 'abeh'}}).bind(this)
 				.then(function(folder) {
 					expect(folder.hierarchyLevel).to.equal(4);
 
-					return this.folder.find({where: {name: 'abi'}});
+					return this.folder.findOne({where: {name: 'abi'}});
 				})
 				.then(function(folder) {
 					expect(folder.hierarchyLevel).to.equal(3);
@@ -415,7 +415,7 @@ function tests() {
 			});
 
 			it('creates hierarchy table records for all rows', function() {
-				return this.folder.find({
+				return this.folder.findOne({
 					where: {name: 'abeh'},
 					include: [{model: this.folder, as: 'ancestors'}],
 					order: [[{model: this.folder, as: 'ancestors'}, 'hierarchyLevel']]
@@ -427,7 +427,7 @@ function tests() {
 					expect(ancestors[1].id).to.equal(this.folders.ab.id);
 					expect(ancestors[2].id).to.equal(this.folders.abe.id);
 
-					return this.folder.find({
+					return this.folder.findOne({
 						where: {name: 'abi'},
 						include: [{model: this.folder, as: 'ancestors'}],
 						order: [[{model: this.folder, as: 'ancestors'}, 'hierarchyLevel']]
@@ -449,7 +449,7 @@ function tests() {
 
 			it('sets hierarchyLevel for all rows', function() {
 				return Promise.each(['abdf', 'abdg'], function(name) {
-					return this.folder.find({where: {name: name}}).bind(this)
+					return this.folder.findOne({where: {name: name}}).bind(this)
 					.then(function(folder) {
 						expect(folder.hierarchyLevel).to.equal(3);
 					});
@@ -458,7 +458,7 @@ function tests() {
 
 			it('creates hierarchy table records for all rows', function() {
 				return Promise.each(['abdf', 'abdg'], function(name) {
-					return this.folder.find({
+					return this.folder.findOne({
 						where: {name: name},
 						include: [{model: this.folder, as: 'ancestors'}],
 						order: [[{model: this.folder, as: 'ancestors'}, 'hierarchyLevel']]
@@ -495,7 +495,7 @@ function tests() {
 		describe('#find', function() {
 			describe('can retrieve', function() {
 				it('children', function() {
-					return this.folder.find({
+					return this.folder.findOne({
 						where: {name: 'a'},
 						include: [{model: this.folder, as: 'children'}],
 						order: [[{model: this.folder, as: 'children'}, 'name']]
@@ -508,7 +508,7 @@ function tests() {
 				});
 
 				it('descendents', function() {
-					return this.folder.find({
+					return this.folder.findOne({
 						where: {name: 'a'},
 						include: [{model: this.folder, as: 'descendents'}],
 						order: [[{model: this.folder, as: 'descendents'}, 'name']]
@@ -525,7 +525,7 @@ function tests() {
 				});
 
 				it('parent', function() {
-					return this.folder.find({
+					return this.folder.findOne({
 						where: {name: 'abdf'},
 						include: [{model: this.folder, as: 'parent'}]
 					}).bind(this)
@@ -536,7 +536,7 @@ function tests() {
 				});
 
 				it('ancestors', function() {
-					return this.folder.find({
+					return this.folder.findOne({
 						where: {name: 'abdf'},
 						include: [{model: this.folder, as: 'ancestors'}],
 						order: [[{model: this.folder, as: 'ancestors'}, 'hierarchyLevel']]
@@ -550,7 +550,7 @@ function tests() {
 				});
 
 				it('other associations', function() {
-					return this.folder.find({
+					return this.folder.findOne({
 						where: {name: 'abdf'},
 						include: this.drive
 					}).bind(this)
@@ -594,7 +594,7 @@ function tests() {
 				});
 
 				it('find gets a structured tree', function() {
-					return this.folder.find({
+					return this.folder.findOne({
 						where: {name: 'a'},
 						include: [{model: this.folder, as: 'descendents', hierarchy: true}],
 						order: [[{model: this.folder, as: 'descendents'}, 'name']]
@@ -667,7 +667,7 @@ function tests() {
 				});
 
 				it('find gets a structured tree when included from another model 2 deep', function() {
-					return this.folder.find({
+					return this.folder.findOne({
 						where: {name: 'a'},
 						include: {
 							model: this.drive,
@@ -751,7 +751,7 @@ function tests() {
 				});
 
 				it('with main model scoped', function() {
-					return this.scopedFolder.find({
+					return this.scopedFolder.findOne({
 						where: {name: 'a'},
 						include: [{model: this.folder, as: 'descendents', hierarchy: true}],
 						order: [[{model: this.folder, as: 'descendents'}, 'name']]
@@ -784,7 +784,7 @@ function tests() {
 				});
 
 				it('with hierarchy model scoped', function() {
-					return this.folder.find({
+					return this.folder.findOne({
 						where: {name: 'a'},
 						include: [{model: this.scopedFolder, as: 'descendents', hierarchy: true}],
 						order: [[{model: this.scopedFolder, as: 'descendents'}, 'name']]
@@ -817,7 +817,7 @@ function tests() {
 				});
 
 				it('with both models scoped', function() {
-					return this.scopedFolder.find({
+					return this.scopedFolder.findOne({
 						where: {name: 'a'},
 						include: [{model: this.scopedFolder, as: 'descendents', hierarchy: true}],
 						order: [[{model: this.scopedFolder, as: 'descendents'}, 'name']]
@@ -853,7 +853,7 @@ function tests() {
 
 			describe('handles empty result set with', function() {
 				it('#find', function() {
-					return this.folder.find({
+					return this.folder.findOne({
 						where: {name: 'z'}
 					}).bind(this)
 					.then(function(folder) {
@@ -871,7 +871,7 @@ function tests() {
 				});
 
 				it('#find with an include', function() {
-					return this.folder.find({
+					return this.folder.findOne({
 						where: {name: 'z'},
 						include: [{model: this.folder, as: 'parent'}]
 					}).bind(this)
@@ -881,7 +881,7 @@ function tests() {
 				});
 
 				it('#find with an empty include', function() {
-					return this.folder.find({
+					return this.folder.findOne({
 						where: {name: 'a'},
 						include: [{model: this.folder, as: 'parent'}]
 					}).bind(this)
@@ -891,7 +891,7 @@ function tests() {
 				});
 
 				it('#find with empty descendents', function() {
-					return this.folder.find({
+					return this.folder.findOne({
 						where: {name: 'abdg'},
 						include: [{model: this.folder, as: 'descendents', hierarchy: true}]
 					}).bind(this)
@@ -979,7 +979,7 @@ function tests() {
 				it('setParent', function() {
 					return this.folders.abdg.setParent(this.folders.a).bind(this)
 					.then(function() {
-						return this.folder.find({where: {name: 'abdg'}});
+						return this.folder.findOne({where: {name: 'abdg'}});
 					}).then(function(folder) {
 						expect(folder.parentId).to.equal(this.folders.a.id);
 						expect(folder.hierarchyLevel).to.equal(2);
@@ -990,7 +990,7 @@ function tests() {
 					beforeEach(function() {
 						return this.folders.abd.createParent({name: 'ach', parentId: this.folders.ac.id}).bind(this)
 						.then(function() {
-							return this.folder.find({where: {name: 'ach'}}).bind(this)
+							return this.folder.findOne({where: {name: 'ach'}}).bind(this)
 							.then(function(folder) {
 								this.folders.ach = folder;
 							});
@@ -1018,14 +1018,14 @@ function tests() {
 
 					describe('sets current item', function() {
 						it('to correct parent', function() {
-							return this.folder.find({where: {name: 'abd'}}).bind(this)
+							return this.folder.findOne({where: {name: 'abd'}}).bind(this)
 							.then(function(folder) {
 								expect(folder.parentId).to.equal(this.folders.ach.id);
 							});
 						});
 
 						it('with correct hierarchyLevel', function() {
-							return this.folder.find({where: {name: 'abd'}}).bind(this)
+							return this.folder.findOne({where: {name: 'abd'}}).bind(this)
 							.then(function(folder) {
 								expect(folder.hierarchyLevel).to.equal(4);
 							});
@@ -1046,7 +1046,7 @@ function tests() {
 				it('addChild', function() {
 					return this.folders.a.addChild(this.folders.abdg).bind(this)
 					.then(function() {
-						return this.folder.find({where: {name: 'abdg'}});
+						return this.folder.findOne({where: {name: 'abdg'}});
 					}).then(function(folder) {
 						expect(folder.parentId).to.equal(this.folders.a.id);
 						expect(folder.hierarchyLevel).to.equal(2);
@@ -1057,7 +1057,7 @@ function tests() {
 					beforeEach(function() {
 						return this.folders.ac.createChild({name: 'ach'}).bind(this)
 						.then(function() {
-							return this.folder.find({where: {name: 'ach'}});
+							return this.folder.findOne({where: {name: 'ach'}});
 						}).then(function(folder) {
 							this.folders.ach = folder;
 						});
@@ -1152,10 +1152,10 @@ function tests() {
 
 				folder.isHierarchy();
 
-				expect(folder.attributes).to.have.property('hierarchy_level');
-				expect(folder.attributes).to.have.property('parent_id');
-				expect(folder.associations.ancestors.through.model.attributes).to.have.property('folder_id');
-				expect(folder.associations.ancestors.through.model.attributes).to.have.property('ancestor_id');
+				expect((folder.rawAttributes || folder.attributes)).to.have.property('hierarchy_level');
+				expect((folder.rawAttributes || folder.attributes)).to.have.property('parent_id');
+				expect((folder.associations.ancestors.through.model.rawAttributes || folder.associations.ancestors.through.model.attributes)).to.have.property('folder_id');
+				expect((folder.associations.ancestors.through.model.rawAttributes || folder.associations.ancestors.through.model.attributes)).to.have.property('ancestor_id');
 				expect(folder.associations.ancestors.foreignKey).to.equal('folder_id');
 				expect(folder.associations.children.foreignKey).to.equal('parent_id');
 			});
@@ -1174,10 +1174,10 @@ function tests() {
 					throughForeignKey: 'testThroughForeignKey'
 				});
 
-				expect(folder.attributes).to.have.property('testFieldName');
-				expect(folder.attributes).to.have.property('testForeignKey');
-				expect(folder.associations.ancestors.through.model.attributes).to.have.property('testThroughForeignKey');
-				expect(folder.associations.ancestors.through.model.attributes).to.have.property('testThroughKey');
+				expect((folder.rawAttributes || folder.attributes)).to.have.property('testFieldName');
+				expect((folder.rawAttributes || folder.attributes)).to.have.property('testForeignKey');
+				expect((folder.associations.ancestors.through.model.rawAttributes || folder.associations.ancestors.through.model.attributes)).to.have.property('testThroughForeignKey');
+				expect((folder.associations.ancestors.through.model.rawAttributes || folder.associations.ancestors.through.model.attributes)).to.have.property('testThroughKey');
 				expect(folder.associations.ancestors.foreignKey).to.equal('testThroughKey');
 				expect(folder.associations.children.foreignKey).to.equal('testForeignKey');
 				expect(folder.associations.ancestors.through.model.tableName).to.equal('foldersancestors');
