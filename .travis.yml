@@ -24,26 +24,21 @@ env:
   global:
     - CXX=g++-4.8
   matrix:
-    - DB=mysql DIALECT=mysql
-    - DB=mysql DIALECT=postgres
-    - DB=mysql DIALECT=postgres-native
-    - DB=mysql DIALECT=sqlite
-    - DB=mysql DIALECT=mysql SEQ_VERSION=3
-    - DB=mysql DIALECT=postgres SEQ_VERSION=3
-    - DB=mysql DIALECT=postgres-native SEQ_VERSION=3
-    - DB=mysql DIALECT=sqlite SEQ_VERSION=3
-    - DB=mysql DIALECT=mysql SEQ_VERSION=2
-    - DB=mysql DIALECT=postgres SEQ_VERSION=2
-    - DB=mysql DIALECT=postgres-native SEQ_VERSION=2
-    - DB=mysql DIALECT=sqlite SEQ_VERSION=2
+    - DIALECT=sqlite
+    - DIALECT=mysql
+    - DIALECT=postgres
+    - DIALECT=postgres-native
+    - DIALECT=postgres SEQ_VERSION=4
+    - DIALECT=sqlite SEQ_VERSION=4
+    - DIALECT=postgres SEQ_VERSION=3
+    - DIALECT=sqlite SEQ_VERSION=3
+    - DIALECT=postgres SEQ_VERSION=2
+    - DIALECT=sqlite SEQ_VERSION=2
 
 matrix:
-  fast_finish: true
-  include:
-    - node_js: "4"
-      env: DB=mysql DIALECT=mysql COVERAGE=true
+#  fast_finish: true
   allow_failures:
-    - env: DB=mysql DIALECT=mysql COVERAGE=true
+    - env: DIALECT=mysql
 
 addons:
   apt:
