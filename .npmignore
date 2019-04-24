@@ -2,6 +2,7 @@ test
 coverage
 .editorconfig
 .gitignore
-.jshintrc
+.eslintignore
+.eslintrc.js
 .npmignore
 .travis.yml

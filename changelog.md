@@ -374,6 +374,7 @@ Breaking changes:
 * Rename `travis` npm script to `ci`
 * Rename `jshint` npm script to `lint`
 * Reorder dev dependencies
+* Dev: Replace JSHint with ESLint
 * Fix: Tests close sequelize connection at end to avoid hang
 * Fix: Typo in changelog
 * Update license year
