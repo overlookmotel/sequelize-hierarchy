@@ -9,7 +9,7 @@ branches:
     - /^v\d+\./
 
 script:
-  - "npm run travis"
+  - "npm run ci"
 
 before_script:
   - "mysql -e 'create database sequelize_test;'"
