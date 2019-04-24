@@ -373,6 +373,7 @@ Breaking changes:
 * Move entry point to `index.js` [refactor]
 * Rename `travis` npm script to `ci`
 * Rename `jshint` npm script to `lint`
+* Reorder dev dependencies
 * Fix: Tests close sequelize connection at end to avoid hang
 * Fix: Typo in changelog
 * Update license year
