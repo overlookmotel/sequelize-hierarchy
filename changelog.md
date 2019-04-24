@@ -379,6 +379,7 @@ Breaking changes:
 * Tests: Fix linting errors
 * Update `lodash` dependency
 * Update dev dependencies
+* Update Sequelize dev dependency to latest 4.x.x
 * Fix: Tests close sequelize connection at end to avoid hang
 * Fix: Typo in changelog
 * Update license year
