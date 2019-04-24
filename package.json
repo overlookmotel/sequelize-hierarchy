@@ -42,8 +42,8 @@
     "tree"
   ],
   "scripts": {
-    "test": "npm run jshint && npm run test-main",
-    "jshint": "jshint lib test",
+    "test": "npm run lint && npm run test-main",
+    "lint": "jshint lib test",
     "test-mysql": "cross-env DIALECT=mysql npm run test-main",
     "test-postgres": "cross-env DIALECT=postgres npm run test-main",
     "test-postgres-native": "cross-env DIALECT=postgres-native npm run test-main",

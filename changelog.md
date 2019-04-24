@@ -372,5 +372,6 @@ Breaking changes:
 * Travis run tests on Node v10
 * Move entry point to `index.js` [refactor]
 * Rename `travis` npm script to `ci`
+* Rename `jshint` npm script to `lint`
 * Fix: Tests close sequelize connection at end to avoid hang
 * Fix: Typo in changelog
