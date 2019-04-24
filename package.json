@@ -2,7 +2,7 @@
   "name": "sequelize-hierarchy",
   "version": "1.3.2",
   "description": "Nested hierarchies for Sequelize",
-  "main": "./lib/",
+  "main": "index.js",
   "author": {
     "name": "Overlook Motel"
   },

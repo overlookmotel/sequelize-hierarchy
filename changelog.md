@@ -370,5 +370,6 @@ Breaking changes:
 
 * Drop support for Node v4 + v6 [major]
 * Travis run tests on Node v10
+* Move entry point to `index.js` [refactor]
 * Fix: Tests close sequelize connection at end to avoid hang
 * Fix: Typo in changelog
