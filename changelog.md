@@ -381,6 +381,7 @@ Breaking changes:
 * Update dev dependencies
 * Update Sequelize dev dependency to latest 4.x.x
 * Update database library dev dependencies
+* Git ignore `package-lock.json`
 * Fix: Tests close sequelize connection at end to avoid hang
 * Fix: Typo in changelog
 * Update license year
