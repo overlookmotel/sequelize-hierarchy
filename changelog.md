@@ -376,6 +376,7 @@ Breaking changes:
 * Reorder dev dependencies
 * Dev: Replace JSHint with ESLint
 * Fix linting errors
+* Tests: Fix linting errors
 * Fix: Tests close sequelize connection at end to avoid hang
 * Fix: Typo in changelog
 * Update license year
