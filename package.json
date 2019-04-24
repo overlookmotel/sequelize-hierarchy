@@ -31,14 +31,14 @@
     "eslint-plugin-import": "^2.17.2",
     "istanbul": "^0.4.5",
     "mocha": "^6.1.4",
-    "mysql": "~2.10.1",
-    "mysql2": "^1.2.0",
-    "pg": "^6.1.0",
+    "mysql": "^2.17.1",
+    "mysql2": "^1.6.5",
+    "pg": "^7.10.0",
     "pg-hstore": "^2.3.2",
-    "pg-native": "^1.10.0",
+    "pg-native": "^3.0.0",
     "sequelize": "^4.43.2",
-    "sqlite3": "^3.1.4",
-    "tedious": "^1.14.0"
+    "sqlite3": "^4.0.6",
+    "tedious": "^6.1.1"
   },
   "keywords": [
     "sequelize",
