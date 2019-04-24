@@ -383,6 +383,7 @@ Breaking changes:
 * Update database library dev dependencies
 * Git ignore `package-lock.json`
 * Git + npm ignore `npm-debug.log`
+* npm ignore `.gitattributes`
 * Fix: Tests close sequelize connection at end to avoid hang
 * Fix: Typo in changelog
 * Update license year

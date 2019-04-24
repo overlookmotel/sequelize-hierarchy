@@ -1,6 +1,7 @@
 test
 coverage
 .editorconfig
+.gitattributes
 .gitignore
 .eslintignore
 .eslintrc.js
