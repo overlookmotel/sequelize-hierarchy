@@ -375,6 +375,7 @@ Breaking changes:
 * Rename `jshint` npm script to `lint`
 * Reorder dev dependencies
 * Dev: Replace JSHint with ESLint
+* Fix linting errors
 * Fix: Tests close sequelize connection at end to avoid hang
 * Fix: Typo in changelog
 * Update license year
