@@ -56,7 +56,7 @@
     "travis": "if [ $COVERAGE ]; then npm run coveralls; else npm test; fi"
   },
   "engines": {
-    "node": ">=4"
+    "node": ">=8"
   },
   "readmeFilename": "README.md",
   "license": "MIT"

@@ -28,9 +28,7 @@ This plugin for [Sequelize](http://sequelizejs.com/) solves this problem.
 
 API is stable. All features and options are fairly well tested. Works with all dialects of SQL supported by Sequelize (MySQL, Postgres, SQLite) except for Microsoft SQL Server.
 
-Requires Sequelize v2.x.x, v3.x.x or v4.x.x.
-
-Version v1.0.0 onwards supports only Node v4 or higher. Currently, all tests pass on Node v0.10 and v0.12, but these versions of Node will no longer be tested against so this cannot be guaranteed in future releases.
+Requires Sequelize v2.x.x, v3.x.x or v4.x.x. Supports only Node v8 or higher.
 
 ## Usage
 
