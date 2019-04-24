@@ -375,3 +375,4 @@ Breaking changes:
 * Rename `jshint` npm script to `lint`
 * Fix: Tests close sequelize connection at end to avoid hang
 * Fix: Typo in changelog
+* Update license year
