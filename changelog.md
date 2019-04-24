@@ -369,5 +369,6 @@ Breaking changes:
 ## Next
 
 * Drop support for Node v4 + v6 [major]
+* Travis run tests on Node v10
 * Fix: Tests close sequelize connection at end to avoid hang
 * Fix: Typo in changelog
