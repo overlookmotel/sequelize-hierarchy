@@ -377,6 +377,7 @@ Breaking changes:
 * Dev: Replace JSHint with ESLint
 * Fix linting errors
 * Tests: Fix linting errors
+* Update `lodash` dependency
 * Fix: Tests close sequelize connection at end to avoid hang
 * Fix: Typo in changelog
 * Update license year
