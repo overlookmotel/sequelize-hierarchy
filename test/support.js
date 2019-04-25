@@ -56,7 +56,7 @@ const Support = {
 					resolve();
 				}
 			})).then(() => { // eslint-disable-line consistent-return
-				const options = Sequelize.Utils._.extend({}, sequelize.options, {storage: p}),
+				const options = Object.assign({}, sequelize.options, {storage: p}),
 					_sequelize = new Sequelize(sequelize.config.database, null, null, options);
 
 				if (callback) {
