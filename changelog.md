@@ -1,24 +1,26 @@
 # Changelog
 
-## Next
+## 2.0.0
 
-* Support Sequelize v5 [feat]
-* Drop support for Node v4 + v6 [major]
+Breaking changes:
+
+* Drop support for Node v4 + v6
+
+Features:
+
+* Support Sequelize v5
+
+Docs:
+
+* README update
+
+Dev:
+
 * Travis run tests on Node v10
-* Move entry point to `index.js` [refactor]
+* Replace JSHint with ESLint
 * Rename `travis` npm script to `ci`
 * Rename `jshint` npm script to `lint`
 * Reorder dev dependencies
-* Dev: Replace JSHint with ESLint
-* Fix linting errors
-* Tests: Fix linting errors
-* Tests: Use async/await [refactor]
-* Simplify error class definition [refactor]
-* Format code comments [refactor]
-* Reduce indentation of `.then` blocks [refactor]
-* Replace `.forEach` with `for of` [refactor]
-* Remove unnecessary lodash calls [refactor]
-* Add line spacing [refactor]
 * Update `lodash` dependency
 * Update dev dependencies
 * Update Sequelize dev dependency to latest 4.x.x
@@ -27,11 +29,26 @@
 * Git ignore `package-lock.json`
 * Git + npm ignore `npm-debug.log`
 * npm ignore `.gitattributes`
-* Fix: Tests close sequelize connection at end to avoid hang
-* Fix: Typo in changelog
-* Docs: README update
+* Fix typo in Changelog
 * Reverse order of Changelog
 * Update license year
+
+Tests:
+
+* Close sequelize connection at end to avoid hang
+* Use async/await
+* Fix linting errors
+
+Refactor:
+
+* Move entry point to `index.js`
+* Fix linting errors
+* Simplify error class definition
+* Reduce indentation of `.then` blocks
+* Replace `.forEach` with `for of`
+* Remove unnecessary lodash calls
+* Format code comments
+* Add line spacing
 
 ## 1.3.2
 
