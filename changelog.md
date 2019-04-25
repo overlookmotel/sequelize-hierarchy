@@ -368,6 +368,7 @@ Breaking changes:
 
 ## Next
 
+* Support Sequelize v5 [feat]
 * Drop support for Node v4 + v6 [major]
 * Travis run tests on Node v10
 * Move entry point to `index.js` [refactor]
