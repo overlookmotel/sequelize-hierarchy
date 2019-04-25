@@ -26,7 +26,7 @@ module.exports = {
 		}
 	},
 
-	// make maxIdleTime small so that tests exit promptly
+	// Make maxIdleTime small so that tests exit promptly
 	mysql: {
 		database: process.env.SEQ_MYSQL_DB || process.env.SEQ_DB || 'sequelize_test',
 		username: process.env.SEQ_MYSQL_USER || process.env.SEQ_USER || 'sequelize_test',

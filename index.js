@@ -1,8 +1,8 @@
-// --------------------
-// Sequelize hierarchy
-// --------------------
+/* --------------------
+ * Sequelize hierarchy
+ * ------------------*/
 
 'use strict';
 
-// exports
+// Exports
 module.exports = require('./lib/index');

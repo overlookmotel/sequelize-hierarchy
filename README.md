@@ -102,7 +102,7 @@ var folder = sequelize.define('folder', {
 Examples of getting a hierarchy structure:
 
 ```js
-// get entire hierarchy as a flat list
+// Get entire hierarchy as a flat list
 folder.findAll().then(function(results) {
 	// results = [
 	//	{ id: 1, parentId: null, name: 'a' },
@@ -111,7 +111,7 @@ folder.findAll().then(function(results) {
 	// ]
 });
 
-// get entire hierarchy as a nested tree
+// Get entire hierarchy as a nested tree
 folder.findAll({ hierarchy: true }).then(function(results) {
 	// results = [
 	//	{ id: 1, parentId: null, name: 'a', children: [
@@ -122,7 +122,7 @@ folder.findAll({ hierarchy: true }).then(function(results) {
 	// ]
 });
 
-// get all the descendents of a particular item
+// Get all the descendents of a particular item
 folder.find({
     where: { name: 'a' },
     include: {
@@ -139,7 +139,7 @@ folder.find({
 	// ] }
 });
 
-// get all the ancestors (i.e. parent and parent's parent and so on)
+// Get all the ancestors (i.e. parent and parent's parent and so on)
 folder.find({
 	where: { name: 'abc' },
 	include: [ { model: folder, as: 'ancestors' } ],

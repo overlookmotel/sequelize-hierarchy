@@ -1,13 +1,13 @@
-// --------------------
-// Sequelize hierarchy
-// Tests
-// --------------------
+/* --------------------
+ * Sequelize hierarchy
+ * Tests
+ * ------------------*/
 
 /* eslint-disable no-invalid-this */
 
 'use strict';
 
-// modules
+// Modules
 const chai = require('chai'),
 	{expect} = chai,
 	promised = require('chai-as-promised'),
@@ -18,17 +18,17 @@ const chai = require('chai'),
 // eslint-disable-next-line global-require
 const sequelizeVersion = Sequelize.version || require('sequelize/package.json').version;
 
-// init
+// Init
 chai.use(promised);
 chai.config.includeStack = true;
 
-// tests
+// Tests
 
 console.log('Sequelize version:', sequelizeVersion); // eslint-disable-line no-console
 console.log('Dialect:', Support.sequelize.options.dialect); // eslint-disable-line no-console
 
 describe(Support.getTestDialectTeaser('Tests'), () => {
-	// run tests
+	// Run tests
 	beforeEach(async function() {
 		this.schema = undefined;
 
@@ -41,7 +41,7 @@ describe(Support.getTestDialectTeaser('Tests'), () => {
 
 	tests();
 
-	// if postgres, run tests again with schemas
+	// If postgres, run tests again with schemas
 	if (Support.sequelize.options.dialect === 'postgres') {
 		describe('With schemas', () => {
 			before(async () => {
@@ -148,10 +148,10 @@ function tests() {
 			this.folder = this.sequelize.define('folder', {
 				name: Sequelize.STRING
 			}, {
-				// scopes do not affect the behavior of the model unless
+				// Scopes do not affect the behavior of the model unless
 				// 'switched on' with a Model.scope(name) call
 				scopes: {
-					// return the objects with the drive populated
+					// Return the objects with the drive populated
 					withDrive: (() => ({
 						include: [{
 							model: this.drive
@@ -192,7 +192,7 @@ function tests() {
 				{name: 'abdg', parentName: 'abd'},
 				{name: 'abdf', parentName: 'abd'}
 			]) {
-				// get parent
+				// Get parent
 				const parent = this.folders[folderParams.parentName];
 				folderParams.parentId = parent ? parent.id : null;
 
@@ -204,8 +204,8 @@ function tests() {
 		});
 
 		afterEach(async function() {
-			// set parentId of all folders to null
-			// (to avoid foreign constraint error in SQLite when dropping table)
+			// Set parentId of all folders to null to avoid foreign constraint error
+			// in SQLite when dropping table
 			await this.folder.update(
 				{parentId: null},
 				{where: {parentId: {ne: null}}, hooks: false}

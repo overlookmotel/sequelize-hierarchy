@@ -378,6 +378,7 @@ Breaking changes:
 * Fix linting errors
 * Tests: Fix linting errors
 * Tests: Use async/await [refactor]
+* Format code comments [refactor]
 * Update `lodash` dependency
 * Update dev dependencies
 * Update Sequelize dev dependency to latest 4.x.x
