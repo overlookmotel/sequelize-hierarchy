@@ -388,6 +388,7 @@ Breaking changes:
 * Update dev dependencies
 * Update Sequelize dev dependency to latest 4.x.x
 * Update database library dev dependencies
+* Travis CI install database libraries for Sequelize version
 * Git ignore `package-lock.json`
 * Git + npm ignore `npm-debug.log`
 * npm ignore `.gitattributes`
