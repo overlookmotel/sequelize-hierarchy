@@ -137,9 +137,9 @@ const folder = await Folder.findOne({
 
 // Get all the ancestors (i.e. parent and parent's parent and so on)
 const folder = await Folder.findOne({
-	where: { name: 'abc' },
-	include: [ { model: folder, as: 'ancestors' } ],
-	order: [ [ { model: folder, as: 'ancestors' }, 'hierarchyLevel' ] ]
+  where: { name: 'abc' },
+  include: [ { model: folder, as: 'ancestors' } ],
+  order: [ [ { model: folder, as: 'ancestors' }, 'hierarchyLevel' ] ]
 });
 // { id: 3, parentId: 2, name: 'abc', ancestors: [
 //   { id: 1, parentId: null, name: 'a' },
