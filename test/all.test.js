@@ -383,7 +383,7 @@ function tests() {
 						this.folders.a.update({parentId: this.folders.ab.id})
 					).to.be.rejectedWith(
 						this.sequelize.HierarchyError,
-						'Parent cannot be a child of itself'
+						'Parent cannot be a descendent of itself'
 					);
 				});
 			});
