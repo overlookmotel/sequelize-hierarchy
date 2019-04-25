@@ -383,6 +383,7 @@ Breaking changes:
 * Reduce indentation of `.then` blocks [refactor]
 * Replace `.forEach` with `for of` [refactor]
 * Remove unnecessary lodash calls [refactor]
+* Add line spacing [refactor]
 * Update `lodash` dependency
 * Update dev dependencies
 * Update Sequelize dev dependency to latest 4.x.x
