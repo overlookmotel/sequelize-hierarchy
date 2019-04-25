@@ -272,10 +272,10 @@ function tests() {
 			});
 		});
 
-		describe('#updateAttributes', () => {
+		describe('#update', () => {
 			describe('for root level', () => {
 				beforeEach(async function() {
-					await this.folders.abdf.updateAttributes({parentId: null});
+					await this.folders.abdf.update({parentId: null});
 				});
 
 				it('sets hierarchyLevel', async function() {
@@ -293,7 +293,7 @@ function tests() {
 
 			describe('for 2nd level', () => {
 				beforeEach(async function() {
-					await this.folders.abdf.updateAttributes({parentId: this.folders.a.id});
+					await this.folders.abdf.update({parentId: this.folders.a.id});
 				});
 
 				it('sets hierarchyLevel', async function() {
@@ -312,7 +312,7 @@ function tests() {
 
 			describe('for 3rd level', () => {
 				beforeEach(async function() {
-					await this.folders.abdf.updateAttributes({parentId: this.folders.ab.id});
+					await this.folders.abdf.update({parentId: this.folders.ab.id});
 				});
 
 				it('sets hierarchyLevel', async function() {
@@ -333,7 +333,7 @@ function tests() {
 
 			describe('descendents', () => {
 				beforeEach(async function() {
-					await this.folders.ab.updateAttributes({parentId: this.folders.ac.id});
+					await this.folders.ab.update({parentId: this.folders.ac.id});
 				});
 
 				it('sets hierarchyLevel for descendents', async function() {
@@ -359,7 +359,7 @@ function tests() {
 			describe('throws', () => {
 				it('if making item child of itself', async function() {
 					await expect(
-						this.folders.a.updateAttributes({parentId: this.folders.a.id})
+						this.folders.a.update({parentId: this.folders.a.id})
 					).to.be.rejectedWith(
 						this.sequelize.HierarchyError,
 						'Parent cannot be a child of itself'
@@ -368,7 +368,7 @@ function tests() {
 
 				it('if making item child of one of its own descendents', async function() {
 					await expect(
-						this.folders.a.updateAttributes({parentId: this.folders.ab.id})
+						this.folders.a.update({parentId: this.folders.ab.id})
 					).to.be.rejectedWith(
 						this.sequelize.HierarchyError,
 						'Parent cannot be a child of itself'
