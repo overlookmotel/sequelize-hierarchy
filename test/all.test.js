@@ -220,7 +220,7 @@ function tests() {
 			// in SQLite when dropping table
 			await this.folder.update(
 				{parentId: null},
-				{where: {parentId: {ne: null}}, hooks: false}
+				{where: {}, hooks: false}
 			);
 		});
 
@@ -1074,7 +1074,7 @@ function tests() {
 		describe('#rebuildHierarchy', () => {
 			beforeEach(async function() {
 				await this.folderAncestor.destroy({where: {}});
-				await this.folder.update({hierarchyLevel: 999}, {where: {id: {ne: 0}}});
+				await this.folder.update({hierarchyLevel: 999}, {where: {}});
 				await this.folder.rebuildHierarchy();
 			});
 
