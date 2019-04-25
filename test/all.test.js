@@ -11,11 +11,11 @@
 const chai = require('chai'),
 	{expect} = chai,
 	promised = require('chai-as-promised'),
-	Support = require('./support'), // eslint-disable-line import/order
-	{Sequelize} = Support,
-	semverSelect = require('semver-select');
+	semverSelect = require('semver-select'),
+	Support = require('./support'),
+	{Sequelize} = Support;
 
-// eslint-disable-next-line global-require
+// eslint-disable-next-line global-require, import/order
 const sequelizeVersion = Sequelize.version || require('sequelize/package.json').version;
 
 // Init
