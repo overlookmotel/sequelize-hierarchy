@@ -1,5 +1,24 @@
 # Changelog
 
+## 2.0.2
+
+Bug fixes:
+
+* `beforeUpdate` hook get old `parentId` + `hierarchyLevel` if not known
+
+Performance:
+
+* Optimize `beforeUpdate` hook
+* `afterFind` hook building hierarchy faster
+
+Refactor:
+
+* Major refactor for code style
+
+Docs:
+
+* Add Greenkeeper badge
+
 ## 2.0.1
 
 Docs:
