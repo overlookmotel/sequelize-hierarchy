@@ -395,4 +395,5 @@ Breaking changes:
 * npm ignore `.gitattributes`
 * Fix: Tests close sequelize connection at end to avoid hang
 * Fix: Typo in changelog
+* Docs: README update
 * Update license year
