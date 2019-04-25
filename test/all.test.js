@@ -28,6 +28,12 @@ const attributes = semverSelect(sequelizeVersion, {
 	'>=5.0.0': model => model.rawAttributes
 });
 
+// Define findOne function, dependent on Sequelize version
+const findOne = semverSelect(sequelizeVersion, {
+	'2.0.0 - 3.x.x': (model, options) => model.find(options),
+	'>=4.0.0': (model, options) => model.findOne(options)
+});
+
 // Tests
 
 console.log('Sequelize version:', sequelizeVersion); // eslint-disable-line no-console
@@ -221,7 +227,7 @@ function tests() {
 		describe('#create', () => {
 			describe('for root level', () => {
 				it('sets hierarchyLevel', async function() {
-					const folder = await this.folder.find({where: {name: 'a'}});
+					const folder = await findOne(this.folder, {where: {name: 'a'}});
 					expect(folder.hierarchyLevel).to.equal(1);
 				});
 
@@ -235,7 +241,7 @@ function tests() {
 
 			describe('for 2nd level', () => {
 				it('sets hierarchyLevel', async function() {
-					const folder = await this.folder.find({where: {name: 'ab'}});
+					const folder = await findOne(this.folder, {where: {name: 'ab'}});
 					expect(folder.hierarchyLevel).to.equal(2);
 				});
 
@@ -250,7 +256,7 @@ function tests() {
 
 			describe('for 3rd level', () => {
 				it('sets hierarchyLevel', async function() {
-					const folder = await this.folder.find({where: {name: 'abd'}});
+					const folder = await findOne(this.folder, {where: {name: 'abd'}});
 					expect(folder.hierarchyLevel).to.equal(3);
 				});
 
@@ -285,7 +291,7 @@ function tests() {
 				});
 
 				it('sets hierarchyLevel', async function() {
-					const folder = await this.folder.find({where: {name: 'abdf'}});
+					const folder = await findOne(this.folder, {where: {name: 'abdf'}});
 					expect(folder.hierarchyLevel).to.equal(1);
 				});
 
@@ -303,7 +309,7 @@ function tests() {
 				});
 
 				it('sets hierarchyLevel', async function() {
-					const folder = await this.folder.find({where: {name: 'abdf'}});
+					const folder = await findOne(this.folder, {where: {name: 'abdf'}});
 					expect(folder.hierarchyLevel).to.equal(2);
 				});
 
@@ -322,7 +328,7 @@ function tests() {
 				});
 
 				it('sets hierarchyLevel', async function() {
-					const folder = await this.folder.find({where: {name: 'abdf'}});
+					const folder = await findOne(this.folder, {where: {name: 'abdf'}});
 					expect(folder.hierarchyLevel).to.equal(3);
 				});
 
@@ -343,12 +349,12 @@ function tests() {
 				});
 
 				it('sets hierarchyLevel for descendents', async function() {
-					const folder = await this.folder.find({where: {name: 'abdf'}});
+					const folder = await findOne(this.folder, {where: {name: 'abdf'}});
 					expect(folder.hierarchyLevel).to.equal(5);
 				});
 
 				it('updates hierarchy table records for descendents', async function() {
-					const folder = await this.folder.find({
+					const folder = await findOne(this.folder, {
 						where: {id: this.folders.abdf.id},
 						include: [{model: this.folder, as: 'ancestors'}],
 						order: [[{model: this.folder, as: 'ancestors'}, 'hierarchyLevel']]
@@ -407,15 +413,15 @@ function tests() {
 			});
 
 			it('sets hierarchyLevel for all rows', async function() {
-				const folder = await this.folder.find({where: {name: 'abeh'}});
+				const folder = await findOne(this.folder, {where: {name: 'abeh'}});
 				expect(folder.hierarchyLevel).to.equal(4);
 
-				const folder2 = await this.folder.find({where: {name: 'abi'}});
+				const folder2 = await findOne(this.folder, {where: {name: 'abi'}});
 				expect(folder2.hierarchyLevel).to.equal(3);
 			});
 
 			it('creates hierarchy table records for all rows', async function() {
-				const folder = await this.folder.find({
+				const folder = await findOne(this.folder, {
 					where: {name: 'abeh'},
 					include: [{model: this.folder, as: 'ancestors'}],
 					order: [[{model: this.folder, as: 'ancestors'}, 'hierarchyLevel']]
@@ -427,7 +433,7 @@ function tests() {
 				expect(ancestors[1].id).to.equal(this.folders.ab.id);
 				expect(ancestors[2].id).to.equal(this.folders.abe.id);
 
-				const folder2 = await this.folder.find({
+				const folder2 = await findOne(this.folder, {
 					where: {name: 'abi'},
 					include: [{model: this.folder, as: 'ancestors'}],
 					order: [[{model: this.folder, as: 'ancestors'}, 'hierarchyLevel']]
@@ -450,14 +456,14 @@ function tests() {
 
 			it('sets hierarchyLevel for all rows', async function() {
 				for (const name of ['abdf', 'abdg']) {
-					const folder = await this.folder.find({where: {name}});
+					const folder = await findOne(this.folder, {where: {name}});
 					expect(folder.hierarchyLevel).to.equal(3);
 				}
 			});
 
 			it('creates hierarchy table records for all rows', async function() {
 				for (const name of ['abdf', 'abdg']) {
-					const folder = await this.folder.find({
+					const folder = await findOne(this.folder, {
 						where: {name},
 						include: [{model: this.folder, as: 'ancestors'}],
 						order: [[{model: this.folder, as: 'ancestors'}, 'hierarchyLevel']]
@@ -491,7 +497,7 @@ function tests() {
 		describe('#find', () => {
 			describe('can retrieve', () => {
 				it('children', async function() {
-					const folder = await this.folder.find({
+					const folder = await findOne(this.folder, {
 						where: {name: 'a'},
 						include: [{model: this.folder, as: 'children'}],
 						order: [[{model: this.folder, as: 'children'}, 'name']]
@@ -503,7 +509,7 @@ function tests() {
 				});
 
 				it('descendents', async function() {
-					const folder = await this.folder.find({
+					const folder = await findOne(this.folder, {
 						where: {name: 'a'},
 						include: [{model: this.folder, as: 'descendents'}],
 						order: [[{model: this.folder, as: 'descendents'}, 'name']]
@@ -519,7 +525,7 @@ function tests() {
 				});
 
 				it('parent', async function() {
-					const folder = await this.folder.find({
+					const folder = await findOne(this.folder, {
 						where: {name: 'abdf'},
 						include: [{model: this.folder, as: 'parent'}]
 					});
@@ -529,7 +535,7 @@ function tests() {
 				});
 
 				it('ancestors', async function() {
-					const folder = await this.folder.find({
+					const folder = await findOne(this.folder, {
 						where: {name: 'abdf'},
 						include: [{model: this.folder, as: 'ancestors'}],
 						order: [[{model: this.folder, as: 'ancestors'}, 'hierarchyLevel']]
@@ -542,7 +548,7 @@ function tests() {
 				});
 
 				it('other associations', async function() {
-					const folder = await this.folder.find({
+					const folder = await findOne(this.folder, {
 						where: {name: 'abdf'},
 						include: this.drive
 					});
@@ -584,7 +590,7 @@ function tests() {
 				});
 
 				it('find gets a structured tree', async function() {
-					const folder = await this.folder.find({
+					const folder = await findOne(this.folder, {
 						where: {name: 'a'},
 						include: [{model: this.folder, as: 'descendents', hierarchy: true}],
 						order: [[{model: this.folder, as: 'descendents'}, 'name']]
@@ -655,7 +661,7 @@ function tests() {
 				});
 
 				it('find gets a structured tree when included from another model 2 deep', async function() {
-					const folder = await this.folder.find({
+					const folder = await findOne(this.folder, {
 						where: {name: 'a'},
 						include: {
 							model: this.drive,
@@ -746,7 +752,7 @@ function tests() {
 				});
 
 				it('with main model scoped', async function() {
-					const folder = await this.scopedFolder.find({
+					const folder = await findOne(this.scopedFolder, {
 						where: {name: 'a'},
 						include: [{model: this.folder, as: 'descendents', hierarchy: true}],
 						order: [[{model: this.folder, as: 'descendents'}, 'name']]
@@ -778,7 +784,7 @@ function tests() {
 				});
 
 				it('with hierarchy model scoped', async function() {
-					const folder = await this.folder.find({
+					const folder = await findOne(this.folder, {
 						where: {name: 'a'},
 						include: [{model: this.scopedFolder, as: 'descendents', hierarchy: true}],
 						order: [[{model: this.scopedFolder, as: 'descendents'}, 'name']]
@@ -810,7 +816,7 @@ function tests() {
 				});
 
 				it('with both models scoped', async function() {
-					const folder = await this.scopedFolder.find({
+					const folder = await findOne(this.scopedFolder, {
 						where: {name: 'a'},
 						include: [{model: this.scopedFolder, as: 'descendents', hierarchy: true}],
 						order: [[{model: this.scopedFolder, as: 'descendents'}, 'name']]
@@ -845,7 +851,7 @@ function tests() {
 
 			describe('handles empty result set with', () => {
 				it('#find', async function() {
-					const folder = await this.folder.find({where: {name: 'z'}});
+					const folder = await findOne(this.folder, {where: {name: 'z'}});
 					expect(folder).to.be.null;
 				});
 
@@ -855,7 +861,7 @@ function tests() {
 				});
 
 				it('#find with an include', async function() {
-					const folder = await this.folder.find({
+					const folder = await findOne(this.folder, {
 						where: {name: 'z'},
 						include: [{model: this.folder, as: 'parent'}]
 					});
@@ -863,7 +869,7 @@ function tests() {
 				});
 
 				it('#find with an empty include', async function() {
-					const folder = await this.folder.find({
+					const folder = await findOne(this.folder, {
 						where: {name: 'a'},
 						include: [{model: this.folder, as: 'parent'}]
 					});
@@ -871,7 +877,7 @@ function tests() {
 				});
 
 				it('#find with empty descendents', async function() {
-					const folder = await this.folder.find({
+					const folder = await findOne(this.folder, {
 						where: {name: 'abdg'},
 						include: [{model: this.folder, as: 'descendents', hierarchy: true}]
 					});
@@ -950,7 +956,7 @@ function tests() {
 			describe('legal', () => {
 				it('setParent', async function() {
 					await this.folders.abdg.setParent(this.folders.a);
-					const folder = await this.folder.find({where: {name: 'abdg'}});
+					const folder = await findOne(this.folder, {where: {name: 'abdg'}});
 					expect(folder.parentId).to.equal(this.folders.a.id);
 					expect(folder.hierarchyLevel).to.equal(2);
 				});
@@ -961,7 +967,7 @@ function tests() {
 							name: 'ach',
 							parentId: this.folders.ac.id
 						});
-						this.folders.ach = await this.folder.find({where: {name: 'ach'}});
+						this.folders.ach = await findOne(this.folder, {where: {name: 'ach'}});
 					});
 
 					describe('creates new item', () => {
@@ -986,12 +992,12 @@ function tests() {
 
 					describe('sets current item', () => {
 						it('to correct parent', async function() {
-							const folder = await this.folder.find({where: {name: 'abd'}});
+							const folder = await findOne(this.folder, {where: {name: 'abd'}});
 							expect(folder.parentId).to.equal(this.folders.ach.id);
 						});
 
 						it('with correct hierarchyLevel', async function() {
-							const folder = await this.folder.find({where: {name: 'abd'}});
+							const folder = await findOne(this.folder, {where: {name: 'abd'}});
 							expect(folder.hierarchyLevel).to.equal(4);
 						});
 
@@ -1011,7 +1017,7 @@ function tests() {
 
 				it('addChild', async function() {
 					await this.folders.a.addChild(this.folders.abdg);
-					const folder = await this.folder.find({where: {name: 'abdg'}});
+					const folder = await findOne(this.folder, {where: {name: 'abdg'}});
 					expect(folder.parentId).to.equal(this.folders.a.id);
 					expect(folder.hierarchyLevel).to.equal(2);
 				});
@@ -1019,7 +1025,7 @@ function tests() {
 				describe('createChild', () => {
 					beforeEach(async function() {
 						await this.folders.ac.createChild({name: 'ach'});
-						const folder = await this.folder.find({where: {name: 'ach'}});
+						const folder = await findOne(this.folder, {where: {name: 'ach'}});
 						this.folders.ach = folder;
 					});
 

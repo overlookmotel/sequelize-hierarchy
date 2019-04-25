@@ -123,7 +123,7 @@ folder.findAll({ hierarchy: true }).then(function(results) {
 });
 
 // Get all the descendents of a particular item
-folder.find({
+folder.findOne({
     where: { name: 'a' },
     include: {
         model: folder,
@@ -140,7 +140,7 @@ folder.find({
 });
 
 // Get all the ancestors (i.e. parent and parent's parent and so on)
-folder.find({
+folder.findOne({
 	where: { name: 'abc' },
 	include: [ { model: folder, as: 'ancestors' } ],
 	order: [ [ { model: folder, as: 'ancestors' }, 'hierarchyLevel' ] ]
