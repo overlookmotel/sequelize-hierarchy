@@ -378,6 +378,7 @@ Breaking changes:
 * Fix linting errors
 * Tests: Fix linting errors
 * Tests: Use async/await [refactor]
+* Simplify error class definition [refactor]
 * Format code comments [refactor]
 * Reduce indentation of `.then` blocks [refactor]
 * Replace `.forEach` with `for of` [refactor]
