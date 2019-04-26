@@ -50,6 +50,7 @@ require('sequelize-hierarchy')(Sequelize);
 ```
 
 ### Initializing hierarchy
+
 #### Model#isHierarchy( [options] )
 
 ```js
@@ -96,6 +97,31 @@ const Folder = sequelize.define('folder', {
     hierarchy: true
   }
 });
+```
+
+If defining the hierarchy via model options, do not also call `.isHierarchy()`. The two methods are equivalent - only use one or the other.
+
+#### Creating database tables
+
+Defining the hierarchy sets up the *models* in Sequelize, not the database tables. You will need to create or modify the tables in the database.
+
+If table already exists, add the following columns:
+
+* `parentId` (same type as `id`)
+* `hierarchyLevel` (`INTEGER` type)
+
+If the table does not already exist, you can ask Sequelize to create it:
+
+```js
+await Folder.sync();
+```
+
+NB Call `.sync()` *after* `.isHierarchy()`.
+
+The ancestry model (`FolderAncestor` in the above example) also needs its database table created:
+
+```js
+await sequelize.models.FolderAncestor.sync();
 ```
 
 ### Retrieving hierarchies
