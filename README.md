@@ -259,7 +259,7 @@ All auto-created field names respect the setting of `model.options.underscored` 
 To build the hierarchy data on an existing table, or if hierarchy data gets corrupted in some way (e.g. by changes to parentId being made directly in the database not through Sequelize), you can rebuild it with:
 
 ```js
-Folder.rebuildHierarchy()
+await Folder.rebuildHierarchy()
 ```
 
 NB: In normal circumstances, you should never need to use this method. It is only intended for the above two use cases.
