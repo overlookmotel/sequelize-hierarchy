@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.0.3
+
+Bug fixes:
+
+* `rebuildHierarchy` handles primary key not called `id`
+
 ## 2.0.2
 
 Bug fixes:
