@@ -71,86 +71,187 @@ describe(Support.getTestDialectTeaser('Tests'), () => {
 
 function tests() {
 	describe('Hierarchy creation', () => {
-		it('works via isHierarchy()', function() {
-			const folder = this.sequelize.define('folder', {
-				name: Sequelize.STRING
-			});
-
-			folder.isHierarchy({camelThrough: true});
-
-			expect(folder.hierarchy).to.be.ok;
-		});
-
-		it('works via define options', function() {
-			const folder = this.sequelize.define('folder', {
-				name: Sequelize.STRING
-			}, {
-				hierarchy: {camelThrough: true}
-			});
-
-			expect(folder.hierarchy).to.be.ok;
-		});
-
-		it('works via defining in model attribute', function() {
-			const folder = this.sequelize.define('folder', {
-				name: Sequelize.STRING,
-				parId: {
-					type: Sequelize.INTEGER.UNSIGNED,
-					allowNull: true,
-					hierarchy: {camelThrough: true}
-				}
-			});
-
-			expect(folder.hierarchy).to.be.ok;
-			expect(folder.hierarchy.foreignKey).to.equal('parId');
-			expect(folder.hierarchy.as).to.equal('par');
-		});
-
-		it('allows parentId and hierarchyLevel fields to already be defined', function() {
-			const folder = this.sequelize.define('folder', {
-				name: Sequelize.STRING,
-				hierarchyLevel: Sequelize.STRING,
-				parentId: Sequelize.INTEGER
-			});
-
-			folder.isHierarchy({camelThrough: true});
-
-			expect(attributes(folder).hierarchyLevel.type).not.to.equal(Sequelize.STRING);
-
-			expect(attributes(folder).parentId.references).to.deep.equal(
-				semverSelect(sequelizeVersion, {
-					'<3.0.1': 'folders',
-					'>=3.0.1': {model: 'folders', key: 'id'}
-				})
-			);
-		});
-
-		describe('options', () => {
-			beforeEach(function() {
-				this.folder = this.sequelize.define('folder', {
+		describe('with .define', () => {
+			it('works via isHierarchy()', function() {
+				const folder = this.sequelize.define('folder', {
 					name: Sequelize.STRING
 				});
 
-				this.folder.isHierarchy({
-					through: 'folderAncestor',
-					throughTable: 'folder_ancestor',
-					throughSchema: 'folder_schema'
+				folder.isHierarchy({camelThrough: true});
+
+				expect(folder.hierarchy).to.be.ok;
+			});
+
+			it('works via define options', function() {
+				const folder = this.sequelize.define('folder', {
+					name: Sequelize.STRING
+				}, {
+					hierarchy: {camelThrough: true}
 				});
 
-				this.throughModel = this.sequelize.models.folderAncestor;
+				expect(folder.hierarchy).to.be.ok;
 			});
 
-			it('`through`', function() {
-				expect(this.folder.hierarchy).to.be.ok;
-				expect(this.throughModel).to.be.ok;
+			it('works via defining in model attribute', function() {
+				const folder = this.sequelize.define('folder', {
+					name: Sequelize.STRING,
+					parId: {
+						type: Sequelize.INTEGER.UNSIGNED,
+						allowNull: true,
+						hierarchy: {camelThrough: true}
+					}
+				});
+
+				expect(folder.hierarchy).to.be.ok;
+				expect(folder.hierarchy.foreignKey).to.equal('parId');
+				expect(folder.hierarchy.as).to.equal('par');
 			});
 
-			it('`throughTable`', function() {
-				expect(this.throughModel.tableName).to.equal('folder_ancestor');
+			it('allows parentId and hierarchyLevel fields to already be defined', function() {
+				const folder = this.sequelize.define('folder', {
+					name: Sequelize.STRING,
+					hierarchyLevel: Sequelize.STRING,
+					parentId: Sequelize.INTEGER
+				});
+
+				folder.isHierarchy({camelThrough: true});
+
+				expect(attributes(folder).hierarchyLevel.type).not.to.equal(Sequelize.STRING);
+
+				expect(attributes(folder).parentId.references).to.deep.equal(
+					semverSelect(sequelizeVersion, {
+						'<3.0.1': 'folders',
+						'>=3.0.1': {model: 'folders', key: 'id'}
+					})
+				);
 			});
 
-			it('`throughSchema`', function() {
-				expect(this.throughModel.getTableName().schema).to.equal('folder_schema');
+			describe('options', () => {
+				beforeEach(function() {
+					this.folder = this.sequelize.define('folder', {
+						name: Sequelize.STRING
+					});
+
+					this.folder.isHierarchy({
+						through: 'folderAncestor',
+						throughTable: 'folder_ancestor',
+						throughSchema: 'folder_schema'
+					});
+
+					this.throughModel = this.sequelize.models.folderAncestor;
+				});
+
+				it('`through`', function() {
+					expect(this.folder.hierarchy).to.be.ok;
+					expect(this.throughModel).to.be.ok;
+				});
+
+				it('`throughTable`', function() {
+					expect(this.throughModel.tableName).to.equal('folder_ancestor');
+				});
+
+				it('`throughSchema`', function() {
+					expect(this.throughModel.getTableName().schema).to.equal('folder_schema');
+				});
+			});
+		});
+
+		// Only run tests for `.init` on Sequelize 4+
+		const describeFiltered = semverSelect(sequelizeVersion, {
+			'2.0.0 - 3.x.x': describe.skip,
+			'>=4.0.0': describe
+		});
+
+		describeFiltered('with .init', () => {
+			it('works via isHierarchy()', function() {
+				class folder extends Sequelize.Model {}
+				folder.init({
+					name: Sequelize.STRING
+				}, {sequelize: this.sequelize});
+
+				folder.isHierarchy({camelThrough: true});
+
+				expect(folder.hierarchy).to.be.ok;
+			});
+
+			it('works via define options', function() {
+				class folder extends Sequelize.Model {}
+				folder.init({
+					name: Sequelize.STRING
+				}, {
+					sequelize: this.sequelize,
+					hierarchy: {camelThrough: true}
+				});
+
+				expect(folder.hierarchy).to.be.ok;
+			});
+
+			it('works via defining in model attribute', function() {
+				class folder extends Sequelize.Model {}
+				folder.init({
+					name: Sequelize.STRING,
+					parId: {
+						type: Sequelize.INTEGER.UNSIGNED,
+						allowNull: true,
+						hierarchy: {camelThrough: true}
+					}
+				}, {sequelize: this.sequelize});
+
+				expect(folder.hierarchy).to.be.ok;
+				expect(folder.hierarchy.foreignKey).to.equal('parId');
+				expect(folder.hierarchy.as).to.equal('par');
+			});
+
+			it('allows parentId and hierarchyLevel fields to already be defined', function() {
+				class folder extends Sequelize.Model {}
+				folder.init({
+					name: Sequelize.STRING,
+					hierarchyLevel: Sequelize.STRING,
+					parentId: Sequelize.INTEGER
+				}, {sequelize: this.sequelize});
+
+				folder.isHierarchy({camelThrough: true});
+
+				expect(attributes(folder).hierarchyLevel.type).not.to.equal(Sequelize.STRING);
+
+				expect(attributes(folder).parentId.references).to.deep.equal(
+					semverSelect(sequelizeVersion, {
+						'<3.0.1': 'folders',
+						'>=3.0.1': {model: 'folders', key: 'id'}
+					})
+				);
+			});
+
+			describe('options', () => {
+				beforeEach(function() {
+					class folder extends Sequelize.Model {}
+					folder.init({
+						name: Sequelize.STRING
+					}, {sequelize: this.sequelize});
+
+					folder.isHierarchy({
+						through: 'folderAncestor',
+						throughTable: 'folder_ancestor',
+						throughSchema: 'folder_schema'
+					});
+
+					this.folder = folder;
+
+					this.throughModel = this.sequelize.models.folderAncestor;
+				});
+
+				it('`through`', function() {
+					expect(this.folder.hierarchy).to.be.ok;
+					expect(this.throughModel).to.be.ok;
+				});
+
+				it('`throughTable`', function() {
+					expect(this.throughModel.tableName).to.equal('folder_ancestor');
+				});
+
+				it('`throughSchema`', function() {
+					expect(this.throughModel.getTableName().schema).to.equal('folder_schema');
+				});
 			});
 		});
 	});
