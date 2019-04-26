@@ -14,6 +14,7 @@
     "url": "https://github.com/overlookmotel/sequelize-hierarchy/issues"
   },
   "dependencies": {
+    "is-generator": "^1.0.3",
     "lodash": "^4.17.11",
     "semver-select": "^1.1.0"
   },
