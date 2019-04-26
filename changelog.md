@@ -1,5 +1,26 @@
 # Changelog
 
+## 2.0.4
+
+Bug fixes:
+
+* `beforeBulkUpdate` hook run `beforeUpdate` hook on each item in series
+* Only add `transaction` + `logging` options if defined
+
+Tests:
+
+* Add tests for defining models with `.init`
+* Add tests for `onDelete: 'CASCADE'` option
+
+Refactor:
+
+* Use coroutines
+
+Docs:
+
+* `onDelete: 'CASCADE'` option
+* Creating database tables
+
 ## 2.0.3
 
 Bug fixes:
