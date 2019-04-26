@@ -245,6 +245,10 @@ These affect the naming of accessors e.g. `instance.getParent()`
 
 All auto-created field names respect the setting of `model.options.underscored` and the through table name respects `sequelize.options.define.underscoredAll`.
 
+#### Cascading deletions
+
+* `onDelete`: Set to `'CASCADE'` if you want deleting a node to delete all its children.
+
 #### Misc
 
 * `labels`: When `true`, creates an attribute `label` on the created `parentId` and `hierarchyLevel` fields which is a human-readable version of the field name. Inherits from sequelize define options or `false`.
