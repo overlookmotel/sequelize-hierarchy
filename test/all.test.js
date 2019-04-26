@@ -1278,5 +1278,40 @@ function tests() {
 				expect(folder.associations.ancestors.through.model.tableName).to.equal('testThroughTable');
 			});
 		});
+
+		describe('onDelete: CASCADE', () => {
+			it('deletes all children', async function() {
+				const {sequelize} = this;
+				const folder = sequelize.define('folder', {
+					name: Sequelize.STRING
+				});
+				folder.isHierarchy({camelThrough: true, onDelete: 'CASCADE'});
+
+				await sequelize.sync({force: true});
+
+				// Created nested folders
+				const folders = {};
+				for (const folderParams of [
+					{name: 'a', parentName: null},
+					{name: 'ab', parentName: 'a'},
+					{name: 'ac', parentName: 'a'},
+					{name: 'abd', parentName: 'ab'}
+				]) {
+					const parent = folders[folderParams.parentName];
+					folderParams.parentId = parent ? parent.id : null;
+					delete folderParams.parentName;
+					folders[folderParams.name] = await folder.create(folderParams);
+				}
+
+				// Delete root folder
+				await folder.destroy({where: {id: folders.a.id}});
+
+				const folderRecords = await folder.findAll();
+				expect(folderRecords.length).to.equal(0);
+
+				const ancestorRecords = await sequelize.models.folderAncestor.findAll();
+				expect(ancestorRecords.length).to.equal(0);
+			});
+		});
 	});
 }
