@@ -19,7 +19,7 @@
     "semver-select": "^1.1.0"
   },
   "devDependencies": {
-    "@overlookmotel/eslint-config": "^2.1.2",
+    "@overlookmotel/eslint-config": "^3.0.0",
     "@overlookmotel/eslint-config-tests": "^1.0.4",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
