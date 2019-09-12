@@ -1,8 +1,7 @@
 language: node_js
 
 node_js:
-  - "4"
-  - "6"
+  - "10"
   - "8"
 
 branches:
@@ -10,7 +9,7 @@ branches:
     - /^v\d+\./
 
 script:
-  - "npm run travis"
+  - "npm run ci"
 
 before_script:
   - "mysql -e 'create database sequelize_test;'"
@@ -19,6 +18,8 @@ before_script:
   - "export SEQ_PG_USER=postgres"
   - "export SEQ_PG_PW=postgres"
   - 'if [ "$SEQ_VERSION" ]; then npm install sequelize@^$SEQ_VERSION.0.0; fi'
+  - 'if [ "$SEQ_VERSION" = "2" ]; then npm install mysql@2 pg@4 pg-native@1; fi'
+  - 'if [ "$SEQ_VERSION" = "3" ]; then npm install mysql@2 pg@4 pg-native@1; fi'
 
 env:
   global:
@@ -28,6 +29,10 @@ env:
     - DB=mysql DIALECT=postgres
     - DB=mysql DIALECT=postgres-native
     - DB=mysql DIALECT=sqlite
+    - DB=mysql DIALECT=mysql SEQ_VERSION=4
+    - DB=mysql DIALECT=postgres SEQ_VERSION=4
+    - DB=mysql DIALECT=postgres-native SEQ_VERSION=4
+    - DB=mysql DIALECT=sqlite SEQ_VERSION=4
     - DB=mysql DIALECT=mysql SEQ_VERSION=3
     - DB=mysql DIALECT=postgres SEQ_VERSION=3
     - DB=mysql DIALECT=postgres-native SEQ_VERSION=3
@@ -40,7 +45,7 @@ env:
 matrix:
   fast_finish: true
   include:
-    - node_js: "4"
+    - node_js: "10"
       env: DB=mysql DIALECT=mysql COVERAGE=true
   allow_failures:
     - env: DB=mysql DIALECT=mysql COVERAGE=true

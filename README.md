@@ -6,6 +6,7 @@
 [![Build Status](https://img.shields.io/travis/overlookmotel/sequelize-hierarchy/master.svg)](http://travis-ci.org/overlookmotel/sequelize-hierarchy)
 [![Dependency Status](https://img.shields.io/david/overlookmotel/sequelize-hierarchy.svg)](https://david-dm.org/overlookmotel/sequelize-hierarchy)
 [![Dev dependency Status](https://img.shields.io/david/dev/overlookmotel/sequelize-hierarchy.svg)](https://david-dm.org/overlookmotel/sequelize-hierarchy)
+[![Greenkeeper badge](https://badges.greenkeeper.io/overlookmotel/sequelize-hierarchy.svg)](https://greenkeeper.io/)
 [![Coverage Status](https://img.shields.io/coveralls/overlookmotel/sequelize-hierarchy/master.svg)](https://coveralls.io/r/overlookmotel/sequelize-hierarchy)
 
 ## What's it for?
@@ -28,9 +29,7 @@ This plugin for [Sequelize](http://sequelizejs.com/) solves this problem.
 
 API is stable. All features and options are fairly well tested. Works with all dialects of SQL supported by Sequelize (MySQL, Postgres, SQLite) except for Microsoft SQL Server.
 
-Requires Sequelize v2.x.x, v3.x.x or v4.x.x.
-
-Version v1.0.0 onwards supports only Node v4 or higher. Currently, all tests pass on Node v0.10 and v0.12, but these versions of Node will no longer be tested against so this cannot be guaranteed in future releases.
+Requires Sequelize v2.x.x, v3.x.x, v4.x.x or v5.x.x. Supports only Node v8 or higher.
 
 ## Usage
 
@@ -39,37 +38,38 @@ Version v1.0.0 onwards supports only Node v4 or higher. Currently, all tests pas
 To load module:
 
 ```js
-var Sequelize = require('sequelize-hierarchy')();
+const Sequelize = require('sequelize-hierarchy')();
 // NB Sequelize must also be present in `node_modules`
 ```
 
 or, a more verbose form useful if chaining multiple Sequelize plugins:
 
 ```js
-var Sequelize = require('sequelize');
+const Sequelize = require('sequelize');
 require('sequelize-hierarchy')(Sequelize);
 ```
 
 ### Initializing hierarchy
+
 #### Model#isHierarchy( [options] )
 
 ```js
-var sequelize = new Sequelize('database', 'user', 'password');
+const sequelize = new Sequelize('database', 'user', 'password');
 
-var folder = sequelize.define('folder', { name: Sequelize.STRING });
-folder.isHierarchy();
+const Folder = sequelize.define('folder', { name: Sequelize.STRING });
+Folder.isHierarchy();
 ```
 
-`folder.isHierarchy()` does the following:
+`Folder.isHierarchy()` does the following:
 
 * Adds a column `parentId` to Folder model
 * Adds a column `hierarchyLevel` to Folder model (which should not be updated directly)
-* Creates a new model `folderAncestor` which contains the ancestry information (columns `folderId` and `ancestorId`)
+* Creates a new model `FolderAncestor` which contains the ancestry information (columns `folderId` and `ancestorId`)
 * Creates the following associations (with foreign key constraints):
-  * `folder.belongsTo(folder, {as: 'parent', foreignKey: 'parentId'})`
-  * `folder.hasMany(folder, {as: 'children', foreignKey: 'parentId'})`
-  * `folder.belongsToMany(folder, {as: 'descendents', foreignKey: 'ancestorId', through: folderAncestor})`
-  * `folder.belongsToMany(folder, {as: 'ancestors', foreignKey: 'folderId', through: folderAncestor})`
+  * `Folder.belongsTo(Folder, {as: 'parent', foreignKey: 'parentId'})`
+  * `Folder.hasMany(Folder, {as: 'children', foreignKey: 'parentId'})`
+  * `Folder.belongsToMany(Folder, {as: 'descendents', foreignKey: 'ancestorId', through: FolderAncestor})`
+  * `Folder.belongsToMany(Folder, {as: 'ancestors', foreignKey: 'folderId', through: FolderAncestor})`
 * Creates hooks into standard Sequelize methods (create, update, destroy, bulkCreate etc) to automatically update the ancestry table and `hierarchyLevel` field as details in the folder table change
 * Creates hooks into Sequelize's `Model#find()` and `Model#findAll()` methods so that hierarchies can be returned as javascript object tree structures
 
@@ -80,23 +80,48 @@ The column and table names etc can be modified by passing options to `.isHierarc
 Hierarchies can also be created in `define()`:
 
 ```js
-var folder = sequelize.define('folder', {
-    name: Sequelize.STRING
+const Folder = sequelize.define('folder', {
+  name: Sequelize.STRING
 }, {
-    hierarchy: true
+  hierarchy: true
 });
 ```
 
 or on an attribute in `define()`:
 
 ```js
-var folder = sequelize.define('folder', {
-	name: Sequelize.STRING,
-	parentId: {
-		type: Sequelize.INTEGER,
-		hierarchy: true
-	}
+const Folder = sequelize.define('folder', {
+  name: Sequelize.STRING,
+  parentId: {
+    type: Sequelize.INTEGER,
+    hierarchy: true
+  }
 });
+```
+
+If defining the hierarchy via model options, do not also call `.isHierarchy()`. The two methods are equivalent - only use one or the other.
+
+#### Creating database tables
+
+Defining the hierarchy sets up the *models* in Sequelize, not the database tables. You will need to create or modify the tables in the database.
+
+If table already exists, add the following columns:
+
+* `parentId` (same type as `id`)
+* `hierarchyLevel` (`INTEGER` type)
+
+If the table does not already exist, you can ask Sequelize to create it:
+
+```js
+await Folder.sync();
+```
+
+NB Call `.sync()` *after* `.isHierarchy()`.
+
+The ancestry model (`FolderAncestor` in the above example) also needs its database table created:
+
+```js
+await sequelize.models.FolderAncestor.sync();
 ```
 
 ### Retrieving hierarchies
@@ -104,82 +129,75 @@ var folder = sequelize.define('folder', {
 Examples of getting a hierarchy structure:
 
 ```js
-// get entire hierarchy as a flat list
-folder.findAll().then(function(results) {
-	// results = [
-	//	{ id: 1, parentId: null, name: 'a' },
-	//	{ id: 2, parentId: 1, name: 'ab' },
-	//	{ id: 3, parentId: 2, name: 'abc' }
-	// ]
-});
+// Get entire hierarchy as a flat list
+const folders = await Folder.findAll();
+// [
+//   { id: 1, parentId: null, name: 'a' },
+//   { id: 2, parentId: 1, name: 'ab' },
+//   { id: 3, parentId: 2, name: 'abc' }
+// ]
 
-// get entire hierarchy as a nested tree
-folder.findAll({ hierarchy: true }).then(function(results) {
-	// results = [
-	//	{ id: 1, parentId: null, name: 'a', children: [
-	//		{ id: 2, parentId: 1, name: 'ab', children: [
-	//			{ id: 3, parentId: 2, name: 'abc' }
-	//		] }
-	//	] }
-	// ]
-});
+// Get entire hierarchy as a nested tree
+const folders = await Folder.findAll({ hierarchy: true });
+// [
+//   { id: 1, parentId: null, name: 'a', children: [
+//     { id: 2, parentId: 1, name: 'ab', children: [
+//       { id: 3, parentId: 2, name: 'abc' }
+//     ] }
+//   ] }
+// ]
 
-// get all the descendents of a particular item
-folder.find({
-    where: { name: 'a' },
-    include: {
-        model: folder,
-        as: 'descendents',
-        hierarchy: true
-    }
-}).then(function(result) {
-	// result =
-	// { id: 1, parentId: null, name: 'a', children: [
-	//		{ id: 2, parentId: 1, name: 'ab', children: [
-	//			{ id: 3, parentId: 2, name: 'abc' }
-	//		] }
-	// ] }
+// Get all the descendents of a particular item
+const folder = await Folder.findOne({
+  where: { name: 'a' },
+  include: {
+    model: Folder,
+    as: 'descendents',
+    hierarchy: true
+  }
 });
+// { id: 1, parentId: null, name: 'a', children: [
+//   { id: 2, parentId: 1, name: 'ab', children: [
+//     { id: 3, parentId: 2, name: 'abc' }
+//   ] }
+// ] }
 
-// get all the ancestors (i.e. parent and parent's parent and so on)
-folder.find({
-	where: { name: 'abc' },
-	include: [ { model: folder, as: 'ancestors' } ],
-	order: [ [ { model: folder, as: 'ancestors' }, 'hierarchyLevel' ] ]
-}).then(function(result) {
-	// results = [
-	//	{ id: 3, parentId: 2, name: 'abc', ancestors: [
-	//		{ id: 1, parentId: null, name: 'a' },
-	//		{ id: 2, parentId: 1, name: 'ab' }
-	//	] }
-	// ]
+// Get all the ancestors (i.e. parent and parent's parent and so on)
+const folder = await Folder.findOne({
+  where: { name: 'abc' },
+  include: [ { model: Folder, as: 'ancestors' } ],
+  order: [ [ { model: Folder, as: 'ancestors' }, 'hierarchyLevel' ] ]
 });
+// { id: 3, parentId: 2, name: 'abc', ancestors: [
+//   { id: 1, parentId: null, name: 'a' },
+//   { id: 2, parentId: 1, name: 'ab' }
+// ] }
 ```
 
-The forms with `{ hierarchy: true }` are equivalent to using `folder.findAll({ include: { model: folder, as: 'children' } })` except that the include is recursed however deeply the tree structure goes.
+The forms with `{ hierarchy: true }` are equivalent to using `Folder.findAll({ include: { model: Folder, as: 'children' } })` except that the include is recursed however deeply the tree structure goes.
 
 ### Accessors
 
 Accessors are also supported:
 
 ```js
-thisFolder.getParent()
-thisFolder.getChildren()
-thisFolder.getAncestors()
-thisFolder.getDescendents()
+folder.getParent()
+folder.getChildren()
+folder.getAncestors()
+folder.getDescendents()
 ```
 
-Setters work as usual e.g. `thisFolder.setParent()`, `thisFolder.addChild()`.
+Setters work as usual e.g. `folder.setParent()`, `folder.addChild()`.
 
 ### Options
 
 The following options can be passed to `Model#isHierarchy( { /* options */ } )` or in a model definition:
 
 ```js
-var folder = sequelize.define('folder', {
-    name: Sequelize.STRING
+const Folder = sequelize.define('folder', {
+  name: Sequelize.STRING
 }, {
-    hierarchy: { /* options */ }
+  hierarchy: { /* options */ }
 });
 ```
 
@@ -188,48 +206,52 @@ Defaults are inherited from `sequelize.options.hierarchy` if defined in call to 
 Examples:
 
 ```js
-folder.isHierarchy( { as: 'above' } );
+Folder.isHierarchy( { as: 'above' } );
 
-var folder = sequelize.define('folder', {
-    name: Sequelize.STRING
+const Folder = sequelize.define('folder', {
+  name: Sequelize.STRING
 }, {
-    hierarchy: { as: 'above' }
+  hierarchy: { as: 'above' }
 });
 ```
 
 #### Aliases for relations
 
-* `as`: Name of parent association. Defaults to `'parent'`
-* `childrenAs`: Name of children association. Defaults to `'children'`
-* `ancestorsAs`: Name of ancestors association. Defaults to `'ancestors'`
-* `descendentsAs`: Name of descendents association. Defaults to `'descendents'`
+* `as`: Name of parent association. Defaults to `'parent'`.
+* `childrenAs`: Name of children association. Defaults to `'children'`.
+* `ancestorsAs`: Name of ancestors association. Defaults to `'ancestors'`.
+* `descendentsAs`: Name of descendents association. Defaults to `'descendents'`.
 
 These affect the naming of accessors e.g. `instance.getParent()`
 
 #### Fields
 
-* `levelFieldName`: Name of the hierarchy depth field. Defaults to `'hierarchyLevel'`
-* `levelFieldType`: Type of the hierarchy depth field. Defaults to `Sequelize.INTEGER.UNSIGNED`
-* `levelFieldAttributes`: Attributes to add to the hierarchy depth field. Defaults to `undefined`
-* `primaryKey`: Name of the primary key. Defaults to model's `primaryKeyAttribute`
-* `foreignKey`: Name of the parent field. Defaults to `'parentId'`
-* `foreignKeyAttributes`: Attributes to add to the parent field. Defaults to `undefined`
-* `throughKey`: Name of the instance field in hierarchy (through) table. Defaults to `'<model name>Id'`
-* `throughForeignKey`: Name of the ancestor field in hierarchy (through) table. Defaults to `'ancestorId'`
+* `levelFieldName`: Name of the hierarchy depth field. Defaults to `'hierarchyLevel'`.
+* `levelFieldType`: Type of the hierarchy depth field. Defaults to `Sequelize.INTEGER.UNSIGNED`.
+* `levelFieldAttributes`: Attributes to add to the hierarchy depth field. Defaults to `undefined`.
+* `primaryKey`: Name of the primary key. Defaults to model's `primaryKeyAttribute`.
+* `foreignKey`: Name of the parent field. Defaults to `'parentId'`.
+* `foreignKeyAttributes`: Attributes to add to the parent field. Defaults to `undefined`.
+* `throughKey`: Name of the instance field in hierarchy (through) table. Defaults to `'<model name>Id'`.
+* `throughForeignKey`: Name of the ancestor field in hierarchy (through) table. Defaults to `'ancestorId'`.
 
 #### Hierarchy (through) table
 
-* `through`: Name of hierarchy (through) model. Defaults to `'<model name>ancestor'`
-* `throughTable`: Name of hierarchy (through) table. Defaults to `'<model name plural>ancestors'`
+* `through`: Name of hierarchy (through) model. Defaults to `'<model name>ancestor'`.
+* `throughTable`: Name of hierarchy (through) table. Defaults to `'<model name plural>ancestors'`.
 * `throughSchema`: Schema of hierarchy (through) table. Defaults to `model.options.schema`, and is optional.
-* `freezeTableName`: When `true`, through table name is same as through model name. Inherits from sequelize define options
-* `camelThrough`: When `true`, through model name and table name are camelized (i.e. `folderAncestor` not `folderancestor`). Inherits from sequelize define options
+* `freezeTableName`: When `true`, through table name is same as through model name. Inherits from sequelize define options.
+* `camelThrough`: When `true`, through model name and table name are camelized (i.e. `folderAncestor` not `folderancestor`). Inherits from sequelize define options.
 
 All auto-created field names respect the setting of `model.options.underscored` and the through table name respects `sequelize.options.define.underscoredAll`.
 
+#### Cascading deletions
+
+* `onDelete`: Set to `'CASCADE'` if you want deleting a node to delete all its children.
+
 #### Misc
 
-* `labels`: When `true`, creates an attribute `label` on the created `parentId` and `hierarchyLevel` fields which is a human-readable version of the field name. Inherits from sequelize define options or `false`
+* `labels`: When `true`, creates an attribute `label` on the created `parentId` and `hierarchyLevel` fields which is a human-readable version of the field name. Inherits from sequelize define options or `false`.
 
 ### Rebuilding the hierarchy
 #### Model#rebuildHierarchy( [options] )
@@ -237,7 +259,7 @@ All auto-created field names respect the setting of `model.options.underscored` 
 To build the hierarchy data on an existing table, or if hierarchy data gets corrupted in some way (e.g. by changes to parentId being made directly in the database not through Sequelize), you can rebuild it with:
 
 ```js
-folder.rebuildHierarchy()
+await Folder.rebuildHierarchy()
 ```
 
 NB: In normal circumstances, you should never need to use this method. It is only intended for the above two use cases.
@@ -271,6 +293,6 @@ If you discover a bug, please raise an issue on Github. https://github.com/overl
 Pull requests are very welcome. Please:
 
 * ensure all tests pass before submitting PR
-* add an entry to changelog
+* do not add an entry to changelog - changelog will be created when cutting releases
 * add tests for new features
 * document new functionality/API additions in README
