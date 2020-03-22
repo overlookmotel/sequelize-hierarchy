@@ -38,7 +38,7 @@
     "pg-native": "^3.0.0",
     "sequelize": "^5.7.5",
     "sqlite3": "^4.0.6",
-    "tedious": "^6.1.1"
+    "tedious": "^8.2.0"
   },
   "keywords": [
     "sequelize",
