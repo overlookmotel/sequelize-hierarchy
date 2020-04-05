@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@overlookmotel/eslint-config": "^2.1.2",
-    "@overlookmotel/eslint-config-tests": "^1.0.4",
+    "@overlookmotel/eslint-config-tests": "^4.0.1",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "coveralls": "^3.0.3",
