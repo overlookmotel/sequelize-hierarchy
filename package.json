@@ -16,7 +16,8 @@
   "dependencies": {
     "is-generator": "^1.0.3",
     "lodash": "^4.17.11",
-    "semver-select": "^1.1.0"
+    "semver-select": "^1.1.0",
+    "bluebird": "^3.7.2"
   },
   "devDependencies": {
     "@overlookmotel/eslint-config": "^2.1.2",
@@ -36,7 +37,7 @@
     "pg": "^7.10.0",
     "pg-hstore": "^2.3.2",
     "pg-native": "^3.0.0",
-    "sequelize": "^5.7.5",
+    "sequelize": "^6.3.4",
     "sqlite3": "^4.0.6",
     "tedious": "^6.1.1"
   },
