@@ -38,7 +38,7 @@ Requires Sequelize v2.x.x, v3.x.x, v4.x.x or v5.x.x. Supports only Node v8 or hi
 To load module:
 
 ```js
-const Sequelize = require('sequelize-hierarchy')();
+const Sequelize = require('sequelize-hierarchy-ts')();
 // NB Sequelize must also be present in `node_modules`
 ```
 
@@ -46,7 +46,7 @@ or, a more verbose form useful if chaining multiple Sequelize plugins:
 
 ```js
 const Sequelize = require('sequelize');
-require('sequelize-hierarchy')(Sequelize);
+require('sequelize-hierarchy-ts')(Sequelize);
 ```
 
 ### Initializing hierarchy
