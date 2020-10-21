@@ -1,17 +1,15 @@
 {
-  "name": "sequelize-hierarchy",
-  "version": "2.0.4",
+  "name": "sequelize-hierarchy-ts",
+  "version": "2.0.5",
   "description": "Nested hierarchies for Sequelize",
   "main": "index.js",
-  "author": {
-    "name": "Overlook Motel"
-  },
+  "author": "Fizure",
   "repository": {
     "type": "git",
-    "url": "https://github.com/overlookmotel/sequelize-hierarchy.git"
+    "url": "git+https://github.com/fizure/sequelize-hierarchy.git"
   },
   "bugs": {
-    "url": "https://github.com/overlookmotel/sequelize-hierarchy/issues"
+    "url": "https://github.com/fizure/sequelize-hierarchy/issues"
   },
   "dependencies": {
     "is-generator": "^1.0.3",
@@ -65,6 +63,10 @@
   "engines": {
     "node": ">=8"
   },
-  "readmeFilename": "README.md",
-  "license": "MIT"
+  "license": "MIT",
+  "homepage": "https://github.com/fizure/sequelize-hierarchy#readme",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  }
 }
