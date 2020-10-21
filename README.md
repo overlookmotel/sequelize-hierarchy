@@ -2,7 +2,7 @@
 
 # Nested hierarchies for Sequelize
 
-[![NPM version](https://img.shields.io/npm/v/sequelize-hierarchy.svg)](https://www.npmjs.com/package/sequelize-hierarchy)
+[![NPM version](https://img.shields.io/npm/v/sequelize-hierarchy-ts.svg)](https://www.npmjs.com/package/sequelize-hierarchy)
 [![Build Status](https://img.shields.io/travis/overlookmotel/sequelize-hierarchy/master.svg)](http://travis-ci.org/overlookmotel/sequelize-hierarchy)
 [![Dependency Status](https://img.shields.io/david/overlookmotel/sequelize-hierarchy.svg)](https://david-dm.org/overlookmotel/sequelize-hierarchy)
 [![Dev dependency Status](https://img.shields.io/david/dev/overlookmotel/sequelize-hierarchy.svg)](https://david-dm.org/overlookmotel/sequelize-hierarchy)
