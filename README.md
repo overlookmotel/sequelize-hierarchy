@@ -31,6 +31,9 @@ API is stable. All features and options are fairly well tested. Works with all d
 
 Requires Sequelize v2.x.x, v3.x.x, v4.x.x or v5.x.x. Supports only Node v8 or higher.
 
+Note: If you are using v6, you will get an Error: "Cannot read property 'coroutine' of undefined"
+There is a patch fork for that and it should allow you to use sequelize-hierarchy with Sequelize v6. Look at the following PR: https://github.com/overlookmotel/sequelize-hierarchy/pull/223
+
 ## Usage
 
 ### Loading module
